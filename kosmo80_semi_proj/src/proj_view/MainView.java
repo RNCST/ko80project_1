@@ -27,9 +27,9 @@ public class MainView implements ActionListener{
 	JLabel  jlb2      = new JLabel();
 	JLabel  jlb3      = new JLabel();
 	JLabel  jlb4      = new JLabel();
-	CView   cv        = new CView();
-	SView   sv        = new SView();
-	OView   ov        = new OView();
+	CView   cv        = new CView(); 
+//	SView   sv        = new SView();
+//	OView   ov        = new OView();
 	
 	
 	
@@ -80,9 +80,9 @@ public class MainView implements ActionListener{
 		if(obj == jbco) {
 			cv.setVisible(true);
 		}else if(obj == jbul) {
-			sv.setVisible(true);
+//			sv.setVisible(true);
 		}else if(obj == jbol) {
-			ov.setVisible(true);
+//			ov.setVisible(true);
 			
 		}
 		
