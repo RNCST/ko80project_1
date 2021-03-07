@@ -8,18 +8,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import proj_back.EventHandler;
+
 /**
  * @author OSH
  * 맨 처음 손님이 주문하는 창, 메뉴수정하는 창 , 전표보는 창을 고르는 창을 띄우기
  * Cview , Sview , Aview 세개로 나눠서
  */
-public class MainView implements ActionListener{
+public class MainView {
 	// 선언부
-	static MainView mv= null;
-	JFrame  jf        = null;
-	JButton jbco      = new JButton("C.O");
-	JButton jbul      = new JButton("U.L");
-	JButton jbol      = new JButton("O.L");
+	static MainView        mv= null;
+	 EventHandler    eh= null;
+	public JFrame  jf        = null;
+	public JButton jbco      = new JButton("C.O");
+	public JButton jbul      = new JButton("U.L");
+	public JButton jbol      = new JButton("O.L");
 	JPanel  jp_center = new JPanel();
 	JPanel  jp_north  = new JPanel();
 	JPanel  jp_south  = new JPanel();
@@ -37,9 +40,10 @@ public class MainView implements ActionListener{
 	//화면처리부
 	public void initDisplayMainView() {
 		jf = new JFrame();
-		jbco.addActionListener(this);
-		jbul.addActionListener(this);
-		jbol.addActionListener(this);
+		
+//		jbco.addActionListener(this);
+//		jbul.addActionListener(this);  EventHandler로 넘어감.
+//		jbol.addActionListener(this);
 		
 		jf.setSize(400,300);
 		jf.setTitle("k80 키오스크 시스템");
@@ -64,28 +68,18 @@ public class MainView implements ActionListener{
 		jf.setLocationRelativeTo(null);
 		// 윈도우 위치.
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		eh = new EventHandler(this);
 	}
 	
 	public static void main(String[] args) {
+		
 		mv = new MainView();
 		mv.initDisplayMainView();
 
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent ae) {
-		Object obj = ae.getSource();
-		// TODO Auto-generated method stub
-		if(obj == jbco) {
-			cv.setVisible(true);
-		}else if(obj == jbul) {
-//			sv.setVisible(true);
-		}else if(obj == jbol) {
-//			ov.setVisible(true);
-			
-		}
+	
 		
 	}
 
+
+	
 }

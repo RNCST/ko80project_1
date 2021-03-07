@@ -36,6 +36,7 @@ public class CView extends JDialog implements ActionListener{
 	TitledBorder tb_west   =  new TitledBorder(new LineBorder(Color.white),"분류");
 	TitledBorder tb_center =  new TitledBorder(new LineBorder(Color.white),"세부메뉴");
 	static MainView mv      = null;
+	static CView    cv      = null;
 	
 //	public CView() {
 //		  dbMgr = DBConnectionMgr.getInstance();
