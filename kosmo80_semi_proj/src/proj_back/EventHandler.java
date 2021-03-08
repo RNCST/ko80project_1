@@ -39,15 +39,19 @@ public class EventHandler implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		System.out.println("11");
 		Object obj = ae.getSource();
-		System.out.println("22");
 		String cmd = ae.getActionCommand();
 		System.out.println("event labetl:"+cmd);
-		System.out.println("33");
 		// TODO Auto-generated method stub
 		if("C.O".equals(cmd)) {
 			cv = new CView();
 			cv.initDisplay();
-
+		}else if ("장바구니에 추가".equals(cmd)) {
+			
+		}else if ("결제하기".equals(cmd)) {
+			
+		}else if ("취소하기".equals(cmd)) {
+			
+		}else if ("새로 고침".equals(cmd)) {
 			
 		}
 	}

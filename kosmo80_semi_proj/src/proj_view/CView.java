@@ -64,7 +64,7 @@ public class CView extends JDialog implements ActionListener{
 		jp_south.setBackground(Color.LIGHT_GRAY);
 		jp_south.setPreferredSize(new Dimension(800,100));
 		
-		jb_in.setBounds(350, 50, 300, 300);;
+		jb_in.setBounds(350, 50, 300, 300);
 		jp_south.add(jb_in);
 		jb_in.setPreferredSize(new Dimension(150,50));
 		this.setSize(800,800);
