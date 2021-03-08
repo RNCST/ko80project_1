@@ -41,11 +41,12 @@ public class DBLogic {
 	public Connection getConnection() {
 		return con;
 	}	
-	
-	public MenuVO[] getMainList() {
-		sql = " SELECT m_num, m_name, m_price, m_type FROM menu ";
+
+	public MenuVO[] getList(String type) {
+		sql = " SELECT m_num, m_name, m_price, m_type FROM menu WHERE m_type = ? ";
 		try {
 			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, type);
 			rs = pstmt.executeQuery();
 			MenuVO mVO = null;
 			Vector<MenuVO> mvoVec = new Vector<MenuVO>();
@@ -72,8 +73,8 @@ public class DBLogic {
 	public static void main(String[] args) {
 		MenuVO[] mv = null;
 		DBLogic dl = new DBLogic();
-		mv=dl.getMainList();
-		System.out.println("getMainList test");
+		mv=dl.getList("beverage");
+		System.out.println("getList test");
 		for(int i = 0; i < mv.length; i++) {
 			System.out.println(mv[i].getM_num() + ", " + mv[i].getM_name() + ", " + mv[i].getM_price() + ", " + mv[i].getM_type());
 		}
