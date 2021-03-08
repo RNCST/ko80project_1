@@ -18,10 +18,12 @@ import proj_back.EventHandler;
  */
 public class MainView extends JFrame{
 	// 선언부
-	static MainView   mv  = null;
-    EventHandler   eh     = null;
-    CView     cv          = null;
-    CartView  cav         = null;
+	MainView   mv  = null;
+    static EventHandler   eh     = null;
+    CView          cv     = new CView();
+    CartView       cav    = new CartView();
+    CaculationView clv    = new CaculationView();
+    OkView         okv    = null;
     
     
 	public JFrame  jf     = null;
@@ -41,6 +43,7 @@ public class MainView extends JFrame{
 	
 	//화면처리부
 	public void initDisplayMainView() {
+		System.out.println("mv initdisplay호출 성공");
 		jf = new JFrame();
 		co = new Container();
 		
@@ -67,16 +70,20 @@ public class MainView extends JFrame{
         jf.getContentPane().add(jbul);
         jf.getContentPane().add(jbol);
         
-		jf.setLocationRelativeTo(null);
 		// 윈도우 위치.
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		cav = new CartView();
-		eh = new EventHandler(this, cav);
+//		cav = new CartView();
+//		eh = new EventHandler(this, cav, clv, okv);
+//		eh = new EventHandler(this, cv, cav);
+		eh = new EventHandler(this);
 		
 		jf.setSize(400,300);
 		jf.setTitle("k80 키오스크 시스템");
 		jf.setVisible(true);
+		jf.setLocationRelativeTo(null);
+		
+		System.out.println(eh);
 		//프레임에 버튼과 라벨을 놓지말고  패널을 두개 만들어서 놓을것.
 		//제이프레임이 아닌 제일 바닥 바탕에 컨테인이라는 요소가 있는데 getContentPane을 하면 컨텐트에 요소가 추가가됨.
 		//소켓통신
@@ -85,6 +92,7 @@ public class MainView extends JFrame{
 		
 
 	public static void main(String[] args) {
+		MainView mv = new MainView();
 		mv = new MainView();
 		mv.initDisplayMainView();
 

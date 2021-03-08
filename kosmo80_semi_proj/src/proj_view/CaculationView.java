@@ -12,14 +12,19 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import proj_back.EventHandler;
+
 public class CaculationView extends JFrame {
 
+	MainView       mv = null;
+	static EventHandler   eh = null;
+	
 	JFrame         jf = null;
 	JPanel     jpList = null;
 	JPanel   jpButton = null;
 	JTable        jtb = null;
 	JScrollPane   jsp = null;
-	JButton     jb_rf = null;
+	public JButton     jb_rf = null;
 	TitledBorder tb_south  = new TitledBorder(new LineBorder(Color.white));
 	DefaultTableModel detm = null;
 	String array[]    = {"판매내역"};
@@ -30,7 +35,16 @@ public class CaculationView extends JFrame {
 	
 	
 	
+	public CaculationView(MainView mv) {
+		this.mv = mv;
+	}
+	public CaculationView() {
+		
+	}
+
 	public void initDisplay() {
+		eh = mv.eh;
+		System.out.println("clv initdisplay호출 성공");
 		detm        = new DefaultTableModel(data, array);
 		jtb         = new JTable(detm);
 		jsp         = new JScrollPane(jtb);
@@ -55,14 +69,9 @@ public class CaculationView extends JFrame {
 		this.add("South",jpButton);
 		this.setSize(800,800);
 		this.setMinimumSize(getSize());
-		this.setMaximumSize(810,810);
 		this.setVisible(true);
 	}
 
- private void setMaximumSize(int i, int j) {
-		// TODO Auto-generated method stub
-		
-	}
 
 public static void main(String[] args) {
 	 CaculationView ca = new CaculationView();

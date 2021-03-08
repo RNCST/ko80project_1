@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import proj_back.EventHandler;
+
 public class CartView extends JDialog implements ActionListener {
 	//ORACLE 연동에 대한 선언부
 	
@@ -22,6 +24,8 @@ public class CartView extends JDialog implements ActionListener {
 	JPanel    jp_southB     = new JPanel();
 	JPanel    jp_south1     = new JPanel();
 	JPanel    jp_south2     = new JPanel();
+	static EventHandler   eh       = null;
+	MainView     mv         = null;
 	
 	TitledBorder tb_south   = new TitledBorder(new LineBorder(Color.lightGray),"주문확인");
 	TitledBorder tb_south1  = new TitledBorder(new LineBorder(Color.white),"총액확인");
@@ -33,9 +37,18 @@ public class CartView extends JDialog implements ActionListener {
 	public JButton   jb_cancel     = new JButton("취소하기");
 	
 	
+	public CartView(MainView mv) {
+		this.mv = mv;
+	}
+	public CartView() {
+	}
 	
 	public void initDisplay() {
-		
+		eh = mv.eh;
+
+		System.out.println(eh+"cav 위");
+
+		System.out.println("Cav initdisplay호출 성공");
 		//총액 구매 취소 패널들을 담는 패널
 		this.add("South", jp_southB);
 		jp_southB.setBorder(tb_south);
@@ -74,6 +87,8 @@ public class CartView extends JDialog implements ActionListener {
 		
 		this.setSize(500, 650);
 		this.setVisible(true);
+		eh = mv.eh;
+		System.out.println(eh+"cav 아래");
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -82,8 +97,8 @@ public class CartView extends JDialog implements ActionListener {
 	}
 	
 	public static void main(String[] args) {
-		CartView cv = new CartView();
-		cv.initDisplay();
+		CartView cav = new CartView();
+		cav.initDisplay();
 		
 	}
 }
