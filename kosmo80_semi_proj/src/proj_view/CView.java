@@ -6,10 +6,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
@@ -23,7 +21,6 @@ public class CView extends JDialog implements ActionListener{
 	
 	//선언부
 	JScrollPane jsp         = null;
-	JFrame      jf          = null;
 	JPanel      jp_west     = new JPanel();
 	//메뉴큰 분류
 	JPanel      jp_south    = new JPanel();
@@ -32,7 +29,7 @@ public class CView extends JDialog implements ActionListener{
 	//메뉴 항목들 나오게
 	JButton     jb_in     = new JButton("장바구니에 추가");
 	//패널 테두리 따로 선언
-	TitledBorder tb_south  =  new TitledBorder(new LineBorder(Color.white),"주문확인");
+	TitledBorder tb_south  =  new TitledBorder(new LineBorder(Color.white),"장바구니추가");
 	TitledBorder tb_west   =  new TitledBorder(new LineBorder(Color.white),"분류");
 	TitledBorder tb_center =  new TitledBorder(new LineBorder(Color.white),"세부메뉴");
 	static MainView mv      = null;
