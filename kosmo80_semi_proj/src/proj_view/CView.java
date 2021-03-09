@@ -44,7 +44,7 @@ public class CView extends JDialog {
 	public RButton     jb_hot     = new RButton("H O T");
 	public RButton     jb_main    = new RButton("M A I N");
 	public RButton     jb_drink   = new RButton("DRINK");
-	public RButton     jb_side    = new RButton("S I D E ");
+	public RButton     jb_side    = new RButton("S I D E");
 	//패널 테두리 따로 선언
 	TitledBorder tb_south  =  new TitledBorder(new LineBorder(Color.white),"장바구니추가");
 	TitledBorder tb_west   =  new TitledBorder(new LineBorder(Color.white),"분류");
@@ -137,11 +137,17 @@ public class CView extends JDialog {
 		jp_south.add(jb_in);
 		jb_in.setPreferredSize(new Dimension(150,50));
 		this.setSize(800,800);
-		this.setVisible(true);
+		this.setVisible(false);
 		
 		
 		System.out.println(eh+"cv아래");
 		
+	}
+	
+	public void refresh() {
+		   while(detm.getRowCount()>0) {
+	            detm.removeRow(0);
+	         }
 	}
 	
 	

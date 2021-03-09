@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
+import proj_view.CView;
+
 
 public class DBLogic {
 	//선언부
@@ -19,6 +21,8 @@ public class DBLogic {
 	private PreparedStatement		pstmt	= null;
 	private ResultSet				rs		= null;
 	private MenuVO[] 				mvoList = null;
+	static EventHandler eh         = null;
+		        CView        cv                 = null;
 	
 	//생성자
 	private DBLogic() {
@@ -50,6 +54,8 @@ public class DBLogic {
 			rs = pstmt.executeQuery();
 			MenuVO mVO = null;
 			Vector<MenuVO> mvoVec = new Vector<MenuVO>();
+			
+			
 			while(rs.next()) {
 				mVO = new MenuVO();
 				mVO.setM_num(rs.getInt("m_num"));
@@ -74,6 +80,8 @@ public class DBLogic {
 		}
 		
 	}
+	
+	
 
 	public static void main(String[] args) {
 		MenuVO[] mv = null;

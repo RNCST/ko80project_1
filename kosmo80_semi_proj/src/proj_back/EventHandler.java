@@ -33,9 +33,15 @@ public class EventHandler implements ActionListener {
 		this.mv.jbco.addActionListener(this);
 		this.mv.jbul.addActionListener(this);
 		this.mv.jbol.addActionListener(this);
+		
 
 		this.cv = new CView(this.mv);
 		this.cv.jb_in.addActionListener(this);
+		this.cv.jb_new.addActionListener(this);
+		this.cv.jb_hot.addActionListener(this);
+		this.cv.jb_main.addActionListener(this);
+		this.cv.jb_drink.addActionListener(this);
+		this.cv.jb_side.addActionListener(this);
 
 		this.cav = new CartView(this.mv);
 		this.cav.jb_buy.addActionListener(this);
@@ -66,13 +72,51 @@ public class EventHandler implements ActionListener {
 			}
 			
 			cv.initDisplay();
+			cv.setVisible(true);
 			cv.setrow(this.mVOS);
 			// CView띄우기
 			
+		}else if ("M A I N".equals(cmd)) {
+			cv.refresh();
+			System.out.println("event labetl:" + cmd);
+			try {
+				this.mVOS = db.getList("main");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			cv.setrow(this.mVOS);
+			// main 눌렀을떄
+			
+		}else if ("DRINK".equals(cmd)) {
+			cv.refresh();
+			System.out.println("event labetl:" + cmd);
+			try {
+				this.mVOS = db.getList("beverage");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			cv.setrow(this.mVOS);
+			return;
+			// drink 눌렀을때
+			
+		}else if ("S I D E".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			try {
+				this.mVOS = db.getList("side");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			cv.setrow(this.mVOS);
+			return;
+			// side 눌렀을때
 			
 		} else if ("O.L".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			clv.initDisplay();
+			return;
 			// CView띄우기
 			
 			
@@ -108,6 +152,8 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("결제".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
+			
+			System.out.println(okv.getTimer());
 			return;
 			// OkView 끄고 팝업 띄우기
 			

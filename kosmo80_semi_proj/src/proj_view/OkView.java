@@ -1,6 +1,7 @@
 package proj_view;
 
 import java.awt.Font;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,9 +15,9 @@ public class OkView extends JDialog{
 	MainView mv       = null;
 	EventHandler   eh = null;
 	
-	JLabel  jl        = new JLabel("결제를 하시려면 결제버튼을 눌러주세요");
-	JPanel  jp_south  = new JPanel();
-	JPanel  jp_center = new JPanel();
+	       JLabel  jl        = new JLabel("결제를 하시려면 결제버튼을 눌러주세요");
+	       JPanel  jp_south  = new JPanel();
+	       JPanel  jp_center = new JPanel();
 	public RButton jb_buy    = new RButton("결제");
 	public RButton jb_no     = new RButton("취소");
 	
@@ -26,8 +27,31 @@ public class OkView extends JDialog{
 		this.mv=mv;
 	}
 	public OkView() {
-		
 	}
+	
+		
+	public String getTimer() {
+		Calendar cal = Calendar.getInstance();
+		int hour     = cal.get(Calendar.HOUR_OF_DAY);
+		int min      = cal.get(Calendar.MINUTE);
+		int sec      = cal.get(Calendar.SECOND);
+		String str1   = Integer.toString(hour);
+		if(str1.length()==1) {
+			str1 = "0"+str1;
+		}
+		String str2   = Integer.toString(min);
+		if(str2.length()==1) {
+			str2 = "0"+str2;
+		}
+		String str3   = Integer.toString(sec);
+		if(str3.length()==1) {
+			str3 = "0"+str3;
+		}
+		return str1+":"+str2+":"+str3;
+	}
+	
+		
+	
 	public void initDiplayOkView() {
 		Font ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
 		Font ft3 = new Font("휴먼모음T", Font.PLAIN, 17);
