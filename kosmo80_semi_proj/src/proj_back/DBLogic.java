@@ -31,7 +31,7 @@ public class DBLogic {
 	}
 	
 	//메소드
-	public DBLogic getInstance() {
+	public static DBLogic getInstance() {
 		if(db == null) {
 			db = new DBLogic();
 		}
@@ -53,10 +53,15 @@ public class DBLogic {
 			while(rs.next()) {
 				mVO = new MenuVO();
 				mVO.setM_num(rs.getInt("m_num"));
+				System.out.println("m_num에 적제성공");
 				mVO.setM_name(rs.getString("m_name"));
+				System.out.println("m_name에 적제성공");
 				mVO.setM_price(rs.getInt("m_price"));
+				System.out.println("m_price에 적제성공");
 				mVO.setM_type(rs.getString("m_type"));
+				System.out.println("m_type에 적제성공");
 				mvoVec.add(mVO);
+				System.out.println("mvoVec에 적제성공");
 			}
 			mvoList = new MenuVO[mvoVec.size()];
 			mvoVec.copyInto(mvoList);
@@ -73,7 +78,7 @@ public class DBLogic {
 	public static void main(String[] args) {
 		MenuVO[] mv = null;
 		DBLogic dl = new DBLogic();
-		mv=dl.getList("beverage");
+		mv=dl.getList("main");
 		System.out.println("getList test");
 		for(int i = 0; i < mv.length; i++) {
 			System.out.println(mv[i].getM_num() + ", " + mv[i].getM_name() + ", " + mv[i].getM_price() + ", " + mv[i].getM_type());

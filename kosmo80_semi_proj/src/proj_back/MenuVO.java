@@ -6,6 +6,7 @@ public class MenuVO {
 	private String 	m_name   = "";
 	private int 	m_price  = 0;
 	private String  m_type	 = "";
+	//private String  m_lunch_date = "";
 	  
 	public int getM_num() {
 		return m_num;

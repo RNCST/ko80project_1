@@ -3,8 +3,6 @@ package proj_view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -16,6 +14,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import proj_back.DBLogic;
 import proj_back.EventHandler;
 import proj_back.MenuVO;
 
@@ -31,7 +30,7 @@ public class CView extends JDialog {
 	MenuVO      mVOS[]      = null;
 	DefaultTableModel detm = null;
 	JTable        jtb = null;
-	String array[]    = {"메뉴"};
+	String array[]    = {"메뉴","가격"};
 	String data[][]   = new String[0][2];
 	JPanel      jp_west     = new JPanel();
 	//메뉴큰 분류
@@ -51,6 +50,7 @@ public class CView extends JDialog {
 //	TitledBorder tb_center =  new TitledBorder(new LineBorder(Color.white),"세부메뉴");
 	MainView       mv      = null;
     CView          cv      = null;
+    DBLogic		   db	   = null;
 	
 
 
@@ -60,15 +60,25 @@ public class CView extends JDialog {
 	public CView() {
 		
 	}
-	public void setrow() {
-		  for(int i=0;i<mVOS.length;i++) {
+	public void setrow(MenuVO[] mVOS) {
+		this.mVOS = mVOS;
+		try {
+		  for(int i=0;i<this.mVOS.length;i++) {
 	            Vector oneRow = new Vector();
-	            oneRow.add(mVOS[i].getM_num());
-	            oneRow.add(mVOS[i].getM_name());
-	            oneRow.add(mVOS[i].getM_price());
-	            oneRow.add(mVOS[i].getM_type());
-	            detm.addRow(oneRow);
+	            oneRow.add(this.mVOS[i].getM_num());
+	            System.out.println("getM_num 성공");
+	            oneRow.add(this.mVOS[i].getM_name());
+	            System.out.println("getM_name 성공");
+	            oneRow.add(this.mVOS[i].getM_price());
+	            System.out.println("getM_price 성공");
+	            oneRow.add(this.mVOS[i].getM_type());
+	            System.out.println("getM_type 성공");
+	            this.detm.addRow(oneRow);
+	            System.out.println("추가 실행");
 		  }
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 

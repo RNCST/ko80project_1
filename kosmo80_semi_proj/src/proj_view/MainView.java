@@ -41,6 +41,7 @@ public class MainView extends JFrame{
 //	SView   sv        = new SView();
 //	OView   ov        = new OView();
 	
+	
 	//화면처리부
 	public void initDisplayMainView() {
 		System.out.println("mv initdisplay호출 성공");
@@ -93,7 +94,6 @@ public class MainView extends JFrame{
 
 	public static void main(String[] args) {
 		MainView mv = new MainView();
-		mv = new MainView();
 		mv.initDisplayMainView();
 
 	

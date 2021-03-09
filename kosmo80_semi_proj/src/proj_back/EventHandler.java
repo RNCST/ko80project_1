@@ -20,12 +20,13 @@ public class EventHandler implements ActionListener {
 	CartView cav = null;
 	OkView okv = null;
 	CaculationView clv = null;
-
+	DBLogic db = null;
+	MenuVO      mVOS[]      = null;
 	// 생성자
-	public EventHandler(CView cv) {
-		this.cv = cv;
-		this.cv.jb_in.addActionListener(this);
-	}
+//	public EventHandler(CView cv) {
+//		this.cv = cv;
+//		this.cv.jb_in.addActionListener(this);
+//	}
 
 	public EventHandler(MainView mv) {
 		this.mv = mv;
@@ -46,6 +47,8 @@ public class EventHandler implements ActionListener {
 
 		this.clv = new CaculationView(this.mv);
 //		this.clv.jb_rf.addActionListener(this);
+		this.db = DBLogic.getInstance();
+		this.mVOS = db.getList("main");
 
 	}
 
@@ -55,8 +58,15 @@ public class EventHandler implements ActionListener {
 		String cmd = ae.getActionCommand();
 		if ("C.O".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			cv.initDisplay();
+			try {
+				this.mVOS = db.getList("main");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 			
+			cv.initDisplay();
+			cv.setrow(this.mVOS);
 			// CView띄우기
 			
 			
