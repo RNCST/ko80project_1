@@ -3,6 +3,7 @@ package proj_view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -44,6 +45,8 @@ public class CartView extends JDialog implements ActionListener {
 	}
 	
 	public void initDisplay() {
+		Font ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
+		Font ft2 = new Font("Ariel", Font.BOLD, 15);
 		eh = mv.eh;
 
 		System.out.println(eh+"cav 위");
@@ -67,6 +70,8 @@ public class CartView extends JDialog implements ActionListener {
 		jp_south2.setBackground(Color.LIGHT_GRAY);
 		jp_south2.setPreferredSize(new Dimension(400,40));
 		
+		jb_buy.setFont(ft1);
+		jb_cancel.setFont(ft1);
 		//구매버튼
 		jp_south2.add(jb_buy);
 		jb_buy.setBounds(0, 0, 100, 100);

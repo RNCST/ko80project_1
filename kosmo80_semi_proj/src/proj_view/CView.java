@@ -3,6 +3,7 @@ package proj_view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -38,12 +39,12 @@ public class CView extends JDialog {
 	//장바구니 추가 
 	JPanel      jp_center   = new JPanel();
 	//메뉴 항목들 나오게
-	public JButton     jb_in     = new JButton("장바구니에 추가");
-	public JButton     jb_new     = new JButton("N E W");
-	public JButton     jb_hot     = new JButton("H O T");
-	public JButton     jb_main     = new JButton("M A I N");
-	public JButton     jb_drink    = new JButton("DRINK");
-	public JButton     jb_side    = new JButton("S I D E ");
+	public RButton     jb_in      = new RButton("장바구니에 추가");
+	public RButton     jb_new     = new RButton("N E W");
+	public RButton     jb_hot     = new RButton("H O T");
+	public RButton     jb_main    = new RButton("M A I N");
+	public RButton     jb_drink   = new RButton("DRINK");
+	public RButton     jb_side    = new RButton("S I D E ");
 	//패널 테두리 따로 선언
 	TitledBorder tb_south  =  new TitledBorder(new LineBorder(Color.white),"장바구니추가");
 	TitledBorder tb_west   =  new TitledBorder(new LineBorder(Color.white),"분류");
@@ -84,13 +85,19 @@ public class CView extends JDialog {
 
 	public void initDisplay() {
 		eh = mv.eh;
+		Font ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
+		Font ft2 = new Font("Ariel", Font.BOLD, 25);
 		System.out.println(eh+"cv위");
 		System.out.println("CV initdisplay호출 성공");
 		
 		detm        = new DefaultTableModel(data, array);
 		jtb         = new JTable(detm);
 		jsp         = new JScrollPane(jtb);
-		jsp.setPreferredSize(new Dimension(600,700));
+		jsp.setPreferredSize(new Dimension(560,700));
+		jtb.setRowHeight(40);
+		jtb.setFont(ft1);
+
+//		jtb.setRowHeight(int row_index, int row_height);
 		
 		this.add("West",jp_west);
 		add(jp_west,BorderLayout.WEST);
@@ -107,6 +114,12 @@ public class CView extends JDialog {
 		jb_main.setPreferredSize(new Dimension(150,120));
 		jb_drink.setPreferredSize(new Dimension(150,120));
 		jb_side.setPreferredSize(new Dimension(150,120));
+		jb_new.setFont(ft2);
+		jb_hot.setFont(ft2);
+		jb_main.setFont(ft2);
+		jb_drink.setFont(ft2);
+		jb_side.setFont(ft2);
+		jb_in.setFont(ft1);
 		
 		this.add("Center", jp_center);
 //		jp_center.setBorder(tb_center);

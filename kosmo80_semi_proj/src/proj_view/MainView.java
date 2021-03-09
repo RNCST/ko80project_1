@@ -1,6 +1,7 @@
 package proj_view;
 
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,16 +29,13 @@ public class MainView extends JFrame{
     
 	public JFrame  jf     = null;
 	Container      co     = null;
-	public JButton jbco   = new JButton("C.O");
-	public JButton jbul   = new JButton("U.L");
-	public JButton jbol   = new JButton("O.L");
+	public RButton jbco   = new RButton("C.O");
+	public RButton jbul   = new RButton("U.L");
+	public RButton jbol   = new RButton("O.L");
 	JPanel    jp_center   = new JPanel();
 	JPanel    jp_north    = new JPanel();
 	JPanel    jp_south    = new JPanel();
 	JLabel    jlb         = new JLabel();
-	JLabel    jlb2        = new JLabel();
-	JLabel    jlb3        = new JLabel();
-	JLabel    jlb4        = new JLabel();
 //	SView   sv        = new SView();
 //	OView   ov        = new OView();
 	
@@ -47,7 +45,8 @@ public class MainView extends JFrame{
 		System.out.println("mv initdisplay호출 성공");
 		jf = new JFrame();
 		co = new Container();
-		
+		Font ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
+		Font ft2 = new Font("Ariel", Font.BOLD, 15);
 //		jbco.addActionListener(this);
 //		jbul.addActionListener(this);  EventHandler로 넘어감.
 //		jbol.addActionListener(this);
@@ -57,15 +56,20 @@ public class MainView extends JFrame{
 		
 		jf.getContentPane().setLayout(null);
 		
-        jlb.setBounds(0, 20, 400, 70);
+        jlb.setBounds(0, 20, 400, 100);
         jlb.setHorizontalAlignment(JLabel.CENTER);
         jlb.setText("<html>KO80 키오스크 첫 화면입니다<br> C.O 는 손님모드 "
         		+ "<br> U.L 은 메뉴수정 <br> O. L 은 매출 전표입니다.</html>");
         jf.getContentPane().add(jlb);
         
-		jbco.setBounds( 10, 170, 122, 30);
-	    jbul.setBounds(130, 170, 122, 30);
-	    jbol.setBounds(250, 170, 122, 30);
+		jbco.setBounds( 10, 170, 112, 30);
+	    jbul.setBounds(130, 170, 112, 30);
+	    jbol.setBounds(250, 170, 112, 30);
+	    
+	    jlb.setFont(ft1);
+	    jbco.setFont(ft2);
+	    jbul.setFont(ft2);
+	    jbol.setFont(ft2);
 	    
 	    jf.getContentPane().add(jbco);
         jf.getContentPane().add(jbul);

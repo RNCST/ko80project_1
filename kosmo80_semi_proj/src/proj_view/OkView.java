@@ -1,5 +1,7 @@
 package proj_view;
 
+import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -15,8 +17,8 @@ public class OkView extends JDialog{
 	JLabel  jl        = new JLabel("결제를 하시려면 결제버튼을 눌러주세요");
 	JPanel  jp_south  = new JPanel();
 	JPanel  jp_center = new JPanel();
-	public JButton jb_buy    = new JButton("결제");
-	public JButton jb_no     = new JButton("취소");
+	public RButton jb_buy    = new RButton("결제");
+	public RButton jb_no     = new RButton("취소");
 	
 	
 	
@@ -27,6 +29,9 @@ public class OkView extends JDialog{
 		
 	}
 	public void initDiplayOkView() {
+		Font ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
+		Font ft3 = new Font("휴먼모음T", Font.PLAIN, 17);
+		Font ft2 = new Font("Ariel", Font.BOLD, 15);
 		eh = mv.eh;
 		System.out.println("okv initdisplay호출 성공");
 		this.add("Center",jp_center);
@@ -36,6 +41,10 @@ public class OkView extends JDialog{
 		jp_south.add(jb_buy);
 		jp_south.add(jb_no);
 		jl.setHorizontalAlignment(JLabel.CENTER);
+		
+		jb_buy.setFont(ft1);
+		jb_no.setFont(ft1);
+		jl.setFont(ft3);
 		
 		this.setSize(300, 150);
 		this.setVisible(true);
