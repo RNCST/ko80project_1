@@ -65,14 +65,14 @@ public class CView extends JDialog {
 		try {
 		  for(int i=0;i<this.mVOS.length;i++) {
 	            Vector oneRow = new Vector();
-	            oneRow.add(this.mVOS[i].getM_num());
-	            System.out.println("getM_num 성공");
+	            //oneRow.add(this.mVOS[i].getM_num());
+	            //System.out.println("getM_num 성공");
 	            oneRow.add(this.mVOS[i].getM_name());
 	            System.out.println("getM_name 성공");
 	            oneRow.add(this.mVOS[i].getM_price());
 	            System.out.println("getM_price 성공");
-	            oneRow.add(this.mVOS[i].getM_type());
-	            System.out.println("getM_type 성공");
+	            //oneRow.add(this.mVOS[i].getM_type());
+	            //System.out.println("getM_type 성공");
 	            this.detm.addRow(oneRow);
 	            System.out.println("추가 실행");
 		  }
