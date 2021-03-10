@@ -12,14 +12,14 @@ import proj_back.EventHandler;
 
 public class OkView extends JDialog{
 
-	MainView mv       = null;
-	EventHandler   eh = null;
+	MainView 		mv       	= null;
+	EventHandler   	eh 			= null;
 	
-	       JLabel  jl        = new JLabel("결제를 하시려면 결제버튼을 눌러주세요");
-	       JPanel  jp_south  = new JPanel();
-	       JPanel  jp_center = new JPanel();
-	public RButton jb_buy    = new RButton("결제");
-	public RButton jb_no     = new RButton("취소");
+	JLabel  		jl        	= new JLabel("결제를 하시려면 결제버튼을 눌러주세요");
+	JPanel  		jp_south  	= new JPanel();
+	JPanel  		jp_center 	= new JPanel();
+	public RButton 	jb_buy    	= new RButton("결제");
+	public RButton 	jb_no     	= new RButton("취소");
 	
 	
 	

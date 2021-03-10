@@ -16,13 +16,13 @@ public class DBLogic {
 	private static final String 	_URL 	= "jdbc:oracle:thin:@127.0.0.1:1521:orcl11";
 	private String					_USER	= "ko80project_1";
 	private String					_PW		= "abcd1234";
-	private String					sql		= "";
 	private Connection				con		= null;
 	private PreparedStatement		pstmt	= null;
+	String 							sql		= "";
 	private ResultSet				rs		= null;
 	private MenuVO[] 				mvoList = null;
 	static EventHandler 			eh      = null;
-	CView        					cv      = null;
+	
 
 	
 	//생성자
@@ -31,17 +31,17 @@ public class DBLogic {
 			Class.forName(_DRIVER);
 			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("DBLogic() : " + e);
 		}
 	}
-	private DBLogic(String user, String pw) {
-		try {
-			Class.forName(_DRIVER);
-			con = DriverManager.getConnection(_URL, user, pw);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
+//	private DBLogic(String user, String pw) {
+//		try {
+//			Class.forName(_DRIVER);
+//			con = DriverManager.getConnection(_URL, user, pw);
+//		} catch (Exception e) {
+//			System.out.println(e);
+//		}
+//	}
 	//메소드
 	public static DBLogic getInstance() {
 		if(db == null) {
@@ -50,56 +50,139 @@ public class DBLogic {
 		return db;
 	}
 	
-	public Connection getConnection() {
-		return con;
-	}	
+//	public Connection getConnection() {
+//		return con;
+//	}	
 
-	public MenuVO[] getList(String type) {
-		sql = " SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_type = ? ";
+	public Vector<MenuVO> getList() {
+		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
+		sql = " SELECT m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_lunch_date > ADD_MONTHS(sysdate, -1) ";
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MenuVO mVO = null;
+				mVO = new MenuVO();
+				mVO.setM_name(rs.getString("m_name"));
+				mVO.setM_price(rs.getInt("m_price"));
+				mVO.setM_type(rs.getString("m_type"));
+				mVO.setM_lunch_date(rs.getString("m_lunch_date"));
+				mvoVec.add(mVO);
+			}
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println("getList() : " + e);
+		} finally {
+			return mvoVec;
+		}
+	}
+	
+	
+	//type을 매개변수로 받아서 main과 drink,side메뉴를 나누어 반환
+	public Vector<MenuVO> getList(String type) {
+		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
+		sql = " SELECT m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_type = ? ";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, type);
 			rs = pstmt.executeQuery();
-			MenuVO mVO = null;
-			Vector<MenuVO> mvoVec = new Vector<MenuVO>();
 			while(rs.next()) {
+				MenuVO mVO = null;
 				mVO = new MenuVO();
-				mVO.setM_num(rs.getInt("m_num"));
-				System.out.println("m_num에 적제성공");
 				mVO.setM_name(rs.getString("m_name"));
-				System.out.println("m_name에 적제성공");
 				mVO.setM_price(rs.getInt("m_price"));
-				System.out.println("m_price에 적제성공");
 				mVO.setM_type(rs.getString("m_type"));
-				System.out.println("m_type에 적제성공");
 				mVO.setM_lunch_date(rs.getString("m_lunch_date"));
-				System.out.println("m_type에 적제성공");
 				mvoVec.add(mVO);
-				System.out.println("mvoVec에 적제성공");
 			}
-			mvoList = new MenuVO[mvoVec.size()];
-			mvoVec.copyInto(mvoList);
-			
-			
+			pstmt.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("getList() : " + e);
 		} finally {
-			return mvoList;
+			return mvoVec;
 		}
-		
 	}
 	
+	public void insertMenu(String m_name, int m_price, String m_type, String m_lunch_date) {
+		sql = "INSET INTO menu(m_num, m_name, m_price, m_type, m_lunch_date) values( ?, ?, ?, ?, ?)"; 
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, getLastIndex("menu"));
+			pstmt.setString(2, m_name);
+			pstmt.setInt(3, m_price);
+			pstmt.setString(4, m_type);
+			pstmt.setString(5, m_lunch_date);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println("insertMenu() : " + e);
+		}
+	}
 	
+	int getLastIndex(String table) {
+
+		if("menu".equals(table)) {
+			sql = "SELECT MAX(m_num) FROM menu";
+		}
+		else if("users".equals(table)) {
+			sql = "SELECT MAX(u_num) FROM users";
+		}
+		int idx = 0;
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next())
+			idx = rs.getInt(1);
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println("getLastIndex() : " + e);
+		}
+		return idx;
+	}
+	
+	public void updateMenu(String m_name, int m_price, String m_type, String m_lunch_date) {
+		sql = "UPDATE SET  WHERE m_name=? ";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1 ,m_name);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println("deleteMenu() : " + e);
+		}
+	}
+	
+	public void deleteMenu(String m_name) {
+		sql = "DELETE FROM menu WHERE m_name=? ";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1 ,m_name);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println("deleteMenu() : " + e);
+		}
+	}
+	
+	void close() {
+		try {
+			rs.close();
+			con.close();
+			
+		} catch (Exception e) {
+			System.out.println("exit() :" + e);
+		}
+	}
 
 	public static void main(String[] args) {
-		MenuVO[] mv = null;
+		Vector<MenuVO> mv = null;
 		DBLogic dl = new DBLogic();
-		mv=dl.getList("main");
+		mv=dl.getList("beverage");
 		System.out.println("getList test");
-		for(int i = 0; i < mv.length; i++) {
-			System.out.println(mv[i].getM_num() + ", " + mv[i].getM_name() + ", " + mv[i].getM_price() + ", " + mv[i].getM_type() + ", " + mv[i].getM_lunch_date());
+		for(int i = 0; i < mv.size(); i++) {
+			System.out.println(mv.elementAt(i).getM_name() + ", " + mv.elementAt(i).getM_price() + ", " + mv.elementAt(i).getM_type() + ", " + mv.elementAt(i).getM_lunch_date());
 		}
-		
-		
+		System.out.println(dl.getLastIndex("users"));
+		System.out.println(dl.getLastIndex("menu"));
 	}
 }

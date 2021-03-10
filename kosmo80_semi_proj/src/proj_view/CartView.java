@@ -161,7 +161,6 @@ public class CartView extends JDialog {
 	
 	public void addCartList(MenuVO selectedMenu) {
 		MenuVO mVO = new MenuVO();
-		mVO.setM_num(selectedMenu.getM_num());
 		mVO.setM_name(selectedMenu.getM_name());
 		mVO.setM_price(selectedMenu.getM_price());
 		mVO.setM_type(selectedMenu.getM_type());
@@ -177,7 +176,7 @@ public class CartView extends JDialog {
 			oneRow.add(cartList.elementAt(i).getM_price());
 			this.detm.addRow(oneRow);
 		}
-		tb_south1.setTitle("지불하실 총 금액은 " +this.getTotal()+"원 입니다.");
+		tb_south1.setTitle("지불하실 총 금액은 " +this.getTotal()+"원 입니다.\n");
 		
 	}
 	

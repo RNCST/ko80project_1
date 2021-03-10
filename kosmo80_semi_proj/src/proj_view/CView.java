@@ -20,11 +20,11 @@ import proj_back.EventHandler;
 import proj_back.MenuVO;
 
 
-public class CView extends JDialog {
+public class CView extends JDialog implements InterView {
 	//선언부
 	JScrollPane			jsp         = null;
 	static EventHandler eh         	= null;
-	MenuVO				mVOS[]      = null;
+	Vector<MenuVO>		mVOS	    = null;
 	DefaultTableModel	detm 		= null;
 	public JTable       jtb 		= null;
 	String 				array[]    	= {"메뉴","가격"};
@@ -60,7 +60,7 @@ public class CView extends JDialog {
     	jp_south    = new JPanel();
     	jp_center   = new JPanel();
     	
-    	jb_see     	= new RButton("장바구니를 보기");
+    	jb_see     	= new RButton("장바구니 확인");
     	jb_in      	= new RButton("장바구니에 담기");
     	jb_new     	= new RButton("N E W");
     	jb_hot     	= new RButton("H O T");
@@ -87,21 +87,21 @@ public class CView extends JDialog {
 		this.mv = mv;
 		eh = mv.eh;
 	}
-	
-	public void setrow(MenuVO[] mVOS) {
+	@Override
+	public void setrow(Vector<MenuVO> mVOS) {
 		this.mVOS = mVOS;
-		for(int i=0;i<this.mVOS.length;i++) {
+		for(int i=0;i<this.mVOS.size();i++) {
 		    Vector oneRow = new Vector();
-		    oneRow.add(this.mVOS[i].getM_name());
+		    oneRow.add(this.mVOS.elementAt(i).getM_name());
 		    System.out.println("getM_name 성공");
-		    oneRow.add(this.mVOS[i].getM_price());
+		    oneRow.add(this.mVOS.elementAt(i).getM_price());
 		    System.out.println("getM_price 성공");
 		    this.detm.addRow(oneRow);
 		    System.out.println("추가 실행");
 		}
 	}
 
-
+	@Override
 	public void initDisplay() {
 		
 		jsp.setPreferredSize(new Dimension(560,650));
@@ -160,7 +160,7 @@ public class CView extends JDialog {
 		this.setSize(800,800);
 		this.setVisible(false);
 	}
-	
+	@Override
 	public void refresh() {
 		   while(this.detm.getRowCount()>0) {
 	            this.detm.removeRow(0);

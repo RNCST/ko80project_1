@@ -2,12 +2,14 @@ package proj_back;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
 import proj_view.CView;
-import proj_view.CaculationView;
+import proj_view.CalculationView;
 import proj_view.CartView;
+import proj_view.InterView;
 import proj_view.MainView;
 import proj_view.OkView;
 import proj_view.UView;
@@ -23,10 +25,12 @@ public class EventHandler implements ActionListener {
 	UView           uv      = null;
 	CartView 		cav 	= null;
 	OkView 			okv 	= null;
-	CaculationView 	clv 	= null;
+	CalculationView clv 	= null;
 	DBLogic 		db 		= null;
-	MenuVO      	mVOS[]  = null;
+	Vector<MenuVO>  mVOS 	= null;
 	MenuVO			cart[]	= null;
+	InterView		iv		= null;
+	String[]		m_type	= {"main", "beverage", "side"};
 	// 생성자
 //	public EventHandler(CView cv) {
 //		this.cv = cv;
@@ -70,38 +74,45 @@ public class EventHandler implements ActionListener {
 		this.okv.jb_buy.addActionListener(this);
 		this.okv.jb_no.addActionListener(this);
 
-		this.clv = new CaculationView(this.mv);
+		this.clv = new CalculationView(this.mv);
 		this.clv.jb_out.addActionListener(this);
 		this.clv.jb_rf.addActionListener(this);
 		
 		this.db = DBLogic.getInstance();
 		this.mVOS = db.getList("main");
-		
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		Object obj = ae.getSource();
 		String cmd = ae.getActionCommand();
 		if ("C.O".equals(cmd)) {
+			cv.refresh();
+			iv = this.cv;
 			System.out.println("event labetl:" + cmd);
 			try {
-				this.mVOS = db.getList("main");
+				this.mVOS = db.getList();
 				
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-			
 			cv.initDisplay();
 			cv.setVisible(true);
 			cv.setrow(this.mVOS);
 			// CView띄우기
 		} else if ("N E W".equals(cmd)) {
+			iv.refresh();
 			System.out.println("event labetl:" + cmd);
-			return;
+			try {
+				this.mVOS = db.getList();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			iv.setrow(this.mVOS);
 			
 		} else if ("H O T".equals(cmd)) {
+			//판매량에 따른 분류
 			System.out.println("event labetl:" + cmd);
 			return;
 			
@@ -110,7 +121,7 @@ public class EventHandler implements ActionListener {
 			return;
 			
 		}else if ("M A I N".equals(cmd)) {
-			cv.refresh();
+			iv.refresh();
 			System.out.println("event labetl:" + cmd);
 			try {
 				this.mVOS = db.getList("main");
@@ -118,11 +129,11 @@ public class EventHandler implements ActionListener {
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-			cv.setrow(this.mVOS);
+			iv.setrow(this.mVOS);
 			// main 눌렀을떄
 			
 		}else if ("DRINK".equals(cmd)) {
-			cv.refresh();
+			iv.refresh();
 			System.out.println("event labetl:" + cmd);
 			try {
 				this.mVOS = db.getList("beverage");
@@ -130,12 +141,12 @@ public class EventHandler implements ActionListener {
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-			cv.setrow(this.mVOS);
+			iv.setrow(this.mVOS);
 			return;
 			// drink 눌렀을때
 			
 		}else if ("S I D E".equals(cmd)) {
-			cv.refresh();
+			iv.refresh();
 			System.out.println("event labetl:" + cmd);
 			try {
 				this.mVOS = db.getList("side");
@@ -143,8 +154,7 @@ public class EventHandler implements ActionListener {
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-			cv.setrow(this.mVOS);
-			return;
+			iv.setrow(this.mVOS);
 			// side 눌렀을때
 			
 
@@ -152,33 +162,40 @@ public class EventHandler implements ActionListener {
 			System.out.println("event labetl:" + cmd);
 			clv.initDisplay();
 			return;
-			// CView띄우기
+			// CalculationView띄우기
 			
 			
 		} else if ("U.L".equals(cmd)) {
+			uv.refresh();
 			System.out.println("event labetl:" + cmd);
+			iv = this.uv;
+			System.out.println("event labetl:" + cmd);
+			try {
+				this.mVOS = db.getList();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 			uv.initDisplay();
 			uv.setVisible(true);
 			uv.setrow(this.mVOS);
 			return;
-			// CView띄우기
+			// UView띄우기
 			
 			
 			
 		} else if ("장바구니에 담기".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			try {
-				cav.addCartList(mVOS[cv.jtb.getSelectedRow()]);
+				cav.addCartList(mVOS.elementAt(cv.jtb.getSelectedRow()));
 				System.out.println("addCartList실행됨");
 				JOptionPane.showMessageDialog(cv, "장바구니에 추가되었습니다.");
 			} catch(ArrayIndexOutOfBoundsException ie) {
 				JOptionPane.showMessageDialog(cv, "메뉴를 선택하여 주십시오");
 			}
 			
-			return;
 			
-			
-		} else if ("장바구니를 보기".equals(cmd)) {
+		} else if ("장바구니 확인".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			cav.refresh();
 			cav.showCartList();
@@ -231,6 +248,11 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("항목 삭제".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
+			int idx = uv.jtb.getSelectedRow();
+			db.deleteMenu(mVOS.elementAt(idx).getM_name());
+			mVOS.remove(idx);
+			uv.refresh();
+			uv.setrow(this.mVOS);
 			return;
 			
 		} else if ("U L 모드 종료".equals(cmd)) {

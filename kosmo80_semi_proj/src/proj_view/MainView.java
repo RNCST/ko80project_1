@@ -23,7 +23,7 @@ public class MainView extends JFrame {
     static EventHandler		eh     		= null;
     CView          			cv     		= null;
     CartView       			cav    		= null;
-    CaculationView 			clv    		= null;    
+    CalculationView 		clv    		= null;    
     //OkView         		okv    		= null; 
 	public JFrame  			jf    	 	= null;
 	Container      			co     		= null;
@@ -44,7 +44,7 @@ public class MainView extends JFrame {
 	public MainView() {
 	    cv     		= new CView();
 	    cav    		= new CartView();
-	    clv    		= new CaculationView();
+	    clv    		= new CalculationView();
 		jbco   		= new RButton("C.O");
 		jbul   		= new RButton("U.L");
 		jbol   		= new RButton("O.L");

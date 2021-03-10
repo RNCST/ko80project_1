@@ -15,51 +15,46 @@ import javax.swing.table.DefaultTableModel;
 
 import proj_back.EventHandler;
 
-public class CaculationView extends JFrame {
+public class CalculationView extends JFrame {
 
-	MainView       mv = null;
-	static EventHandler   eh = null;
-	
-	JFrame         jf = null;
-	JPanel     jpList = null;
-	JPanel   jpButton = null;
-	JTable        jtb = null;
-	JScrollPane   jsp = null;
-	public RButton     jb_rf = null;
-	public RButton     jb_out = null;
-	TitledBorder tb_south  = new TitledBorder(new LineBorder(Color.white));
-	DefaultTableModel detm = null;
-	String array[]    = {"판매내역"};
-	String data[][]   = new String[0][0];
-	
-	Font 					ft1 		= null; 
+	MainView       		mv 				= null;
+	static EventHandler eh 				= null;
+	JFrame         		jf 				= null;
+	JPanel     			jpList 			= null;
+	JPanel   			jpButton 		= null;
+	JTable        		jtb 			= null;
+	JScrollPane   		jsp 			= null;
+	public RButton     	jb_rf 			= null;
+	public RButton     	jb_out 			= null;
+	TitledBorder 		tb_south  		= null;
+	DefaultTableModel 	detm 			= null;
+	String 				array[]    		= {"판매내역"};
+	String 				data[][]   		= new String[0][0];
+	Font 				ft1 			= null; 
  
 	
 	
 	
-	public CaculationView() {
+	public CalculationView() {
 		System.out.println("clv initdisplay호출 성공");
-		detm         = new DefaultTableModel(data, array);
-		jtb          = new JTable(detm);
-		jsp          = new JScrollPane(jtb);
-		jpList       = new JPanel();
-		
-		ft1 		 = new Font("휴먼모음T", Font.PLAIN, 15);
-		
-		jb_rf        = new RButton("새로 고침");
-		jb_out       = new RButton("O L 모드 종료");
-		jpButton     = new JPanel();
+		detm        = new DefaultTableModel(data, array);
+		jtb         = new JTable(detm);
+		jsp         = new JScrollPane(jtb);
+		jpList      = new JPanel();
+		tb_south	= new TitledBorder(new LineBorder(Color.white));
+		ft1 		= new Font("휴먼모음T", Font.PLAIN, 15);
+		jb_rf       = new RButton("새로 고침");
+		jb_out      = new RButton("O L 모드 종료");
+		jpButton    = new JPanel();
 		
 	}
 
-	public CaculationView(MainView mv) {
+	public CalculationView(MainView mv) {
 		this();
 		this.mv = mv;
 		eh = mv.eh;
 	}
 	public void initDisplay() {
-		eh = mv.eh;
-		
 		jsp.setPreferredSize(new Dimension(810,760));
 		jpList.add(jsp);
 		jpList.setBackground(Color.LIGHT_GRAY);
@@ -85,7 +80,7 @@ public class CaculationView extends JFrame {
 
 
 public static void main(String[] args) {
-	 CaculationView ca = new CaculationView();
+	 CalculationView ca = new CalculationView();
 	 ca.initDisplay();
  }
 }

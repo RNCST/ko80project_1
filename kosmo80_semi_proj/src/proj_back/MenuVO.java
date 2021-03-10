@@ -2,18 +2,11 @@ package proj_back;
 
 public class MenuVO {
 
-	private int 	m_num    = 0;
 	private String 	m_name   = "";
 	private int 	m_price  = 0;
 	private String  m_type	 = "";
 	private String  m_lunch_date = "";
 	  
-	public int getM_num() {
-		return m_num;
-	}
-	public void setM_num(int m_num) {
-		this.m_num = m_num;
-	}
 	public String getM_name() {
 		return m_name;
 	}
