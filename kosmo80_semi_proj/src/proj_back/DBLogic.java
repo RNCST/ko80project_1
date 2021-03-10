@@ -21,8 +21,8 @@ public class DBLogic {
 	private PreparedStatement		pstmt	= null;
 	private ResultSet				rs		= null;
 	private MenuVO[] 				mvoList = null;
-	static EventHandler eh         = null;
-		        CView        cv                 = null;
+	static EventHandler eh                  = null;
+		    CView        cv                 = null;
 	
 	//생성자
 	private DBLogic() {

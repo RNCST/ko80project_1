@@ -44,6 +44,7 @@ public class EventHandler implements ActionListener {
 		this.cv.jb_in.addActionListener(this);
 		this.cv.jb_see.addActionListener(this);
 		this.cv.jb_new.addActionListener(this);
+		this.cv.jb_set.addActionListener(this);
 		this.cv.jb_hot.addActionListener(this);
 		this.cv.jb_main.addActionListener(this);
 		this.cv.jb_drink.addActionListener(this);
@@ -70,8 +71,8 @@ public class EventHandler implements ActionListener {
 		this.okv.jb_no.addActionListener(this);
 
 		this.clv = new CaculationView(this.mv);
-//		this.clv.jb_out.addActionListener(this);
-//		this.clv.jb_rf.addActionListener(this);
+		this.clv.jb_out.addActionListener(this);
+		this.clv.jb_rf.addActionListener(this);
 		
 		this.db = DBLogic.getInstance();
 		this.mVOS = db.getList("main");
@@ -96,6 +97,17 @@ public class EventHandler implements ActionListener {
 			cv.setVisible(true);
 			cv.setrow(this.mVOS);
 			// CView띄우기
+		} else if ("N E W".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			return;
+			
+		} else if ("H O T".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			return;
+			
+		} else if ("S E T".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			return;
 			
 		}else if ("M A I N".equals(cmd)) {
 			cv.refresh();
@@ -228,11 +240,13 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("U L 모드 종료".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
+			this.uv.dispose();
 			System.gc();
 			return;
 			
 		} else if ("O L 모드 종료".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
+			this.clv.dispose();
 			System.gc();
 			return;
 		}
