@@ -162,8 +162,8 @@ public class CView extends JDialog {
 	}
 	
 	public void refresh() {
-		   while(detm.getRowCount()>0) {
-	            detm.removeRow(0);
+		   while(this.detm.getRowCount()>0) {
+	            this.detm.removeRow(0);
 	         }
 	}
 	

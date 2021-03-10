@@ -159,10 +159,6 @@ public class CartView extends JDialog {
 		System.out.println("Cav initdisplay호출 성공");
 	}
 	
-	
-	
-	
-	
 	public void addCartList(MenuVO selectedMenu) {
 		MenuVO mVO = new MenuVO();
 		mVO.setM_num(selectedMenu.getM_num());

@@ -180,7 +180,7 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("장바구니를 보기".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			//System.out.println(cv.jtb.getSelectedRow());
+			cav.refresh();
 			cav.showCartList();
 			cav.initDisplay();
 			// CartView 띄우기
