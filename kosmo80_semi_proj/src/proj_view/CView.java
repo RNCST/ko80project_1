@@ -35,6 +35,7 @@ public class CView extends JDialog {
 	//장바구니 추가
 	JPanel      		jp_center   = null;
 	//메뉴 항목들 나오게
+	public RButton     	jb_see     	= null;
 	public RButton     	jb_in      	= null;
 	public RButton   	jb_new     	= null;
 	public RButton   	jb_hot     	= null;
@@ -58,7 +59,8 @@ public class CView extends JDialog {
     	jp_south    = new JPanel();
     	jp_center   = new JPanel();
     	
-    	jb_in      	= new RButton("장바구니에 추가");
+    	jb_see     	= new RButton("장바구니를 보기");
+    	jb_in      	= new RButton("장바구니에 담기");
     	jb_new     	= new RButton("N E W");
     	jb_hot     	= new RButton("H O T");
     	jb_main    	= new RButton("M A I N");
@@ -111,22 +113,26 @@ public class CView extends JDialog {
 		jp_west.setBorder(tb_west);
 		jp_west.setBackground(Color.LIGHT_GRAY);
 		jp_west.setPreferredSize(new Dimension(200,700));
+		
 		jp_west.add(jb_new);
 		jp_west.add(jb_hot);
 		jp_west.add(jb_main);
 		jp_west.add(jb_drink);
 		jp_west.add(jb_side);
+		
 		jb_new.setPreferredSize(new Dimension(150,120));
 		jb_hot.setPreferredSize(new Dimension(150,120));
 		jb_main.setPreferredSize(new Dimension(150,120));
 		jb_drink.setPreferredSize(new Dimension(150,120));
 		jb_side.setPreferredSize(new Dimension(150,120));
+		
 		jb_new.setFont(ft2);
 		jb_hot.setFont(ft2);
 		jb_main.setFont(ft2);
 		jb_drink.setFont(ft2);
 		jb_side.setFont(ft2);
 		jb_in.setFont(ft1);
+		jb_see.setFont(ft1);
 		
 		add("Center", jp_center);
 		//jp_center.setBorder(tb_center);
@@ -143,6 +149,9 @@ public class CView extends JDialog {
 		jb_in.setBounds(350, 50, 300, 300);
 		jp_south.add(jb_in);
 		jb_in.setPreferredSize(new Dimension(150,50));
+		jb_see.setBounds(350, 50, 300, 300);
+		jp_south.add(jb_see);
+		jb_see.setPreferredSize(new Dimension(150,50));
 		this.setSize(800,800);
 		this.setVisible(false);
 	}

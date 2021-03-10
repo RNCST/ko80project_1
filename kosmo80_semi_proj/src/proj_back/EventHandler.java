@@ -2,7 +2,8 @@ package proj_back;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
+
+import javax.swing.JOptionPane;
 
 import proj_view.CView;
 import proj_view.CaculationView;
@@ -39,6 +40,7 @@ public class EventHandler implements ActionListener {
 
 		this.cv = new CView(this.mv);
 		this.cv.jb_in.addActionListener(this);
+		this.cv.jb_see.addActionListener(this);
 		this.cv.jb_new.addActionListener(this);
 		this.cv.jb_hot.addActionListener(this);
 		this.cv.jb_main.addActionListener(this);
@@ -126,7 +128,14 @@ public class EventHandler implements ActionListener {
 			
 			
 			
-		} else if ("장바구니에 추가".equals(cmd)) {
+		} else if ("장바구니에 담기".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			JOptionPane.showMessageDialog(cv, "사");
+			
+			return;
+			
+			
+		} else if ("장바구니를 보기".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			System.out.println(cv.jtb.getSelectedRow());
 			/*int i = 0;

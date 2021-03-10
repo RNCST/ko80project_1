@@ -7,8 +7,11 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import proj_back.EventHandler;
 import proj_back.MenuVO;
@@ -21,6 +24,13 @@ public class CartView extends JDialog {
 	JPanel    				jp_south2     	= null;
 	static EventHandler   	eh       		= null;
 	MainView     			mv         		= null;
+	
+	JScrollPane			    jsp             = null;
+	MenuVO				    mVOS[]          = null;
+	DefaultTableModel	    detm 		    = null;
+	public JTable           jtb 		    = null;
+	String 				    array[]    	    = {};
+	String 				    data[][]   	    = new String[0][2];
 	
 	TitledBorder 			tb_south   		= null;
 	TitledBorder 			tb_south1  		= null;
@@ -45,6 +55,10 @@ public class CartView extends JDialog {
 		tb_south1  		= new TitledBorder(new LineBorder(Color.white),"총액확인");
 		tb_south2  		= new TitledBorder(new LineBorder(Color.white));
 		tb_center  		= new TitledBorder(new LineBorder(Color.white),"목록확인");
+		
+		detm            = new DefaultTableModel(data, array);
+		jtb             = new JTable(detm);
+		jsp             = new JScrollPane(jtb);
 		
 		jb_buy        	= new JButton("결제하기");
 		jb_cancel     	= new JButton("취소하기");
@@ -72,6 +86,8 @@ public class CartView extends JDialog {
 		jp_south1.setBackground(Color.WHITE);
 		jp_south1.setPreferredSize(new Dimension(400,40));
 		
+		
+		
 		//버튼부
 		jp_southB.add("Center",jp_south2);
 		jp_south2.setBorder(tb_south2);
@@ -80,6 +96,7 @@ public class CartView extends JDialog {
 		
 		jb_buy.setFont(ft1);
 		jb_cancel.setFont(ft1);
+		
 		//구매버튼
 		jp_south2.add(jb_buy);
 		jb_buy.setBounds(0, 0, 100, 100);
@@ -96,6 +113,15 @@ public class CartView extends JDialog {
 		jp_center.setBackground(Color.LIGHT_GRAY);
 		jp_center.setPreferredSize(new Dimension(300,30));
 		
+		//장바구니 테이블속 데이터를 내보내는 테이블.
+		jtb.setRowHeight(35);
+		jtb.setFont(ft1);
+		jp_center.add(jsp);
+		
+		
+		
+		
+		
 		this.setSize(500, 650);
 		this.setVisible(true);
 		System.out.println("Cav initdisplay호출 성공");
@@ -107,6 +133,12 @@ public class CartView extends JDialog {
 	
 	public MenuVO[] getCartList() {
 		return cartList;
+	}
+	
+	public void refresh() {
+		   while(detm.getRowCount()>0) {
+	            detm.removeRow(0);
+	         }
 	}
 	
 	public static void main(String[] args) {
