@@ -15,43 +15,52 @@ import javax.swing.border.TitledBorder;
 
 import proj_back.EventHandler;
 
-public class CartView extends JDialog implements ActionListener {
-	//ORACLE 연동에 대한 선언부
-	
-	
-	
+public class CartView extends JDialog {
 	//선언부
-	JPanel    jp_center     = new JPanel();
-	JPanel    jp_southB     = new JPanel();
-	JPanel    jp_south1     = new JPanel();
-	JPanel    jp_south2     = new JPanel();
-	static EventHandler   eh       = null;
-	MainView     mv         = null;
+	JPanel    				jp_center     	= null;
+	JPanel    				jp_southB     	= null;
+	JPanel    				jp_south1     	= null;
+	JPanel    				jp_south2     	= null;
+	static EventHandler   	eh       		= null;
+	MainView     			mv         		= null;
 	
-	TitledBorder tb_south   = new TitledBorder(new LineBorder(Color.lightGray),"주문확인");
-	TitledBorder tb_south1  = new TitledBorder(new LineBorder(Color.white),"총액확인");
-	TitledBorder tb_south2  = new TitledBorder(new LineBorder(Color.white));
-	TitledBorder tb_center  = new TitledBorder(new LineBorder(Color.white),"목록확인");
+	TitledBorder 			tb_south   		= null;
+	TitledBorder 			tb_south1  		= null;
+	TitledBorder 			tb_south2  		= null;
+	TitledBorder 			tb_center  		= null;
 	
+	public JButton   		jb_buy        	= null;
+	public JButton   		jb_cancel     	= null;
 	
-	public JButton   jb_buy        = new JButton("결제하기");
-	public JButton   jb_cancel     = new JButton("취소하기");
+	Font 					ft1 			= null;
+	Font 					ft2 			= null;
 	
-	
-	public CartView(MainView mv) {
-		this.mv = mv;
-	}
+	//생성자
 	public CartView() {
+		jp_center     	= new JPanel();
+		jp_southB     	= new JPanel();
+		jp_south1     	= new JPanel();
+		jp_south2     	= new JPanel();
+		
+		tb_south   		= new TitledBorder(new LineBorder(Color.lightGray),"주문확인");
+		tb_south1  		= new TitledBorder(new LineBorder(Color.white),"총액확인");
+		tb_south2  		= new TitledBorder(new LineBorder(Color.white));
+		tb_center  		= new TitledBorder(new LineBorder(Color.white),"목록확인");
+		
+		jb_buy        	= new JButton("결제하기");
+		jb_cancel     	= new JButton("취소하기");
+		
+		ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
+		ft2 = new Font("Ariel", Font.BOLD, 15);
 	}
-	
-	public void initDisplay() {
-		Font ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
-		Font ft2 = new Font("Ariel", Font.BOLD, 15);
+	public CartView(MainView mv) {
+		this();
+		this.mv = mv;
 		eh = mv.eh;
+	}
 
-		System.out.println(eh+"cav 위");
-
-		System.out.println("Cav initdisplay호출 성공");
+	//화면처리
+	public void initDisplay() {
 		//총액 구매 취소 패널들을 담는 패널
 		this.add("South", jp_southB);
 		jp_southB.setBorder(tb_south);
@@ -88,17 +97,9 @@ public class CartView extends JDialog implements ActionListener {
 		jp_center.setBackground(Color.LIGHT_GRAY);
 		jp_center.setPreferredSize(new Dimension(300,30));
 		
-		
-		
 		this.setSize(500, 650);
 		this.setVisible(true);
-		eh = mv.eh;
-		System.out.println(eh+"cav 아래");
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Cav initdisplay호출 성공");
 	}
 	
 	public static void main(String[] args) {

@@ -33,7 +33,14 @@ public class DBLogic {
 			System.out.println(e);
 		}
 	}
-	
+	private DBLogic(String user, String pw) {
+		try {
+			Class.forName(_DRIVER);
+			con = DriverManager.getConnection(_URL, user, pw);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 	//메소드
 	public static DBLogic getInstance() {
 		if(db == null) {

@@ -17,41 +17,53 @@ import proj_back.EventHandler;
  * 맨 처음 손님이 주문하는 창, 메뉴수정하는 창 , 전표보는 창을 고르는 창을 띄우기
  * Cview , Sview , Aview 세개로 나눠서
  */
-public class MainView extends JFrame{
+public class MainView extends JFrame {
 	// 선언부
-	MainView   mv  = null;
-    static EventHandler   eh     = null;
-    CView          cv     = new CView();
-    CartView       cav    = new CartView();
-    CaculationView clv    = new CaculationView();
-    OkView         okv    = null;
-    
-    
-	public JFrame  jf     = null;
-	Container      co     = null;
-	public RButton jbco   = new RButton("C.O");
-	public RButton jbul   = new RButton("U.L");
-	public RButton jbol   = new RButton("O.L");
-	JPanel    jp_center   = new JPanel();
-	JPanel    jp_north    = new JPanel();
-	JPanel    jp_south    = new JPanel();
-	JLabel    jlb         = new JLabel();
-//	SView   sv        = new SView();
-//	OView   ov        = new OView();
+	MainView   				mv  		= null;
+    static EventHandler		eh     		= null;
+    CView          			cv     		= null;
+    CartView       			cav    		= null;
+    CaculationView 			clv    		= null;    
+    //OkView         			okv    		= null; 
+	public JFrame  			jf    	 	= null;
+	Container      			co     		= null;
+	public RButton 			jbco   		= null;
+	public RButton 			jbul   		= null;
+	public RButton 			jbol   		= null;
+	JPanel    				jp_center   = null;
+	JPanel    				jp_north    = null;
+	JPanel    				jp_south    = null;
+	JLabel    				jlb         = null;
+	//SView   				sv        	= new SView();
+	//OView   				ov        	= new OView();
 	
+	Font 					ft1 		= null; 
+	Font 					ft2 		= null; 
+	
+	
+	public MainView() {
+	    cv     		= new CView();
+	    cav    		= new CartView();
+	    clv    		= new CaculationView();
+		jbco   		= new RButton("C.O");
+		jbul   		= new RButton("U.L");
+		jbol   		= new RButton("O.L");
+		jp_center   = new JPanel();
+		jp_north    = new JPanel();
+		jp_south    = new JPanel();
+		jlb         = new JLabel();
+		co 			= new Container();
+		co 			= this.getContentPane();
+		jf 			= new JFrame();
+		
+		ft1 		= new Font("휴먼모음T", Font.PLAIN, 15);
+		ft2 		= new Font("Ariel", Font.BOLD, 15);
+		
+		eh 			= new EventHandler(this);
+	}
 	
 	//화면처리부
-	public void initDisplayMainView() {
-		System.out.println("mv initdisplay호출 성공");
-		jf = new JFrame();
-		co = new Container();
-		Font ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
-		Font ft2 = new Font("Ariel", Font.BOLD, 15);
-//		jbco.addActionListener(this);
-//		jbul.addActionListener(this);  EventHandler로 넘어감.
-//		jbol.addActionListener(this);
-		
-		co=this.getContentPane();
+	public void initDisplay() {
 		//container가 jframe에??
 		
 		jf.getContentPane().setLayout(null);
@@ -77,33 +89,20 @@ public class MainView extends JFrame{
         
 		// 윈도우 위치.
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-//		cav = new CartView();
-//		eh = new EventHandler(this, cav, clv, okv);
-//		eh = new EventHandler(this, cv, cav);
-		eh = new EventHandler(this);
-		
 		jf.setSize(400,300);
 		jf.setTitle("k80 키오스크 시스템");
 		jf.setVisible(true);
 		jf.setLocationRelativeTo(null);
 		
 		System.out.println(eh);
+		System.out.println("mv initdisplay호출 성공");
 		//프레임에 버튼과 라벨을 놓지말고  패널을 두개 만들어서 놓을것.
 		//제이프레임이 아닌 제일 바닥 바탕에 컨테인이라는 요소가 있는데 getContentPane을 하면 컨텐트에 요소가 추가가됨.
 		//소켓통신
 	}
 	
-		
-
 	public static void main(String[] args) {
 		MainView mv = new MainView();
-		mv.initDisplayMainView();
-
-	
-		
+		mv.initDisplay();
 	}
-
-
-	
 }

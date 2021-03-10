@@ -2,6 +2,7 @@ package proj_back;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import proj_view.CView;
 import proj_view.CaculationView;
@@ -15,13 +16,14 @@ import proj_view.OkView;
 //Main View 에서  ActionEvent를 받아오는 EventHandler 입니다.
 public class EventHandler implements ActionListener {
 	// 선언부
-	MainView mv = null;
-	CView cv = null;
-	CartView cav = null;
-	OkView okv = null;
-	CaculationView clv = null;
-	DBLogic db = null;
-	MenuVO      mVOS[]      = null;
+	MainView 		mv 		= null;
+	CView 			cv 		= null;
+	CartView 		cav 	= null;
+	OkView 			okv 	= null;
+	CaculationView 	clv 	= null;
+	DBLogic 		db 		= null;
+	MenuVO      	mVOS[]  = null;
+	MenuVO			cart[]	= null;
 	// 생성자
 //	public EventHandler(CView cv) {
 //		this.cv = cv;
@@ -53,8 +55,10 @@ public class EventHandler implements ActionListener {
 
 		this.clv = new CaculationView(this.mv);
 //		this.clv.jb_rf.addActionListener(this);
+		
 		this.db = DBLogic.getInstance();
 		this.mVOS = db.getList("main");
+		
 
 	}
 
@@ -113,6 +117,7 @@ public class EventHandler implements ActionListener {
 			return;
 			// side 눌렀을때
 			
+
 		} else if ("O.L".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			clv.initDisplay();
@@ -123,6 +128,18 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("장바구니에 추가".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
+			/*int i = 0;
+			while(cv.jtb.getSelectedRow() != -1) {
+				i = cv.jtb.getSelectedRow();
+				Vector oneRow = new Vector();
+	            oneRow.add(this.mVOS[i].getM_name());
+	            System.out.println("getM_name 성공");
+	            oneRow.add(this.mVOS[i].getM_price());
+	            System.out.println("getM_price 성공");
+//	            this.cav.detm.addRow(oneRow);
+	            System.out.println("추가 실행");
+			}
+			*/
 			cav.initDisplay();
 			// CartView 띄우기
 			
