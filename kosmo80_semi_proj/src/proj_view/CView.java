@@ -117,7 +117,7 @@ public class CView extends JDialog {
 		jp_west.setPreferredSize(new Dimension(200,700));
 		
 		jp_west.add(jb_new);
-		jp_west.add(jb_hot);
+		jp_west.add(jb_hot);  
 		jp_west.add(jb_set);
 		jp_west.add(jb_main);
 		jp_west.add(jb_drink);
