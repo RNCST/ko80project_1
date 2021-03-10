@@ -20,7 +20,7 @@ import proj_back.EventHandler;
 import proj_back.MenuVO;
 
 
-public class CView extends JDialog {
+public class UView extends JDialog {
 	//선언부
 	JScrollPane			jsp         = null;
 	static EventHandler eh         	= null;
@@ -35,8 +35,11 @@ public class CView extends JDialog {
 	//장바구니 추가
 	JPanel      		jp_center   = null;
 	//메뉴 항목들 나오게
-	public RButton     	jb_see     	= null;
-	public RButton     	jb_in      	= null;
+	public RButton     	jb_ins     	= null;
+	public RButton     	jb_upd     	= null;
+	public RButton      jb_del      = null;
+	public RButton      jb_out      = null;
+	
 	public RButton   	jb_new     	= null;
 	public RButton   	jb_hot     	= null;
 	public RButton   	jb_main    	= null;
@@ -47,20 +50,22 @@ public class CView extends JDialog {
 	TitledBorder 		tb_west   	= null;
 //	TitledBorder 		tb_center	= null;
 	MainView       		mv      	= null;
-    CView          		cv      	= null;
+    UView          		uv      	= null;
     DBLogic		   		db	   		= null;
     
 	Font 				ft1 		= null;
 	Font 				ft2 		= null;
 	
     //생성자
-    public CView() {
+    public UView() {
     	jp_west     = new JPanel();
     	jp_south    = new JPanel();
     	jp_center   = new JPanel();
     	
-    	jb_see     	= new RButton("장바구니를 보기");
-    	jb_in      	= new RButton("장바구니에 담기");
+    	jb_ins    	= new RButton("항목 추가");
+    	jb_upd     	= new RButton("항목 수정");
+    	jb_del      = new RButton("항목 삭제");
+    	jb_out      = new RButton("U L 모드 종료");
     	jb_new     	= new RButton("N E W");
     	jb_hot     	= new RButton("H O T");
     	jb_main    	= new RButton("M A I N");
@@ -80,10 +85,10 @@ public class CView extends JDialog {
     	
     	
 	}
-	public CView(MainView mv) {
+	public UView(UView uv) {
 		this();
-		this.mv = mv;
-		eh = mv.eh;
+		this.uv = uv;
+		eh = uv.eh;
 	}
 	
 	public void setrow(MenuVO[] mVOS) {
@@ -131,8 +136,9 @@ public class CView extends JDialog {
 		jb_main.setFont(ft2);
 		jb_drink.setFont(ft2);
 		jb_side.setFont(ft2);
-		jb_in.setFont(ft1);
-		jb_see.setFont(ft1);
+		jb_ins.setFont(ft1);
+		jb_upd.setFont(ft1);
+		jb_del.setFont(ft1);
 		
 		add("Center", jp_center);
 		//jp_center.setBorder(tb_center);
@@ -146,12 +152,18 @@ public class CView extends JDialog {
 		jp_south.setBackground(Color.LIGHT_GRAY);
 		jp_south.setPreferredSize(new Dimension(800,100));
 		
-		jb_in.setBounds(350, 50, 300, 300);
-		jp_south.add(jb_in);
-		jb_in.setPreferredSize(new Dimension(150,50));
-		jb_see.setBounds(350, 50, 300, 300);
-		jp_south.add(jb_see);
-		jb_see.setPreferredSize(new Dimension(150,50));
+		jb_ins.setBounds(350, 50, 300, 300);
+		jp_south.add(jb_ins);
+		jb_ins.setPreferredSize(new Dimension(150,50));
+		jb_upd.setBounds(350, 50, 300, 300);
+		jp_south.add(jb_upd);
+		jb_upd.setPreferredSize(new Dimension(150,50));
+		jb_del.setBounds(350, 50, 300, 300);
+		jp_south.add(jb_del);
+		jb_del.setPreferredSize(new Dimension(150,50));
+		jb_out.setBounds(350, 50, 300, 300);
+		jp_south.add(jb_out);
+		jb_out.setPreferredSize(new Dimension(150,50));
 		this.setSize(800,800);
 		this.setVisible(false);
 	}
@@ -163,8 +175,8 @@ public class CView extends JDialog {
 	}
 	
 	public static void main(String[] args) {
-		CView cv = new CView();
-		cv.initDisplay();
-		cv.setVisible(true);
+		UView uv = new UView();
+		uv.initDisplay();
+		uv.setVisible(true);
 	}
 }

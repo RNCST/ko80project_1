@@ -10,6 +10,7 @@ import proj_view.CaculationView;
 import proj_view.CartView;
 import proj_view.MainView;
 import proj_view.OkView;
+import proj_view.UView;
 
 /**************************************************************
  * 
@@ -19,6 +20,7 @@ public class EventHandler implements ActionListener {
 	// 선언부
 	MainView 		mv 		= null;
 	CView 			cv 		= null;
+	UView           uv      = null;
 	CartView 		cav 	= null;
 	OkView 			okv 	= null;
 	CaculationView 	clv 	= null;
@@ -46,6 +48,18 @@ public class EventHandler implements ActionListener {
 		this.cv.jb_main.addActionListener(this);
 		this.cv.jb_drink.addActionListener(this);
 		this.cv.jb_side.addActionListener(this);
+		
+		
+		this.uv = new UView(this.uv);
+		this.uv.jb_ins.addActionListener(this);
+		this.uv.jb_upd.addActionListener(this);
+		this.uv.jb_del.addActionListener(this);
+		this.uv.jb_out.addActionListener(this);
+		this.uv.jb_new.addActionListener(this);
+		this.uv.jb_hot.addActionListener(this);
+		this.uv.jb_main.addActionListener(this);
+		this.uv.jb_drink.addActionListener(this);
+		this.uv.jb_side.addActionListener(this);
 
 		this.cav = new CartView(this.mv);
 		this.cav.jb_buy.addActionListener(this);
@@ -56,6 +70,7 @@ public class EventHandler implements ActionListener {
 		this.okv.jb_no.addActionListener(this);
 
 		this.clv = new CaculationView(this.mv);
+//		this.clv.jb_out.addActionListener(this);
 //		this.clv.jb_rf.addActionListener(this);
 		
 		this.db = DBLogic.getInstance();
@@ -108,6 +123,7 @@ public class EventHandler implements ActionListener {
 			// drink 눌렀을때
 			
 		}else if ("S I D E".equals(cmd)) {
+			cv.refresh();
 			System.out.println("event labetl:" + cmd);
 			try {
 				this.mVOS = db.getList("side");
@@ -123,6 +139,15 @@ public class EventHandler implements ActionListener {
 		} else if ("O.L".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			clv.initDisplay();
+			return;
+			// CView띄우기
+			
+			
+		} else if ("U.L".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			uv.initDisplay();
+			uv.setVisible(true);
+			uv.setrow(this.mVOS);
 			return;
 			// CView띄우기
 			
@@ -182,10 +207,29 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("취소".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			this.okv.dispose();
+			return;
+			
+		} else if ("항목 추가".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			return;
+			
+		} else if ("항목 수정".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			return;
+			
+		} else if ("항목 삭제".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			return;
+			
+		} else if ("U L 모드 종료".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
 			System.gc();
 			return;
-			// OkView 끄기
+			
+		} else if ("O L 모드 종료".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			System.gc();
+			return;
 		}
 	}
 }

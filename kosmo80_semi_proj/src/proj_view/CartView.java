@@ -3,16 +3,19 @@ package proj_view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.Vector;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import java.util.Vector;
 
 import proj_back.EventHandler;
 import proj_back.MenuVO;
@@ -43,10 +46,14 @@ public class CartView extends JDialog {
 	public JButton   			jb_buy        	= null;
 	public JButton   			jb_cancel     	= null;
 	
-	Font 						ft1 			= null;
-	Font 						ft2 			= null;
 	private Vector<MenuVO>		cartList		= null;
 	private int					total			= 0;
+	JLabel                  	jlb             = null;
+	JLabel                  	jlb2            = null;
+	
+	Font 						ft1 			= null;
+	Font 						ft2 			= null;
+	Font 						ft3 			= null;
 	
 	//생성자
 	public CartView() {
@@ -56,7 +63,7 @@ public class CartView extends JDialog {
 		jp_south2     	= new JPanel();
 		
 		tb_south   		= new TitledBorder(new LineBorder(Color.lightGray),"주문확인");
-		tb_south1  		= new TitledBorder(new LineBorder(Color.white),"총액확인");
+		tb_south1  		= new TitledBorder(new LineBorder(Color.white),"");
 		tb_south2  		= new TitledBorder(new LineBorder(Color.white));
 		tb_center  		= new TitledBorder(new LineBorder(Color.white),"목록확인");
 		
@@ -64,13 +71,21 @@ public class CartView extends JDialog {
 		jtb             = new JTable(detm);
 		jsp             = new JScrollPane(jtb);
 		
+		jlb             = new JLabel("");
+		jlb2            = new JLabel("");
+		
+		
 		jb_buy        	= new JButton("결제하기");
 		jb_cancel     	= new JButton("취소하기");
 		
 		ft1 			= new Font("휴먼모음T", Font.PLAIN, 15);
 		ft2 			= new Font("Ariel", Font.BOLD, 15);
+		ft3             = new Font("휴먼모음T",Font.PLAIN,14);
+		
 		cartList		= new Vector<MenuVO>();
+
 	}
+
 	public CartView(MainView mv) {
 		this();
 		this.mv = mv;
@@ -91,6 +106,23 @@ public class CartView extends JDialog {
 		jp_south1.setBorder(tb_south1);
 		jp_south1.setBackground(Color.WHITE);
 		jp_south1.setPreferredSize(new Dimension(400,40));
+		
+		jp_south1.setLayout(new GridLayout(2,0));           
+
+		jp_south1.add(jlb);
+		jlb.setOpaque(true);
+		jlb.setBackground(Color.LIGHT_GRAY);
+		jlb.setHorizontalAlignment(JLabel.RIGHT);
+		jp_south1.add(jlb2);
+		jlb2.setOpaque(true);
+		jlb2.setBackground(Color.LIGHT_GRAY);
+		jlb2.setHorizontalAlignment(JLabel.RIGHT);
+		jlb.setFont(ft3);
+		jlb2.setFont(ft3);
+		
+//		jlb.setText("지불하실 금액은 ");
+//		totalPrice=Integer.toString(price);
+//		jlb2.setText("총 "+totalPrice+"원 입니다.");
 		
 		//버튼부
 		jp_southB.add("Center",jp_south2);
