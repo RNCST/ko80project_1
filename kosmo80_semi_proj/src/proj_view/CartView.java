@@ -1,11 +1,8 @@
 package proj_view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,6 +11,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import proj_back.EventHandler;
+import proj_back.MenuVO;
 
 public class CartView extends JDialog {
 	//선언부
@@ -34,6 +32,7 @@ public class CartView extends JDialog {
 	
 	Font 					ft1 			= null;
 	Font 					ft2 			= null;
+	private MenuVO[]		cartList		= null;
 	
 	//생성자
 	public CartView() {
@@ -50,8 +49,8 @@ public class CartView extends JDialog {
 		jb_buy        	= new JButton("결제하기");
 		jb_cancel     	= new JButton("취소하기");
 		
-		ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
-		ft2 = new Font("Ariel", Font.BOLD, 15);
+		ft1 			= new Font("휴먼모음T", Font.PLAIN, 15);
+		ft2 			= new Font("Ariel", Font.BOLD, 15);
 	}
 	public CartView(MainView mv) {
 		this();
@@ -100,6 +99,14 @@ public class CartView extends JDialog {
 		this.setSize(500, 650);
 		this.setVisible(true);
 		System.out.println("Cav initdisplay호출 성공");
+	}
+	
+	public void setCartList() {
+		
+	}
+	
+	public MenuVO[] getCartList() {
+		return cartList;
 	}
 	
 	public static void main(String[] args) {

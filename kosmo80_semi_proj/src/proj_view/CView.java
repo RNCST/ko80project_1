@@ -86,18 +86,14 @@ public class CView extends JDialog {
 	
 	public void setrow(MenuVO[] mVOS) {
 		this.mVOS = mVOS;
-		try {
-			for(int i=0;i<this.mVOS.length;i++) {
-	            Vector oneRow = new Vector();
-	            oneRow.add(this.mVOS[i].getM_name());
-	            System.out.println("getM_name 성공");
-	            oneRow.add(this.mVOS[i].getM_price());
-	            System.out.println("getM_price 성공");
-	            this.detm.addRow(oneRow);
-	            System.out.println("추가 실행");
-			}
-		} catch (Exception e) {
-			System.out.println(e);
+		for(int i=0;i<this.mVOS.length;i++) {
+		    Vector oneRow = new Vector();
+		    oneRow.add(this.mVOS[i].getM_name());
+		    System.out.println("getM_name 성공");
+		    oneRow.add(this.mVOS[i].getM_price());
+		    System.out.println("getM_price 성공");
+		    this.detm.addRow(oneRow);
+		    System.out.println("추가 실행");
 		}
 	}
 

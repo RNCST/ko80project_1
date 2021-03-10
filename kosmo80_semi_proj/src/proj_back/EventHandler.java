@@ -128,6 +128,7 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("장바구니에 추가".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
+			System.out.println(cv.jtb.getSelectedRow());
 			/*int i = 0;
 			while(cv.jtb.getSelectedRow() != -1) {
 				i = cv.jtb.getSelectedRow();
