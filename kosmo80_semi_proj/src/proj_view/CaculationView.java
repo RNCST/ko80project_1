@@ -2,6 +2,7 @@ package proj_view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,19 +25,21 @@ public class CaculationView extends JFrame {
 	JPanel   jpButton = null;
 	JTable        jtb = null;
 	JScrollPane   jsp = null;
-	public JButton     jb_rf = null;
+	public RButton     jb_rf = null;
+	public RButton     jb_out = null;
 	TitledBorder tb_south  = new TitledBorder(new LineBorder(Color.white));
 	DefaultTableModel detm = null;
 	String array[]    = {"판매내역"};
 	String data[][]   = new String[0][0];
 	
-	
+	Font 					ft1 		= null; 
  
 	
 	
 	
 	public CaculationView(MainView mv) {
 		this.mv = mv;
+		eh = mv.eh;
 	}
 	public CaculationView() {
 		
@@ -55,14 +58,22 @@ public class CaculationView extends JFrame {
 		jpList.add(jsp);
 		jpList.setBackground(Color.LIGHT_GRAY);
 		
-		jb_rf       = new JButton("새로 고침");
+		ft1 		= new Font("휴먼모음T", Font.PLAIN, 15);
+		
+		jb_rf        = new RButton("새로 고침");
+		jb_out       = new RButton("O L 모드 종료");
+		
+		jb_out.setFont(ft1);
+		jb_rf.setFont(ft1);
 		
 		jb_rf.setPreferredSize(new Dimension(150,50));
+		jb_out.setPreferredSize(new Dimension(150,50));
 		
 		jpButton    = new JPanel();
 		jpButton.setBorder(tb_south);
 		jpButton.setBackground(Color.LIGHT_GRAY);
 		jpButton.add(jb_rf);
+		jpButton.add(jb_out);
 		
 		
 		this.add("Center",jpList);
