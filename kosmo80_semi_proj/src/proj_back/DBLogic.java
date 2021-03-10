@@ -11,7 +11,7 @@ import proj_view.CView;
 
 public class DBLogic {
 	//선언부
-	private static DBLogic 	 db 	= null;
+	private static DBLogic 	 		db 		= null;
 	private static final String 	_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String 	_URL 	= "jdbc:oracle:thin:@127.0.0.1:1521:orcl11";
 	private String					_USER	= "ko80project_1";
@@ -21,8 +21,8 @@ public class DBLogic {
 	private PreparedStatement		pstmt	= null;
 	private ResultSet				rs		= null;
 	private MenuVO[] 				mvoList = null;
-	static EventHandler eh         = null;
-		        CView        cv                 = null;
+	static EventHandler 			eh      = null;
+	CView        					cv      = null;
 	
 	//생성자
 	private DBLogic() {
@@ -54,15 +54,13 @@ public class DBLogic {
 	}	
 
 	public MenuVO[] getList(String type) {
-		sql = " SELECT m_num, m_name, m_price, m_type FROM menu WHERE m_type = ? ";
+		sql = " SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_type = ? ";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, type);
 			rs = pstmt.executeQuery();
 			MenuVO mVO = null;
 			Vector<MenuVO> mvoVec = new Vector<MenuVO>();
-			
-			
 			while(rs.next()) {
 				mVO = new MenuVO();
 				mVO.setM_num(rs.getInt("m_num"));
@@ -72,6 +70,8 @@ public class DBLogic {
 				mVO.setM_price(rs.getInt("m_price"));
 				System.out.println("m_price에 적제성공");
 				mVO.setM_type(rs.getString("m_type"));
+				System.out.println("m_type에 적제성공");
+				mVO.setM_lunch_date(rs.getString("m_lunch_date"));
 				System.out.println("m_type에 적제성공");
 				mvoVec.add(mVO);
 				System.out.println("mvoVec에 적제성공");
@@ -96,7 +96,7 @@ public class DBLogic {
 		mv=dl.getList("main");
 		System.out.println("getList test");
 		for(int i = 0; i < mv.length; i++) {
-			System.out.println(mv[i].getM_num() + ", " + mv[i].getM_name() + ", " + mv[i].getM_price() + ", " + mv[i].getM_type());
+			System.out.println(mv[i].getM_num() + ", " + mv[i].getM_name() + ", " + mv[i].getM_price() + ", " + mv[i].getM_type() + ", " + mv[i].getM_lunch_date());
 		}
 		
 		

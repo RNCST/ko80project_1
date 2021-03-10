@@ -3,6 +3,7 @@ package proj_view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,31 +19,34 @@ import proj_back.MenuVO;
 
 public class CartView extends JDialog {
 	//선언부
-	JPanel    				jp_center     	= null;
-	JPanel    				jp_southB     	= null;
-	JPanel    				jp_south1     	= null;
-	JPanel    				jp_south2     	= null;
-	static EventHandler   	eh       		= null;
-	MainView     			mv         		= null;
+	static EventHandler   		eh       		= null;
+	MainView     				mv         		= null;
+	CView          				cv     			= null;
 	
-	JScrollPane			    jsp             = null;
-	MenuVO				    mVOS[]          = null;
-	DefaultTableModel	    detm 		    = null;
-	public JTable           jtb 		    = null;
-	String 				    array[]    	    = {};
-	String 				    data[][]   	    = new String[0][2];
+	JPanel    					jp_center     	= null;
+	JPanel    					jp_southB     	= null;
+	JPanel    					jp_south1     	= null;
+	JPanel    					jp_south2     	= null;
+
+	JScrollPane			   		jsp             = null;
+	MenuVO				    	mVOS[]          = null;
+	DefaultTableModel	    	detm 		    = null;
+	public JTable           	jtb 		    = null;
+	String 				    	array[]    	    = {"메뉴","가격"};
+	String 				    	data[][]   	    = new String[0][2];
 	
-	TitledBorder 			tb_south   		= null;
-	TitledBorder 			tb_south1  		= null;
-	TitledBorder 			tb_south2  		= null;
-	TitledBorder 			tb_center  		= null;
+	TitledBorder 				tb_south   		= null;
+	TitledBorder 				tb_south1  		= null;
+	TitledBorder 				tb_south2  		= null;
+	TitledBorder 				tb_center  		= null;
 	
-	public JButton   		jb_buy        	= null;
-	public JButton   		jb_cancel     	= null;
+	public JButton   			jb_buy        	= null;
+	public JButton   			jb_cancel     	= null;
 	
-	Font 					ft1 			= null;
-	Font 					ft2 			= null;
-	private MenuVO[]		cartList		= null;
+	Font 						ft1 			= null;
+	Font 						ft2 			= null;
+	private Vector<MenuVO>		cartList		= null;
+	private int					total			= 0;
 	
 	//생성자
 	public CartView() {
@@ -65,11 +69,13 @@ public class CartView extends JDialog {
 		
 		ft1 			= new Font("휴먼모음T", Font.PLAIN, 15);
 		ft2 			= new Font("Ariel", Font.BOLD, 15);
+		cartList		= new Vector<MenuVO>();
 	}
 	public CartView(MainView mv) {
 		this();
 		this.mv = mv;
 		eh = mv.eh;
+		cv = mv.cv;
 	}
 
 	//화면처리
@@ -85,8 +91,6 @@ public class CartView extends JDialog {
 		jp_south1.setBorder(tb_south1);
 		jp_south1.setBackground(Color.WHITE);
 		jp_south1.setPreferredSize(new Dimension(400,40));
-		
-		
 		
 		//버튼부
 		jp_southB.add("Center",jp_south2);
@@ -118,21 +122,45 @@ public class CartView extends JDialog {
 		jtb.setFont(ft1);
 		jp_center.add(jsp);
 		
-		
-		
-		
-		
 		this.setSize(500, 650);
 		this.setVisible(true);
 		System.out.println("Cav initdisplay호출 성공");
 	}
 	
-	public void setCartList() {
+	
+	
+	
+	
+	public void addCartList(MenuVO selectedMenu) {
+		MenuVO mVO = new MenuVO();
+		mVO.setM_num(selectedMenu.getM_num());
+		mVO.setM_name(selectedMenu.getM_name());
+		mVO.setM_price(selectedMenu.getM_price());
+		mVO.setM_type(selectedMenu.getM_type());
+		mVO.setM_type(selectedMenu.getM_lunch_date());
+		total += selectedMenu.getM_price();
+		cartList.addElement(mVO);
+	}
+	
+	public void showCartList() {
+		for(int i=0;i<this.cartList.size();i++) {
+			Vector oneRow = new Vector();
+			oneRow.add(cartList.elementAt(i).getM_name());
+			oneRow.add(cartList.elementAt(i).getM_price());
+			this.detm.addRow(oneRow);
+		}
+		tb_south1.setTitle("지불하실 총 금액은 " +this.getTotal()+"원 입니다.");
 		
 	}
 	
 	public MenuVO[] getCartList() {
-		return cartList;
+		MenuVO[] cl = null;
+		cartList.copyInto(cl);
+		return cl;
+	}
+	
+	public int getTotal() {
+		return this.total;
 	}
 	
 	public void refresh() {

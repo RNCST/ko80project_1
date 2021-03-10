@@ -6,7 +6,7 @@ public class MenuVO {
 	private String 	m_name   = "";
 	private int 	m_price  = 0;
 	private String  m_type	 = "";
-	//private String  m_lunch_date = "";
+	private String  m_lunch_date = "";
 	  
 	public int getM_num() {
 		return m_num;
@@ -31,6 +31,12 @@ public class MenuVO {
 	}
 	public void setM_type(String m_type) {
 		this.m_type = m_type;
+	}
+	public String getM_lunch_date() {
+		return m_lunch_date;
+	}
+	public void setM_lunch_date(String m_lunch_date) {
+		this.m_lunch_date = m_lunch_date;
 	}
 
 }

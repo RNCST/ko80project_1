@@ -130,26 +130,21 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("장바구니에 담기".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			JOptionPane.showMessageDialog(cv, "사");
+			try {
+				cav.addCartList(mVOS[cv.jtb.getSelectedRow()]);
+				System.out.println("addCartList실행됨");
+				JOptionPane.showMessageDialog(cv, "장바구니에 추가되었습니다.");
+			} catch(ArrayIndexOutOfBoundsException ie) {
+				JOptionPane.showMessageDialog(cv, "메뉴를 선택하여 주십시오");
+			}
 			
 			return;
 			
 			
 		} else if ("장바구니를 보기".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			System.out.println(cv.jtb.getSelectedRow());
-			/*int i = 0;
-			while(cv.jtb.getSelectedRow() != -1) {
-				i = cv.jtb.getSelectedRow();
-				Vector oneRow = new Vector();
-	            oneRow.add(this.mVOS[i].getM_name());
-	            System.out.println("getM_name 성공");
-	            oneRow.add(this.mVOS[i].getM_price());
-	            System.out.println("getM_price 성공");
-//	            this.cav.detm.addRow(oneRow);
-	            System.out.println("추가 실행");
-			}
-			*/
+			//System.out.println(cv.jtb.getSelectedRow());
+			cav.showCartList();
 			cav.initDisplay();
 			// CartView 띄우기
 			
