@@ -23,6 +23,7 @@ public class DBLogic {
 	private MenuVO[] 				mvoList = null;
 	static EventHandler 			eh      = null;
 	CView        					cv      = null;
+
 	
 	//생성자
 	private DBLogic() {

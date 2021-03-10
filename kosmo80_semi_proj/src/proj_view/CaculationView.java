@@ -37,31 +37,32 @@ public class CaculationView extends JFrame {
 	
 	
 	
-	public CaculationView(MainView mv) {
-		this.mv = mv;
-		eh = mv.eh;
-	}
 	public CaculationView() {
-		
-	}
-
-	public void initDisplay() {
-		eh = mv.eh;
 		System.out.println("clv initdisplay호출 성공");
-		detm        = new DefaultTableModel(data, array);
-		jtb         = new JTable(detm);
-		jsp         = new JScrollPane(jtb);
-		jsp.setPreferredSize(new Dimension(810,760));
+		detm         = new DefaultTableModel(data, array);
+		jtb          = new JTable(detm);
+		jsp          = new JScrollPane(jtb);
+		jpList       = new JPanel();
 		
-		
-		jpList      = new JPanel();
-		jpList.add(jsp);
-		jpList.setBackground(Color.LIGHT_GRAY);
-		
-		ft1 		= new Font("휴먼모음T", Font.PLAIN, 15);
+		ft1 		 = new Font("휴먼모음T", Font.PLAIN, 15);
 		
 		jb_rf        = new RButton("새로 고침");
 		jb_out       = new RButton("O L 모드 종료");
+		jpButton     = new JPanel();
+		
+	}
+
+	public CaculationView(MainView mv) {
+		this();
+		this.mv = mv;
+		eh = mv.eh;
+	}
+	public void initDisplay() {
+		eh = mv.eh;
+		
+		jsp.setPreferredSize(new Dimension(810,760));
+		jpList.add(jsp);
+		jpList.setBackground(Color.LIGHT_GRAY);
 		
 		jb_out.setFont(ft1);
 		jb_rf.setFont(ft1);
@@ -69,7 +70,6 @@ public class CaculationView extends JFrame {
 		jb_rf.setPreferredSize(new Dimension(150,50));
 		jb_out.setPreferredSize(new Dimension(150,50));
 		
-		jpButton    = new JPanel();
 		jpButton.setBorder(tb_south);
 		jpButton.setBackground(Color.LIGHT_GRAY);
 		jpButton.add(jb_rf);

@@ -24,7 +24,7 @@ public class MainView extends JFrame {
     CView          			cv     		= null;
     CartView       			cav    		= null;
     CaculationView 			clv    		= null;    
-    //OkView         			okv    		= null; 
+    //OkView         		okv    		= null; 
 	public JFrame  			jf    	 	= null;
 	Container      			co     		= null;
 	public RButton 			jbco   		= null;
