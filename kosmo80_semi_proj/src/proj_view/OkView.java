@@ -32,22 +32,26 @@ public class OkView extends JDialog{
 		
 	public String getTimer() {
 		Calendar cal = Calendar.getInstance();
+		
+		int year     = cal.get(Calendar.YEAR);
+		int month    = cal.get(Calendar.MONTH);
+		int day      = cal.get(Calendar.DATE);
 		int hour     = cal.get(Calendar.HOUR_OF_DAY);
 		int min      = cal.get(Calendar.MINUTE);
 		int sec      = cal.get(Calendar.SECOND);
-		String str1   = Integer.toString(hour);
-		if(str1.length()==1) {
-			str1 = "0"+str1;
-		}
-		String str2   = Integer.toString(min);
-		if(str2.length()==1) {
-			str2 = "0"+str2;
-		}
-		String str3   = Integer.toString(sec);
-		if(str3.length()==1) {
-			str3 = "0"+str3;
-		}
-		return str1+":"+str2+":"+str3;
+//		String str1   = Integer.toString(hour);
+//		if(str1.length()==1) {
+//			str1 = "0"+str1;
+//		}
+//		String str2   = Integer.toString(min);
+//		if(str2.length()==1) {
+//			str2 = "0"+str2;
+//		}
+//		String str3   = Integer.toString(sec);
+//		if(str3.length()==1) {
+//			str3 = "0"+str3;
+//		}
+		return year+"년"+month+"월"+day+"일 "+hour+":"+min+":"+sec;
 	}
 	
 		

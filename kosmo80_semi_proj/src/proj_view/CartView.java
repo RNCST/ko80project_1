@@ -176,7 +176,12 @@ public class CartView extends JDialog {
 			oneRow.add(cartList.elementAt(i).getM_price());
 			this.detm.addRow(oneRow);
 		}
-		tb_south1.setTitle("지불하실 총 금액은 " +this.getTotal()+"원 입니다.\n");
+		jp_south1.setLayout(new GridLayout(2,0));  
+		jp_south1.add(jlb);
+		jp_south1.add(jlb2);
+		
+		jlb.setText("지불하실 금액은\n" );
+		jlb2.setText("총 "+this.getTotal()+"원 입니다.\n");
 		
 	}
 	
@@ -194,6 +199,10 @@ public class CartView extends JDialog {
 		   while(detm.getRowCount()>0) {
 	            detm.removeRow(0);
 	         }
+	}
+	public void cartRemove() {
+		cartList.removeAllElements();
+		this.total=0;
 	}
 	
 	public static void main(String[] args) {

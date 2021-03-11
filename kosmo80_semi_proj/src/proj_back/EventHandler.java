@@ -85,13 +85,14 @@ public class EventHandler implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+		
 		String cmd = ae.getActionCommand();
 		if ("C.O".equals(cmd)) {
-			cv.refresh();
 			iv = this.cv;
+			cv.refresh();
 			System.out.println("event labetl:" + cmd);
 			try {
-				this.mVOS = db.getList();
+				this.mVOS = db.getList("main");
 				
 			} catch (Exception e) {
 				System.out.println(e);
@@ -100,6 +101,7 @@ public class EventHandler implements ActionListener {
 			cv.setVisible(true);
 			cv.setrow(this.mVOS);
 			// CView띄우기
+			
 		} else if ("N E W".equals(cmd)) {
 			iv.refresh();
 			System.out.println("event labetl:" + cmd);
@@ -190,6 +192,9 @@ public class EventHandler implements ActionListener {
 				cav.addCartList(mVOS.elementAt(cv.jtb.getSelectedRow()));
 				System.out.println("addCartList실행됨");
 				JOptionPane.showMessageDialog(cv, "장바구니에 추가되었습니다.");
+				cav.refresh();
+				cav.showCartList();
+				cav.initDisplay();
 			} catch(ArrayIndexOutOfBoundsException ie) {
 				JOptionPane.showMessageDialog(cv, "메뉴를 선택하여 주십시오");
 			}
@@ -214,7 +219,8 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("취소하기".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			this.okv.dispose();
+			cav.cartRemove();
+			this.cav.dispose();
 			System.gc();
 			return;
 			// CartView 끄기
@@ -228,7 +234,7 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("결제".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			
+			cav.cartRemove();
 			System.out.println(okv.getTimer());
 			return;
 			// OkView 끄고 팝업 띄우기
@@ -236,11 +242,15 @@ public class EventHandler implements ActionListener {
 			
 		} else if ("취소".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
+			this.okv.dispose();
+			System.gc();
 			return;
+			
 			
 		} else if ("항목 추가".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			return;
+			
 			
 		} else if ("항목 수정".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);

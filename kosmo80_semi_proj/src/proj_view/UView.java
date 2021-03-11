@@ -138,6 +138,7 @@ public class UView extends JDialog implements InterView {
 		jb_ins.setFont(ft1);
 		jb_upd.setFont(ft1);
 		jb_del.setFont(ft1);
+		jb_out.setFont(ft1);
 		
 		add("Center", jp_center);
 		//jp_center.setBorder(tb_center);
