@@ -24,7 +24,6 @@ public class MainView extends JFrame {
     CView          			cv     		= null;
     CartView       			cav    		= null;
     CalculationView 		clv    		= null;    
-    //OkView         		okv    		= null; 
 	public JFrame  			jf    	 	= null;
 	Container      			co     		= null;
 	public RButton 			jbco   		= null;
@@ -34,6 +33,7 @@ public class MainView extends JFrame {
 	JPanel    				jp_north    = null;
 	JPanel    				jp_south    = null;
 	JLabel    				jlb         = null;
+	//OkView         		okv    		= null; 
 	//SView   				sv        	= new SView();
 	//OView   				ov        	= new OView();
 	

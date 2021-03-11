@@ -39,7 +39,6 @@ public class CView extends JDialog implements InterView {
 	public RButton     	jb_in      	= null;
 	public RButton   	jb_new     	= null;
 	public RButton   	jb_hot     	= null;
-	public RButton   	jb_set     	= null;
 	public RButton   	jb_main    	= null;
 	public RButton   	jb_drink   	= null;
 	public RButton    	jb_side    	= null;
@@ -64,7 +63,7 @@ public class CView extends JDialog implements InterView {
     	jb_in      	= new RButton("장바구니에 담기");
     	jb_new     	= new RButton("N E W");
     	jb_hot     	= new RButton("H O T");
-    	jb_set     	= new RButton("S E T");
+//    	jb_set     	= new RButton("S E T");
     	jb_main    	= new RButton("M A I N");
     	jb_drink   	= new RButton("DRINK");
     	jb_side    	= new RButton("S I D E");
@@ -118,21 +117,21 @@ public class CView extends JDialog implements InterView {
 		
 		jp_west.add(jb_new);
 		jp_west.add(jb_hot);
-		jp_west.add(jb_set);
+//		jp_west.add(jb_set);
 		jp_west.add(jb_main);
 		jp_west.add(jb_drink);
 		jp_west.add(jb_side);
 		
-		jb_new.setPreferredSize(new Dimension(150,100));
-		jb_hot.setPreferredSize(new Dimension(150,100));
-		jb_set.setPreferredSize(new Dimension(150,100));
-		jb_main.setPreferredSize(new Dimension(150,100));
-		jb_drink.setPreferredSize(new Dimension(150,100));
-		jb_side.setPreferredSize(new Dimension(150,100));
+		jb_new.setPreferredSize(new Dimension(150,120));
+		jb_hot.setPreferredSize(new Dimension(150,120));
+//		jb_set.setPreferredSize(new Dimension(150,100));
+		jb_main.setPreferredSize(new Dimension(150,120));
+		jb_drink.setPreferredSize(new Dimension(150,120));
+		jb_side.setPreferredSize(new Dimension(150,120));
 		
 		jb_new.setFont(ft2);
 		jb_hot.setFont(ft2);
-		jb_set.setFont(ft2);
+//		jb_set.setFont(ft2);
 		jb_main.setFont(ft2);
 		jb_drink.setFont(ft2);
 		jb_side.setFont(ft2);

@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import proj_back.EventHandler;
 
-public class OkView extends JDialog{
+public class BuyOkView extends JDialog{
 
 	MainView 		mv       	= null;
 	EventHandler   	eh 			= null;
@@ -23,10 +23,10 @@ public class OkView extends JDialog{
 	
 	
 	
-	public OkView(MainView mv) {
+	public BuyOkView(MainView mv) {
 		this.mv=mv;
 	}
-	public OkView() {
+	public BuyOkView() {
 	}
 	
 		
@@ -80,7 +80,7 @@ public class OkView extends JDialog{
 		
 	}
 	public static void main(String[] args) {
-		OkView ok = new OkView();
+		BuyOkView ok = new BuyOkView();
 		ok.initDiplayOkView();
 	}
 }
