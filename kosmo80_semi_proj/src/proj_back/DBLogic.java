@@ -56,7 +56,8 @@ public class DBLogic {
 
 	public Vector<MenuVO> getList() {
 		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
-		sql = " SELECT m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_lunch_date > ADD_MONTHS(sysdate, -1) ";
+		sql = " SELECT m_name, m_price, m_type, m_lunch_date FROM menu "
+				+ "WHERE m_lunch_date > ADD_MONTHS(sysdate, -1) ";
 		try {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -81,7 +82,8 @@ public class DBLogic {
 	//type을 매개변수로 받아서 main과 drink,side메뉴를 나누어 반환
 	public Vector<MenuVO> getList(String type) {
 		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
-		sql = " SELECT m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_type = ? ";
+		sql = " SELECT m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_type "
+				+ "= ? ";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, type);
@@ -104,7 +106,8 @@ public class DBLogic {
 	}
 	
 	public void insertMenu(String m_name, int m_price, String m_type, String m_lunch_date) {
-		sql = "INSET INTO menu(m_num, m_name, m_price, m_type, m_lunch_date) values( ?, ?, ?, ?, ?)"; 
+		sql = "INSERT INTO menu(m_num, m_name, m_price, m_type, m_lunch_date)"
+				+ " values( ?, ?, ?, ?, ?)"; 
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, getLastIndex("menu"));
@@ -141,10 +144,13 @@ public class DBLogic {
 	}
 	
 	public void updateMenu(String m_name, int m_price, String m_type, String m_lunch_date) {
-		sql = "UPDATE SET  WHERE m_name=? ";
+		sql = "UPDATE MENU"
+		    + "  SET loc = ?  "
+		    + "WHERE m_name=? ";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1 ,m_name);
+			pstmt.setInt(2 ,m_price);
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (Exception e) {

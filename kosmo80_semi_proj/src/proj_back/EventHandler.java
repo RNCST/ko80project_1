@@ -296,7 +296,6 @@ public class EventHandler implements ActionListener
 			
 		} else if ("처리".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-	
 			this.cmv.dispose();
 			return;
 			

@@ -31,7 +31,7 @@ public class ChangeMenuView extends JDialog{
   public JComboBox jcb1          =  null;      
 	
 	JLabel         jl_mname      =  null;
-	JTextField     jtf_mname     =  null;
+	public JTextField     jtf_mname     =  null;
 	JLabel         jl_mprice     =  null;
 	JTextField     jtf_mprice    =  null;
 	JLabel         jl_mtype      =  null;
@@ -79,7 +79,18 @@ public class ChangeMenuView extends JDialog{
 	 ft2           =  new Font("휴먼모음T", Font.BOLD, 20);
 	}
 	
-	
+	public String getJtf_mname() { return jtf_mname.getText(); }
+	public void setJtf_mname(String mname) {
+		jtf_mprice.setText(mname);
+	}
+	public String getJtf_mprice() { return jtf_mprice.getText(); }
+	public void setJtf_mprice(String mprice) {
+		jtf_mprice.setText(mprice);
+	}
+	public String getJtf_mtype() { return jcb1.getSelectedItem().toString(); }
+	public void setJtf_mtype(String mtype) {
+		mtype = jcb1.getSelectedItem().toString();
+	}
 	//화면처리부
 	public void initDisplay() {
 		
