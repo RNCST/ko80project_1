@@ -2,6 +2,8 @@ package proj_back;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -20,7 +22,8 @@ import proj_view.UView;
  * 
  **************************************************************/
 //Main View 에서  ActionEvent를 받아오는 EventHandler 입니다.
-public class EventHandler implements ActionListener {
+public class EventHandler implements ActionListener 
+                                    ,ItemListener{
 	// 선언부
 	MainView 		mv 		= null;
 	CView 			cv 		= null;
@@ -85,7 +88,8 @@ public class EventHandler implements ActionListener {
 		this.cmv = new ChangeMenuView(this.mv);
 		this.cmv.jbrun.addActionListener(this);
 		this.cmv.jbno.addActionListener(this);
-		
+		this.cmv.jcb1.addItemListener(this);
+		this.cmv.jcb1.addActionListener(this);
 
 		this.clv = new CalculationView(this.mv);
 		this.clv.jb_out.addActionListener(this);
@@ -184,7 +188,6 @@ public class EventHandler implements ActionListener {
 			uv.refresh();
 			System.out.println("event labetl:" + cmd);
 			iv = this.uv;
-			System.out.println("event labetl:" + cmd);
 			try {
 				this.mVOS = db.getList();
 				
@@ -237,10 +240,6 @@ public class EventHandler implements ActionListener {
 			// CartView 끄기
 			
 			
-		} else if ("새로 고침".equals(cmd)) {
-			System.out.println("event labetl:" + cmd);
-			return;
-			// CaculationView 새로고침하기
 			
 			
 		} else if ("결제".equals(cmd)) {
@@ -266,12 +265,20 @@ public class EventHandler implements ActionListener {
 			uv.setrow(this.mVOS);
 			this.dokv.dispose();
 			return;
+			//DeleteOkView
 			
 		} else if ("아니요".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			this.dokv.dispose();
 			return;
+			//DeleteOkView
 			
+		} else if (cmv.jcb1==obj) {
+			System.out.println("event labetl:" + cmd);
+			String name = (String)cmv.jcb1.getSelectedItem();
+			System.out.println(name);
+			
+			return;
 		} else if ("항목 추가".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			cmv.initDisplay();
@@ -308,6 +315,19 @@ public class EventHandler implements ActionListener {
 			System.out.println("event labetl:" + cmd);
 			this.clv.dispose();
 			return;
-		}
+			
+		} else if ("새로 고침".equals(cmd)) {
+			System.out.println("event labetl:" + cmd);
+			return;
+			// CaculationView 새로고침하기
 	}
 }
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		Object obj = e.getSource();
+		 	System.out.println("JCombobox 감지");
+		}
+		
+}
+

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,8 +26,9 @@ public class ChangeMenuView extends JDialog{
 	JPanel         jp_south      =  null;
 	TitledBorder   tb_center     =  null;
 	TitledBorder   tb_south   	 =  null;
-	public RButton        jbrun         =  null;
-	public RButton        jbno          =  null;
+	public RButton jbrun         =  null;
+	public RButton jbno          =  null;
+  public JComboBox jcb1          =  null;      
 	
 	JLabel         jl_mname      =  null;
 	JTextField     jtf_mname     =  null;
@@ -41,6 +43,7 @@ public class ChangeMenuView extends JDialog{
 	
 	Font           ft1           =  null;
 	Font           ft2           =  null;
+	String[]       type          =  {"main","beverage","side"};
 	
 	public ChangeMenuView(MainView mv) {
 		this();
@@ -55,6 +58,8 @@ public class ChangeMenuView extends JDialog{
      jp_south      =  new JPanel();
      jbrun         =  new RButton("처리");
      jbno          =  new RButton("취소");
+     jcb1          =  new JComboBox(type);
+     
      
      tb_center     =  new TitledBorder(new LineBorder(Color.white));
      tb_south      =  new TitledBorder(new LineBorder(Color.white));
@@ -69,7 +74,7 @@ public class ChangeMenuView extends JDialog{
      jtf_mldate    =  new JTextField();
      
      jl_jl1        =  new JLabel("빈칸을 채운후 처리버튼을 눌러주세요");
-	
+     
 	 ft1           =  new Font("휴먼모음T", Font.PLAIN, 15);
 	 ft2           =  new Font("휴먼모음T", Font.BOLD, 20);
 	}
@@ -85,33 +90,36 @@ public class ChangeMenuView extends JDialog{
 		jp_center.setPreferredSize(new Dimension(150,120));
 		jp_center.setLayout(null);
 		
-		jl_mname.setBounds(40, 50, 100, 30);
-		jl_mprice.setBounds(150, 50, 100, 30);
-		jl_mtype.setBounds(260, 50, 100, 30);
-		jl_mldate.setBounds(370, 50, 100, 30);
+		jl_mtype.setBounds(40, 50, 100, 30);
+		jl_mname.setBounds(150, 50, 100, 30);
+		jl_mprice.setBounds(260, 50, 100, 30);
+//		jl_mldate.setBounds(370, 50, 100, 30);
 		
 		jl_jl1.setHorizontalAlignment(JLabel.CENTER);
-		jl_jl1.setBounds(0, 5, 500, 50);
+		jl_jl1.setBounds(0, 5, 375, 50);
 		jl_mname.setFont(ft1);
 		jl_mprice.setFont(ft1);
 		jl_mtype.setFont(ft1);
-		jl_mldate.setFont(ft1);
+		jcb1.setFont(ft1);
+//		jl_mldate.setFont(ft1);
 		jl_jl1.setFont(ft2);
 		
-		jtf_mname.setBounds(20, 80, 100, 30);
-		jtf_mprice.setBounds(130, 80, 100, 30);
-		jtf_mtype.setBounds(240, 80, 100, 30);
-		jtf_mldate.setBounds(350, 80, 100, 30);
+		jcb1.setBounds(20, 80, 100, 30);
+		jtf_mname.setBounds(130, 80, 100, 30);
+		jtf_mprice.setBounds(240, 80, 100, 30);
+//		jtf_mtype.setBounds(240, 80, 100, 30);
+//		jtf_mldate.setBounds(350, 80, 100, 30);
 		
 		jp_center.add(jl_jl1);
 		jp_center.add(jl_mname);
 		jp_center.add(jtf_mname);
 		jp_center.add(jl_mprice);
 		jp_center.add(jtf_mprice);
+		jp_center.add(jcb1);
 		jp_center.add(jl_mtype);
-		jp_center.add(jtf_mtype);
-		jp_center.add(jl_mldate);
-		jp_center.add(jtf_mldate);
+//		jp_center.add(jtf_mtype);
+//		jp_center.add(jl_mldate);
+//		jp_center.add(jtf_mldate);
 		
 		
 		jp_south.setBorder(tb_south);
@@ -125,8 +133,7 @@ public class ChangeMenuView extends JDialog{
 		jp_south.add(jbrun);
 		jp_south.add(jbno);
 		
-		
-		this.setSize(500, 230);
+		this.setSize(375, 230);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		
