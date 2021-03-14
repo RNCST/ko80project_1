@@ -92,11 +92,11 @@ public class CView extends JDialog implements InterView {
 		for(int i=0;i<this.mVOS.size();i++) {
 		    Vector oneRow = new Vector();
 		    oneRow.add(this.mVOS.elementAt(i).getM_name());
-		    System.out.println("getM_name 성공");
+		    //System.out.println("getM_name 성공");
 		    oneRow.add(this.mVOS.elementAt(i).getM_price());
-		    System.out.println("getM_price 성공");
+		    //System.out.println("getM_price 성공");
 		    this.detm.addRow(oneRow);
-		    System.out.println("추가 실행");
+		    //System.out.println("추가 실행");
 		}
 	}
 

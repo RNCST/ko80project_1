@@ -27,7 +27,7 @@ public class UView extends JDialog implements InterView {
 	Vector<MenuVO>		mVOS	    = null;
 	DefaultTableModel	detm 		= null;
 	public JTable       jtb 		= null;
-	String 				array[]    	= {"메뉴","가격"};
+	String 				array[]    	= {"메뉴","가격", "출시일"};
 	String 				data[][]   	= new String[0][2];
 	JPanel      		jp_west     = null;
 	//메뉴큰 분류
@@ -96,11 +96,9 @@ public class UView extends JDialog implements InterView {
 		for(int i=0;i<this.mVOS.size();i++) {
 		    Vector oneRow = new Vector();
 		    oneRow.add(this.mVOS.elementAt(i).getM_name());
-		    System.out.println("getM_name 성공");
 		    oneRow.add(this.mVOS.elementAt(i).getM_price());
-		    System.out.println("getM_price 성공");
+		    oneRow.add(this.mVOS.elementAt(i).getM_lunch_date());
 		    this.detm.addRow(oneRow);
-		    System.out.println("추가 실행");
 		}
 	}
 	@Override

@@ -34,10 +34,14 @@ public class EventHandler implements ActionListener
 	ChangeMenuView  cmv     = null;
 	CalculationView clv 	= null;
 	DBLogic 		db 		= null;
+	MenuVO			mVO		= null;
 	Vector<MenuVO>  mVOS 	= null;
 	MenuVO			cart[]	= null;
 	InterView		iv		= null;
-	String[]		m_type	= {"main", "beverage", "side"};
+	String[]		m_type	= {"main", "drink", "side"};
+	int				idx 	= 0;
+	String			type	= "";
+
 	// 생성자
 //	public EventHandler(CView cv) {
 //		this.cv = cv;
@@ -97,6 +101,7 @@ public class EventHandler implements ActionListener
 		
 		this.db = DBLogic.getInstance();
 		this.mVOS = db.getList("main");
+		mVO = mVOS.elementAt(0);
 
 	}
 
@@ -109,7 +114,7 @@ public class EventHandler implements ActionListener
 			cv.refresh();
 			System.out.println("event labetl:" + cmd);
 			try {
-				this.mVOS = db.getList("main");
+				this.mVOS = db.getList();
 				
 			} catch (Exception e) {
 				System.out.println(e);
@@ -122,6 +127,7 @@ public class EventHandler implements ActionListener
 		} else if ("N E W".equals(cmd)) {
 			iv.refresh();
 			System.out.println("event labetl:" + cmd);
+			type = "";
 			try {
 				this.mVOS = db.getList();
 				
@@ -141,6 +147,8 @@ public class EventHandler implements ActionListener
 			
 		}else if ("M A I N".equals(cmd)) {
 			iv.refresh();
+			this.cmv.jcb1.setSelectedIndex(0);
+			type = "main";
 			System.out.println("event labetl:" + cmd);
 			try {
 				this.mVOS = db.getList("main");
@@ -153,19 +161,22 @@ public class EventHandler implements ActionListener
 			
 		}else if ("DRINK".equals(cmd)) {
 			iv.refresh();
+			this.cmv.jcb1.setSelectedIndex(1);
+			type = "drink";
 			System.out.println("event labetl:" + cmd);
 			try {
-				this.mVOS = db.getList("beverage");
+				this.mVOS = db.getList(type);
 				
 			} catch (Exception e) {
 				System.out.println(e);
 			}
 			iv.setrow(this.mVOS);
-			return;
 			// drink 눌렀을때
 			
 		}else if ("S I D E".equals(cmd)) {
 			iv.refresh();
+			this.cmv.jcb1.setSelectedIndex(2);
+			type = "side";
 			System.out.println("event labetl:" + cmd);
 			try {
 				this.mVOS = db.getList("side");
@@ -192,7 +203,7 @@ public class EventHandler implements ActionListener
 				this.mVOS = db.getList();
 				
 			} catch (Exception e) {
-				System.out.println(e);
+				System.out.println("U.L" + e);
 			}
 			uv.initDisplay();
 			uv.setVisible(true);
@@ -259,7 +270,7 @@ public class EventHandler implements ActionListener
 		} else if (dokv.jb_delete==obj) {
 			System.out.println("event labetl:" + cmd);
 			int idx = uv.jtb.getSelectedRow();
-			db.deleteMenu(mVOS.elementAt(idx).getM_name());
+			db.deleteMenu(mVOS.elementAt(idx).getM_num());
 			mVOS.remove(idx);
 			uv.refresh();
 			uv.setrow(this.mVOS);
@@ -281,12 +292,25 @@ public class EventHandler implements ActionListener
 			return;
 		} else if ("항목 추가".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
+			cmv.reset();
+			cmv.setAdd(true);
 			cmv.initDisplay();
 			return;
 			
 		} else if ("항목 수정".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			cmv.initDisplay();
+			cmv.setAdd(false);
+			try {
+				idx = uv.jtb.getSelectedRow();
+				mVO = mVOS.elementAt(idx);
+				cmv.setMVO(mVO);
+				cmv.setDisplay();
+				cmv.initDisplay();
+				System.out.println("출력");
+			} catch (Exception e) {
+				System.out.println(e);
+				JOptionPane.showMessageDialog(cmv, "수정할 메뉴를 선택하여 주십시오");
+			}	
 			return;
 			
 		} else if ("항목 삭제".equals(cmd)) {
@@ -294,10 +318,25 @@ public class EventHandler implements ActionListener
 			dokv.initDiplayOkView();
 			return;
 			
-		} else if ("처리".equals(cmd)) {
-			System.out.println("event labetl:" + cmd);
+		} else if ("처리".equals(cmd) && cmv.checkToAdd() == true) { //항목추가에서 처리를 눌렀을때
+			System.out.println("항목추가에서 처리를 눌렀을때");
+			cmv.setMVO(mVO);
+			db.insertMenu(cmv.getDisplay());
+			if(type.equals("")) {this.mVOS = db.getList();}
+			else {this.mVOS = db.getList(type);}
+			iv.refresh();
+			iv.setrow(this.mVOS);
 			this.cmv.dispose();
-			return;
+
+		} else if ("처리".equals(cmd) && cmv.checkToAdd() == false) { //항목수정에서 처리를 눌렀을때
+			System.out.println("항목수정에서 처리를 눌렀을때");
+			db.updateMenu(cmv.getDisplay());
+			System.out.println("event labetl:" + "update실행");
+			if(type.equals("")) this.mVOS = db.getList();
+			else this.mVOS = db.getList(type);
+			iv.refresh();
+			iv.setrow(this.mVOS);
+			this.cmv.dispose();
 			
 		} else if (cmv.jbno==obj) {
 			System.out.println("event labetl:" + cmd);
@@ -313,15 +352,16 @@ public class EventHandler implements ActionListener
 		} else if ("O L 모드 종료".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			this.clv.dispose();
+			
 			return;
 			
 		} else if ("새로 고침".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			return;
 			// CaculationView 새로고침하기
+		}
 	}
-}
-
+		
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		Object obj = e.getSource();

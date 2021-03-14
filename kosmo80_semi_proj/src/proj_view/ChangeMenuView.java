@@ -13,43 +13,40 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import proj_back.EventHandler;
+import proj_back.MenuVO;
 
 public class ChangeMenuView extends JDialog{
 	
 	
 	//선언부
-	ChangeMenuView cmv           =  null;
-	MainView       mv            =  null;
-	EventHandler   eh            =  null;
+	ChangeMenuView 		cmv           =  null;
+	MainView       		mv            =  null;
+	EventHandler   		eh            =  null;
 	
-	JPanel         jp_center     =  null;
-	JPanel         jp_south      =  null;
-	TitledBorder   tb_center     =  null;
-	TitledBorder   tb_south   	 =  null;
-	public RButton jbrun         =  null;
-	public RButton jbno          =  null;
-  public JComboBox jcb1          =  null;      
+	JPanel         		jp_center     =  null;
+	JPanel         		jp_south      =  null;
+	TitledBorder   		tb_center     =  null;
+	TitledBorder   		tb_south	  =  null;
+	public RButton 		jbrun         =  null;
+	public RButton 		jbno          =  null;
+	public JComboBox 	jcb1          =  null;      
 	
-	JLabel         jl_mname      =  null;
-	public JTextField     jtf_mname     =  null;
-	JLabel         jl_mprice     =  null;
-	JTextField     jtf_mprice    =  null;
-	JLabel         jl_mtype      =  null;
-	JTextField     jtf_mtype     =  null;
-	JLabel         jl_mldate     =  null;
-	JTextField     jtf_mldate    =  null;
+	JLabel         		jl_mname      =  null;
+	public JTextField   jtf_mname     =  null;
+	JLabel         		jl_mprice     =  null;
+	JTextField     		jtf_mprice    =  null;
+	JLabel         		jl_mtype      =  null;
+	JTextField     		jtf_mtype     =  null;
+//	JLabel         		jl_mldate     =  null;
+//	JTextField     		jtf_mldate    =  null;
 	
-	JLabel         jl_jl1        =  null;
+	JLabel        		jl_jl1        =  null;
 	
-	Font           ft1           =  null;
-	Font           ft2           =  null;
-	String[]       type          =  {"main","beverage","side"};
-	
-	public ChangeMenuView(MainView mv) {
-		this();
-		this.mv = mv;
-		eh = mv.eh;
-	}
+	Font           		ft1           =  null;
+	Font           		ft2           =  null;
+	private String[]    type          =  {"Main","Drink","Side"};
+	private boolean		add		 	  ;
+	private MenuVO		mVO			  = null;
 	
 	public ChangeMenuView() {
 		
@@ -60,7 +57,6 @@ public class ChangeMenuView extends JDialog{
      jbno          =  new RButton("취소");
      jcb1          =  new JComboBox(type);
      
-     
      tb_center     =  new TitledBorder(new LineBorder(Color.white));
      tb_south      =  new TitledBorder(new LineBorder(Color.white));
 
@@ -69,9 +65,9 @@ public class ChangeMenuView extends JDialog{
      jl_mprice     =  new JLabel("상품가격");
      jtf_mprice    =  new JTextField();
      jl_mtype      =  new JLabel("상품종류");
-     jtf_mtype     =  new JTextField();
-     jl_mldate     =  new JLabel("상품등록일");
-     jtf_mldate    =  new JTextField();
+//     jtf_mtype     =  new JTextField();
+//     jl_mldate     =  new JLabel("상품등록일");
+//     jtf_mldate    =  new JTextField();
      
      jl_jl1        =  new JLabel("빈칸을 채운후 처리버튼을 눌러주세요");
      
@@ -79,11 +75,17 @@ public class ChangeMenuView extends JDialog{
 	 ft2           =  new Font("휴먼모음T", Font.BOLD, 20);
 	}
 	
+	public ChangeMenuView(MainView mv) {
+		this();
+		this.mv = mv;
+		eh = mv.eh;
+	}
+	
 	public String getJtf_mname() { return jtf_mname.getText(); }
 	public void setJtf_mname(String mname) {
 		jtf_mprice.setText(mname);
 	}
-	public String getJtf_mprice() { return jtf_mprice.getText(); }
+	public int getJtf_mprice() { return Integer.parseInt(jtf_mprice.getText()); }
 	public void setJtf_mprice(String mprice) {
 		jtf_mprice.setText(mprice);
 	}
@@ -91,6 +93,7 @@ public class ChangeMenuView extends JDialog{
 	public void setJtf_mtype(String mtype) {
 		mtype = jcb1.getSelectedItem().toString();
 	}
+
 	//화면처리부
 	public void initDisplay() {
 		
@@ -149,18 +152,47 @@ public class ChangeMenuView extends JDialog{
 		this.setLocationRelativeTo(null);
 		
 	}
+	private int getIndexOfType(MenuVO mVO) {
+		int idx = 0;
+		for(int i = 0; i < type.length; i++) {
+			if(type[i].toLowerCase().equals(mVO.getM_type().toLowerCase()))
+				idx = i;
+		}
+		return idx;
+	}
+	public boolean checkToAdd() {
+		return add;
+	}
+	public void setAdd(boolean add) {
+		this.add = add;
+	}
+	
+	public void reset() {
+		jtf_mname.setText("");
+		jtf_mprice.setText("");
+		jcb1.setSelectedIndex(0);
+		
+	}
+	public void setMVO(MenuVO mVO) {
+		this.mVO = mVO;
+	}
+	public MenuVO getDisplay() {
+		this.mVO.setM_name(jtf_mname.getText());
+		this.mVO.setM_price(Integer.parseInt(jtf_mprice.getText()));
+		this.mVO.setM_type(jcb1.getSelectedItem().toString());
+		return mVO;
+	}
+	public void setDisplay() {
+		jtf_mname.setText(mVO.getM_name()); 
+		jtf_mprice.setText(mVO.getM_price()+"");
+		jcb1.setSelectedIndex(getIndexOfType(mVO));
+	}
+
 	public static void main(String[] args) {
 		ChangeMenuView cmv = new ChangeMenuView();
+		cmv.jcb1.setSelectedIndex(1);
 				cmv.initDisplay();
+
 	}
 			
-		
-	
-	
-	
-	
-	
-	
-	
-	
 }
