@@ -169,6 +169,8 @@ public class CartView extends JDialog {
 		cartList.addElement(mVO);
 	}
 	
+	
+	
 	public void showCartList() {
 		for(int i=0;i<this.cartList.size();i++) {
 			Vector oneRow = new Vector();

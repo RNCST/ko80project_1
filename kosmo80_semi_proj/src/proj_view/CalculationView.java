@@ -3,8 +3,8 @@ package proj_view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Vector;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,6 +14,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import proj_back.EventHandler;
+import proj_back.MenuVO;
 
 public class CalculationView extends JFrame {
 
@@ -31,6 +32,9 @@ public class CalculationView extends JFrame {
 	String 				array[]    		= {"판매내역"};
 	String 				data[][]   		= new String[0][0];
 	Font 				ft1 			= null; 
+	
+	
+	
  
 	
 	

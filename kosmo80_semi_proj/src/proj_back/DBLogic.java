@@ -114,14 +114,14 @@ public class DBLogic {
 	}
 	
 	public void insertMenu(MenuVO mVO) {
-		sql.append("INSERT INTO menu (m_num, m_name, m_price, m_type, m_lunch_date) values (?, ?, ?, LOWER(?), TO_DATE(sysdate, 'RR/MM/DD'))"); 
+		sql.append("INSERT INTO menu (m_num, m_name, m_price) values (?, ?, ?)"); 
 		try {
 			pstmt = con.prepareStatement(sql.toString());
 			System.out.println(sql.toString());
 			pstmt.setInt(1, getLastIndex("menu")+1);
 			pstmt.setString(2, mVO.getM_name());
 			pstmt.setInt(3, mVO.getM_price());
-			pstmt.setString(4, mVO.getM_type());
+//			pstmt.setString(4, mVO.getM_type());
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (Exception e) {

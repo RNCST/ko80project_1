@@ -1,0 +1,108 @@
+package proj_view;
+
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import proj_back.EventHandler;
+
+public class isAdminView extends JFrame {
+	
+	isAdminView iav = null;
+	MainView mv     = null;
+	EventHandler eh = null;
+
+	public RButton jb_login = null;
+	public RButton jb_chpw = null;
+	public RButton jb_out = null;
+
+	JTextField jtf_pw = null;
+
+	JPanel jp_south = null;
+	JPanel jp_center = null;
+
+	JLabel jlb = null;
+
+	Font ft1 = null;
+	Font ft2 = null;
+
+	public isAdminView() {
+		jb_login  = new RButton("login");
+		jb_chpw = new RButton("change pw");
+		jb_out    = new RButton("Cancel");
+
+		jtf_pw    = new JTextField();
+		jp_south  = new JPanel();
+		jp_center = new JPanel();
+		
+		jlb      = new JLabel();
+
+		ft1      = new Font("휴먼모음T", Font.PLAIN, 15);
+		ft2      = new Font("Ariel", Font.BOLD, 15);
+
+	}
+	public isAdminView(MainView mv) {
+		this();
+		this.mv = mv;
+		eh = mv.eh;
+	}
+	public void initDisplay() {
+		this.getContentPane().setLayout(null);
+		
+		jb_login.setFont(ft2);
+		jb_chpw.setFont(ft2);
+		jb_out.setFont(ft2);
+		jlb.setFont(ft1);
+		
+		
+		jlb.setBounds(0, 20, 400, 100);
+		jlb.setHorizontalAlignment(JLabel.CENTER);
+		jlb.setText("<html>로그인을 위해 <br>"
+				+ "패스워드를 입력해주십시오.</html>");
+		
+		jtf_pw.setBounds(130, 100, 112, 25);
+		jtf_pw.setHorizontalAlignment(JLabel.CENTER);
+		
+		this.getContentPane().add(jlb);
+		this.getContentPane().add(jtf_pw);
+		
+		jb_login.setBounds( 10, 170, 112, 30);
+	    jb_chpw.setBounds(130, 170, 112, 30);
+	    jb_out.setBounds(250, 170, 112, 30);
+		
+		this.getContentPane().add(jb_login);
+		this.getContentPane().add(jb_chpw);
+		this.getContentPane().add(jb_out);
+		
+		this.setTitle("관리자 진입확인");
+		this.setSize(400,300);
+		this.setVisible(true);
+		this.setLocationRelativeTo(null);
+		
+	}
+	public static void main(String[] args) {
+
+		isAdminView iav = new isAdminView();
+		iav.initDisplay();
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

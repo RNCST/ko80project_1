@@ -81,6 +81,7 @@ public class BuyOkView extends JDialog{
 	}
 	public static void main(String[] args) {
 		BuyOkView ok = new BuyOkView();
+		System.out.println(ok.getTimer());
 		ok.initDiplayOkView();
 	}
 }
