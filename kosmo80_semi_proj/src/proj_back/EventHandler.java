@@ -19,6 +19,7 @@ import proj_view.MainView;
 import proj_view.SignUpView;
 import proj_view.UView;
 import proj_view.isAdminView;
+import proj_view.pwView;
 
 /**************************************************************
  * 
@@ -38,9 +39,11 @@ public class EventHandler implements ActionListener, ItemListener {
 	MenuVO mVO = null;
 	Vector<MenuVO> mVOS = null;
 	MenuVO cart[] = null;
+	PwVO   pw[]   = null;
 	InterView iv = null;
 	isAdminView iav = null;
 	SignUpView  suv = null;
+	pwView      pv  = null;
 	String[] m_type = { "main", "drink", "side" };
 	int idx = 0;
 	String type = "";
@@ -106,10 +109,25 @@ public class EventHandler implements ActionListener, ItemListener {
 		this.iav.jb_login.addActionListener(this);
 		this.iav.jb_chpw.addActionListener(this);
 		this.iav.jb_out.addActionListener(this);
+		this.iav.jb_input.addActionListener(this);
 		
 		this.suv = new SignUpView(this.mv);
 		this.suv.jb_chpw.addActionListener(this);
 		this.suv.jb_out.addActionListener(this);
+		
+		this.pv = new pwView(this.mv);
+		this.pv.jb_1.addActionListener(this);
+		this.pv.jb_2.addActionListener(this);
+		this.pv.jb_3.addActionListener(this);
+		this.pv.jb_4.addActionListener(this);
+		this.pv.jb_5.addActionListener(this);
+		this.pv.jb_6.addActionListener(this);
+		this.pv.jb_7.addActionListener(this);
+		this.pv.jb_8.addActionListener(this);
+		this.pv.jb_9.addActionListener(this);
+		this.pv.jb_0.addActionListener(this);
+		this.pv.jb_b1.addActionListener(this);
+		this.pv.jb_b2.addActionListener(this);
 
 		this.db = DBLogic.getInstance();
 		this.mVOS = db.getList("main");
@@ -358,44 +376,97 @@ public class EventHandler implements ActionListener, ItemListener {
 
 		} else if (iav.jb_login == obj) {
 			System.out.println("event labetl:" + cmd);
-			if(isul ==0) {
-				clv.initDisplay();
-			return;
-			}if(isul ==1) {
-				uv.refresh();
-				System.out.println("event labetl:" + cmd);
-				iv = this.uv;
-				try {
-					this.mVOS = db.getList();
+			String text = iav.get_text();
+			System.out.println("jtf텍스트는 "+ text+"|");
+			System.out.println("db.cjecl는 "+db.checkPw()+"|");
+			
+			System.out.println(text.equals(db.checkPw()));
+			if(db.checkPw().equals(text)){
+				if(isul ==0) {
+					clv.initDisplay();
+					return;}
+				if(isul ==1) {
+					uv.refresh();
+					System.out.println("event labetl:" + cmd);
+					iv = this.uv;
+					try {
+						this.mVOS = db.getList();
 
-				} catch (Exception e) {
-					System.out.println("U.L" + e);
-				}
-				uv.initDisplay();
+					} catch (Exception e) {
+						System.out.println("U.L" + e);
+					}
+				uv.initDisplay(); 
 				uv.setVisible(true);
 				uv.setrow(this.mVOS);
-				return;
-			}
+				return;}
+			}else{JOptionPane.showMessageDialog(iav, "비밀번호를 확인해주세요.");};
 			//패스워드가 맞다면 UL모드 나 OL모드 띄우기
 			
 		} else if (iav.jb_chpw == obj) {
 			System.out.println("event labetl:" + cmd);
-			this.suv.initDisplay();
+			String text = iav.get_text();
+			if(db.checkPw().equals(text)) {
+				this.suv.initDisplay();
+			}else{JOptionPane.showMessageDialog(iav, "비밀번호를 확인해주세요.");};
 			return;
 
 			//SignUpView 띄우기
+		} else if (suv.jb_chpw == obj) {
+			System.out.println("event labetl:" + cmd);
+			String text = suv.get_text();
+			if(text.length()<4) {
+				JOptionPane.showMessageDialog(suv, "비밀번호는 네자리입니다.");
+			}else{
+				db.changePw(text);
+			}
+			return;
 		} else if (iav.jb_out == obj) {
 			System.out.println("event labetl:" + cmd);
 			this.iav.dispose();
 			return;
 			
 			//isAdminView 끄기
-		} else if (suv.jb_chpw == obj) {
+			
+		} else if (iav.jb_input == obj) {
+			System.out.println("event labetl:" + cmd);
+			pv.initDisplay();
+			return;
+		} else if (pv.jb_0 == obj) {
 			System.out.println("event labetl:" + cmd);
 			return;
-			
-			//SignUpView 띄우기
-		
+		} else if (pv.jb_1 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_2 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_3 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_4 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_5 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_6 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_7 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_8 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_9 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_b1 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
+		} else if (pv.jb_b2 == obj) {
+			System.out.println("event labetl:" + cmd);
+			return;
 	} else if (suv.jb_out == obj) {
 		System.out.println("event labetl:" + cmd);
 		this.suv.dispose();

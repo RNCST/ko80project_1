@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import proj_back.BoundDocument;
+
 public class SignUpView extends JDialog {
 
 	MainView mv     = null;
@@ -33,7 +35,7 @@ public class SignUpView extends JDialog {
 		jp_south  = new JPanel();
 		jp_center = new JPanel();
 		
-		jlb      = new JLabel();
+		jlb      = new JLabel(); 
 
 		ft1      = new Font("휴먼모음T", Font.PLAIN, 15);
 		ft2      = new Font("Ariel", Font.BOLD, 15);
@@ -57,6 +59,7 @@ public class SignUpView extends JDialog {
 		
 		jtf_pw.setBounds(130, 100, 112, 25);
 		jtf_pw.setHorizontalAlignment(JLabel.CENTER);
+		jtf_pw.setDocument(new BoundDocument(4, jtf_pw));
 		
 		this.add(jlb);
 		this.add(jtf_pw);
@@ -71,6 +74,11 @@ public class SignUpView extends JDialog {
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		
+	}
+	
+	public String get_text() { return jtf_pw.getText();}
+	public void set_text(String text) {
+		jtf_pw.setText(text);
 	}
 	public static void main(String[] args) {
 

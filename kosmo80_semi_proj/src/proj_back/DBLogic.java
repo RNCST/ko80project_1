@@ -19,6 +19,7 @@ public class DBLogic {
 	private StringBuffer 			sql		= null;
 	private ResultSet				rs		= null;
 	private MenuVO[] 				mvoList = null;
+	private LoginVO[] 				lvoList = null;
 	static EventHandler 			eh      = null;
 
 	
@@ -190,16 +191,53 @@ public class DBLogic {
 			System.out.println("deleteMenu() : " + e);
 		}
 	}
-	
-	void close() {
-		try {
-			if(rs!=null)rs.close();
-			if(con!=null)con.close();
-			
-		} catch (Exception e) {
-			System.out.println("exit() :" + e);
-		}
+
+	public void setPw() {
+		Vector<PwVO> pwVOS = new Vector<PwVO>();
 	}
+	
+	 
+	
+	public String checkPw() {
+//		sql.append("SELECT u_pw "
+//				+ "FROM USERS");
+		sql.append("select LPAD(u_pw, 4 , 0) from USERS");
+		String upw = null;
+			try {
+				pstmt = con.prepareStatement(sql.toString());
+				rs = pstmt.executeQuery();
+				rs.next();
+				upw = rs.getString(1);	
+				rs.close();
+				pstmt.close();
+			} catch (Exception e) {
+				System.out.println("checkPw() : " + e);
+			} finally {
+				sql.setLength(0);
+			}
+			return upw;
+	}
+	
+	public String changePw(String text) {
+		sql.append("UPDATE USERS SET u_pw=? ");
+		String upw = null;
+			try {
+				pstmt = con.prepareStatement(sql.toString());
+				pstmt.setString(1,  text);
+				System.out.println(text);
+				pstmt.executeUpdate();
+				System.out.println("ChangePw");
+				pstmt.close();
+				System.out.println("close");
+			} catch (Exception e) {
+				System.out.println("changePw() : " + e);
+			} finally {
+				sql.setLength(0);
+			}
+			return upw;
+	}
+	
+	
 
 	public static void main(String[] args) {
 		Vector<MenuVO> mv = null;
@@ -211,5 +249,7 @@ public class DBLogic {
 		}
 		//System.out.println(dl.getLastIndex("users"));
 		System.out.println(dl.getLastIndex("menu"));
+		
+		System.out.println(dl.checkPw());
 	}
 }

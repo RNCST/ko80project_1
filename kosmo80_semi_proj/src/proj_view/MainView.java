@@ -77,7 +77,7 @@ public class MainView extends JFrame {
 		jbco.setBounds( 10, 170, 112, 30);
 	    jbul.setBounds(130, 170, 112, 30);
 	    jbol.setBounds(250, 170, 112, 30);
-	    
+	     
 	    jlb.setFont(ft1);
 	    jbco.setFont(ft2);
 	    jbul.setFont(ft2);

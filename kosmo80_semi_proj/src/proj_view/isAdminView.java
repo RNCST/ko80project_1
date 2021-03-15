@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import proj_back.EventHandler;
+import proj_back.BoundDocument;
 
 public class isAdminView extends JFrame {
 	
@@ -18,11 +19,15 @@ public class isAdminView extends JFrame {
 	public RButton jb_login = null;
 	public RButton jb_chpw = null;
 	public RButton jb_out = null;
+	
+	public RButton jb_input = null;
 
-	JTextField jtf_pw = null;
+
+	public JTextField jtf_pw = null;
 
 	JPanel jp_south = null;
-	JPanel jp_center = null;
+	JPanel jp_center= null;
+	JPanel jp_east  = null;
 
 	JLabel jlb = null;
 
@@ -31,12 +36,14 @@ public class isAdminView extends JFrame {
 
 	public isAdminView() {
 		jb_login  = new RButton("login");
-		jb_chpw = new RButton("change pw");
+		jb_chpw   = new RButton("change pw");
 		jb_out    = new RButton("Cancel");
+		jb_input  = new RButton("패스워드 입력");
 
-		jtf_pw    = new JTextField();
+		jtf_pw    = new JTextField(4);
 		jp_south  = new JPanel();
 		jp_center = new JPanel();
+		jp_east   = new JPanel();
 		
 		jlb      = new JLabel();
 
@@ -55,16 +62,19 @@ public class isAdminView extends JFrame {
 		jb_login.setFont(ft2);
 		jb_chpw.setFont(ft2);
 		jb_out.setFont(ft2);
-		jlb.setFont(ft1);
+		jb_input.setFont(ft2);
+		jlb.setFont(ft2);
 		
 		
-		jlb.setBounds(0, 20, 400, 100);
+		jlb.setBounds(0, 0, 400, 100);
 		jlb.setHorizontalAlignment(JLabel.CENTER);
 		jlb.setText("<html>로그인을 위해 <br>"
 				+ "패스워드를 입력해주십시오.</html>");
 		
-		jtf_pw.setBounds(130, 100, 112, 25);
+		jtf_pw.setBounds(130, 80, 112, 25);
+		jtf_pw.setDocument(new BoundDocument(4, jtf_pw));
 		jtf_pw.setHorizontalAlignment(JLabel.CENTER);
+		
 		
 		this.getContentPane().add(jlb);
 		this.getContentPane().add(jtf_pw);
@@ -72,16 +82,24 @@ public class isAdminView extends JFrame {
 		jb_login.setBounds( 10, 170, 112, 30);
 	    jb_chpw.setBounds(130, 170, 112, 30);
 	    jb_out.setBounds(250, 170, 112, 30);
+	    jb_input.setBounds(130, 100, 112, 25);
+	    
+	    this.getContentPane().add("East", jp_east);
 		
 		this.getContentPane().add(jb_login);
 		this.getContentPane().add(jb_chpw);
 		this.getContentPane().add(jb_out);
+		this.getContentPane().add(jb_input);
 		
 		this.setTitle("관리자 진입확인");
 		this.setSize(400,300);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		
+	}
+	public String get_text() { return jtf_pw.getText();}
+	public void set_text(String text) {
+		jtf_pw.setText(text);
 	}
 	public static void main(String[] args) {
 
