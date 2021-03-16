@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import proj_back.DBLogic;
 import proj_back.EventHandler;
 
 /**
@@ -23,7 +24,8 @@ public class MainView extends JFrame {
     static EventHandler		eh     		= null;
     CView          			cv     		= null;
     CartView       			cav    		= null;
-    CalculationView 		clv    		= null;    
+    CalculationView 		clv    		= null;  
+    DBLogic                 db          = null;
 	public JFrame  			jf    	 	= null;
 	Container      			co     		= null;
 	public RButton 			jbco   		= null;
@@ -40,6 +42,7 @@ public class MainView extends JFrame {
 	Font 					ft1 		= null; 
 	Font 					ft2 		= null; 
 	
+	public static int menuidx = 0;
 	
 	public MainView() {
 	    cv     		= new CView();
@@ -60,11 +63,13 @@ public class MainView extends JFrame {
 		ft2 		= new Font("Ariel", Font.BOLD, 15);
 		
 		eh 			= new EventHandler(this);
+		
 	}
 	
 	//화면처리부
 	public void initDisplay() {
 		//container가 jframe에??
+
 		
 		jf.getContentPane().setLayout(null);
 		
@@ -103,7 +108,10 @@ public class MainView extends JFrame {
 	}
 	
 	public static void main(String[] args) {
+		
 		MainView mv = new MainView();
 		mv.initDisplay();
+		System.out.println("menuidx에 index값 담기");
+		
 	}
 }

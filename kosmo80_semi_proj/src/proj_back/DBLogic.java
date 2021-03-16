@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
+import proj_view.MainView;
+
 
 public class DBLogic {
 	//선언부
@@ -78,7 +80,6 @@ public class DBLogic {
 			}
 			rs.close();
 			pstmt.close();
-			con.close();
 		} catch (Exception e) {
 			System.out.println("getList() : " + e);
 		} finally {
@@ -123,14 +124,15 @@ public class DBLogic {
 	public void insertMenu(MenuVO mVO) {
 		sql = null;
 		sql = new StringBuffer();
-		sql.append("INSERT INTO menu (m_num, m_name, m_price) values (?, ?, ?)"); 
+		sql.append("INSERT INTO menu (m_num, m_name, m_price, m_type) values (?, ?, ? ,?)"); 
 		try {
 			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
 			System.out.println(con);
 			pstmt = con.prepareStatement(sql.toString());
 			System.out.println(sql.toString());
 			String menu = "menu";
-			int index = getLastIndex(menu);
+			int index = EventHandler.menuidx;
+			System.out.println(index);
 //			int index = 27;
 			System.out.println(index);
 			pstmt.setInt(1, index+1);
@@ -139,7 +141,8 @@ public class DBLogic {
 			System.out.println("2");
 			pstmt.setInt(3, mVO.getM_price());
 			System.out.println("3");
-//			pstmt.setString(4, mVO.getM_type());
+			pstmt.setString(4, mVO.getM_type());
+			System.out.println("4");
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -151,14 +154,13 @@ public class DBLogic {
 		}
 	}
 	
-	int getLastIndex(String table) {
+	public int getLastIndex(String table) {
 		sql = null;
 		sql = new StringBuffer();
 		
 		if("menu".equals(table)) {
 			sql.append("SELECT MAX(m_num) as m_num FROM menu ");
-		}
-		else if("users".equals(table)) {
+		}else if("users".equals(table)) {
 			sql.append("SELECT MAX(u_num) FROM users");
 		}
 		int idx = 0;

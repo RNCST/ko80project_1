@@ -46,8 +46,9 @@ public class EventHandler implements ActionListener, ItemListener {
 	pwView      pv  = null;
 	String[] m_type = { "main", "drink", "side" };
 	int idx = 0;
+	public static int menuidx = 0;
 	String type = "";
-	
+	public static String menutype = "";
 	int isul    = 0;
 
 	// 생성자
@@ -295,10 +296,14 @@ public class EventHandler implements ActionListener, ItemListener {
 
 		} else if (cmv.jcb1 == obj) {
 			System.out.println("event labetl:" + cmd);
-			String name = (String) cmv.jcb1.getSelectedItem();
-			System.out.println(name);
+			menutype = (String) cmv.jcb1.getSelectedItem();
+			System.out.println(menutype);
+			
+			
 
 			return;
+			
+			//jcombobox항목 넣기 ===================================================
 		} else if ("항목 추가".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			cmv.reset();
@@ -329,6 +334,12 @@ public class EventHandler implements ActionListener, ItemListener {
 
 		} else if ("처리".equals(cmd) && cmv.checkToAdd() == true) { // 항목추가에서 처리를 눌렀을때
 			System.out.println("항목추가에서 처리를 눌렀을때");
+			System.out.println("menutype은 "+menutype);
+			menuidx = db.getLastIndex("menu");
+			
+			System.out.println("menuidx는 "+menuidx);
+			//처리가 누르는순간 menuidx에 파라미터에 있는 " " 의 last index가 담김
+		
 			cmv.setMVO(mVO);
 			db.insertMenu(cmv.getDisplay());
 			if (type.equals("")) {
@@ -481,6 +492,9 @@ public class EventHandler implements ActionListener, ItemListener {
 	public void itemStateChanged(ItemEvent e) {
 		Object obj = e.getSource();
 		System.out.println("JCombobox 감지");
+//		String name = (String) cmv.jcb1.getSelectedItem();
+//		System.out.println(name);
+		
 	}
 
 }
