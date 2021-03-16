@@ -57,8 +57,11 @@ public class DBLogic {
 
 	public Vector<MenuVO> getList() { //for NEW
 		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
+		sql = null;
+		sql = new StringBuffer();
 		sql.append(" SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_lunch_date > ADD_MONTHS(sysdate, -1)");
 		try {
+			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -75,6 +78,7 @@ public class DBLogic {
 			}
 			rs.close();
 			pstmt.close();
+			con.close();
 		} catch (Exception e) {
 			System.out.println("getList() : " + e);
 		} finally {
@@ -87,6 +91,8 @@ public class DBLogic {
 	//type을 매개변수로 받아서 main과 drink,side메뉴를 나누어 반환
 	public Vector<MenuVO> getList(String type) {
 		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
+		sql = null;
+		sql = new StringBuffer();
 		sql.append("SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_type = ?");
 		try {
 			pstmt = con.prepareStatement(sql.toString());
@@ -115,14 +121,17 @@ public class DBLogic {
 	}
 	
 	public void insertMenu(MenuVO mVO) {
+		sql = null;
 		sql = new StringBuffer();
 		sql.append("INSERT INTO menu (m_num, m_name, m_price) values (?, ?, ?)"); 
 		try {
+			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+			System.out.println(con);
 			pstmt = con.prepareStatement(sql.toString());
 			System.out.println(sql.toString());
 			String menu = "menu";
 			int index = getLastIndex(menu);
-//			int index = 26;
+//			int index = 27;
 			System.out.println(index);
 			pstmt.setInt(1, index+1);
 			System.out.println("1");
@@ -133,15 +142,19 @@ public class DBLogic {
 //			pstmt.setString(4, mVO.getM_type());
 			pstmt.executeUpdate();
 			pstmt.close();
+			con.close();
 		} catch (Exception e) {
 			System.out.println("insertMenu() : " + e);
+			e.printStackTrace();
 		} finally {
 			sql.setLength(0);
 		}
 	}
 	
 	int getLastIndex(String table) {
+		sql = null;
 		sql = new StringBuffer();
+		
 		if("menu".equals(table)) {
 			sql.append("SELECT MAX(m_num) as m_num FROM menu ");
 		}
@@ -150,13 +163,17 @@ public class DBLogic {
 		}
 		int idx = 0;
 		try {
+			
+			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+			System.out.println(con);
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
 			rs.next();
 			idx = rs.getInt("m_num");
 			System.out.println("idx : " + idx);
-			pstmt.close();
 			rs.close();
+			pstmt.close();
+			con.close();
 		} catch (Exception e) {
 			System.out.println("getLastIndex() : " + e);
 		} finally {
@@ -166,8 +183,11 @@ public class DBLogic {
 	}
 	
 	public void updateMenu(MenuVO mVO) {
+		sql = null;
+		sql = new StringBuffer();
 		sql.append("UPDATE menu SET m_name=?, m_price=?, m_type=LOWER(?) WHERE m_num=? ");
 		try {
+			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, mVO.getM_name());
 			System.out.println(mVO.getM_name());
@@ -179,6 +199,7 @@ public class DBLogic {
 			System.out.println(mVO.getM_num());
 			pstmt.executeUpdate();
 			pstmt.close();
+			con.close();
 			System.out.println("update문 실행");
 		} catch (Exception e) {
 			System.out.println("updateMenu() : " + e);
@@ -189,12 +210,16 @@ public class DBLogic {
 	}
 	
 	public void deleteMenu(int m_num) {
+		sql = null;
+		sql = new StringBuffer();
 		sql.append("DELETE FROM menu WHERE m_num=? ");
 		try {
+			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1 , m_num);
 			pstmt.executeUpdate();
 			pstmt.close();
+			con.close();
 		} catch (Exception e) {
 			System.out.println("deleteMenu() : " + e);
 		}
@@ -207,17 +232,21 @@ public class DBLogic {
 	 
 	
 	public String checkPw() {
+		sql = null;
+		sql = new StringBuffer();
 //		sql.append("SELECT u_pw "
 //				+ "FROM USERS");
 		sql.append("select LPAD(u_pw, 4 , 0) from USERS");
 		String upw = null;
 			try {
+				con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
 				pstmt = con.prepareStatement(sql.toString());
 				rs = pstmt.executeQuery();
 				rs.next();
 				upw = rs.getString(1);	
 				rs.close();
 				pstmt.close();
+				con.close();
 			} catch (Exception e) {
 				System.out.println("checkPw() : " + e);
 			} finally {
@@ -227,9 +256,12 @@ public class DBLogic {
 	}
 	
 	public String changePw(String text) {
+		sql = null;
+		sql = new StringBuffer();
 		sql.append("UPDATE USERS SET u_pw=? ");
 		String upw = null;
 			try {
+				con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
 				pstmt = con.prepareStatement(sql.toString());
 				pstmt.setString(1,  text);
 				System.out.println(text);
@@ -237,6 +269,7 @@ public class DBLogic {
 				System.out.println("ChangePw");
 				pstmt.close();
 				System.out.println("close");
+				con.close();
 			} catch (Exception e) {
 				System.out.println("changePw() : " + e);
 			} finally {
