@@ -95,6 +95,7 @@ public class isAdminView extends JFrame {
 		this.setSize(400,300);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
+		this.setResizable(false);
 		
 	}
 	public String get_text() { return jtf_pw.getText();}

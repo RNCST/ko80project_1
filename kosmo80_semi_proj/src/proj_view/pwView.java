@@ -72,18 +72,18 @@ public class pwView extends JDialog {
 		this.add(jb_0);
 		this.add(jb_b2);
 		
-		jb_9.setPreferredSize(new Dimension(10,40));
-		jb_8.setPreferredSize(new Dimension(40,40));
-		jb_7.setPreferredSize(new Dimension(40,40));
-		jb_6.setPreferredSize(new Dimension(40,40));
-		jb_5.setPreferredSize(new Dimension(40,40));
-		jb_4.setPreferredSize(new Dimension(40,40));
-		jb_3.setPreferredSize(new Dimension(40,40));
-		jb_2.setPreferredSize(new Dimension(40,40));
-		jb_1.setPreferredSize(new Dimension(40,40));
-		jb_0.setPreferredSize(new Dimension(40,40));
-		jb_b1.setPreferredSize(new Dimension(40,40));
-		jb_b2.setPreferredSize(new Dimension(40,40));
+//		jb_9.setPreferredSize(new Dimension(10,40));
+//		jb_8.setPreferredSize(new Dimension(40,40));
+//		jb_7.setPreferredSize(new Dimension(40,40));
+//		jb_6.setPreferredSize(new Dimension(40,40));
+//		jb_5.setPreferredSize(new Dimension(40,40));
+//		jb_4.setPreferredSize(new Dimension(40,40));
+//		jb_3.setPreferredSize(new Dimension(40,40));
+//		jb_2.setPreferredSize(new Dimension(40,40));
+//		jb_1.setPreferredSize(new Dimension(40,40));
+//		jb_0.setPreferredSize(new Dimension(40,40));
+//		jb_b1.setPreferredSize(new Dimension(40,40));
+//		jb_b2.setPreferredSize(new Dimension(40,40));
 		jb_9.setFont(ft2);
 		jb_8.setFont(ft2);
 		jb_7.setFont(ft2);
@@ -100,6 +100,9 @@ public class pwView extends JDialog {
 		this.setSize(300,500);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
+		this.setLocation(1180, 390);
+		this.setResizable(false);
+		
 		
 		
 	}

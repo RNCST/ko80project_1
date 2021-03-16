@@ -382,6 +382,7 @@ public class EventHandler implements ActionListener, ItemListener {
 			
 			System.out.println(text.equals(db.checkPw()));
 			if(db.checkPw().equals(text)){
+				this.pv.dispose();
 				if(isul ==0) {
 					clv.initDisplay();
 					return;}

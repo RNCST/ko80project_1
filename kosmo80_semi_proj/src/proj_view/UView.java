@@ -164,6 +164,7 @@ public class UView extends JDialog implements InterView {
 		jb_out.setPreferredSize(new Dimension(150,50));
 		this.setSize(800,800);
 		this.setVisible(false);
+		this.setResizable(false);
 	}
 	@Override
 	public void refresh() {

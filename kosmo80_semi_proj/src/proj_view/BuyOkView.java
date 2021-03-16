@@ -77,6 +77,7 @@ public class BuyOkView extends JDialog{
 		this.setSize(300, 150);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
+		this.setResizable(false);
 		
 	}
 	public static void main(String[] args) {

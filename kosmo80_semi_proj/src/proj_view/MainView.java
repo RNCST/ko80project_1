@@ -93,6 +93,7 @@ public class MainView extends JFrame {
 		jf.setTitle("k80 키오스크 시스템");
 		jf.setVisible(true);
 		jf.setLocationRelativeTo(null);
+		this.setResizable(false);
 		
 		System.out.println(eh);
 		System.out.println("mv initdisplay호출 성공");

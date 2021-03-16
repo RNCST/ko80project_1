@@ -156,6 +156,7 @@ public class CartView extends JDialog {
 		
 		this.setSize(500, 650);
 		this.setVisible(true);
+		this.setResizable(false);
 		System.out.println("Cav initdisplay호출 성공");
 	}
 	

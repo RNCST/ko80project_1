@@ -106,6 +106,8 @@ public class CView extends JDialog implements InterView {
 		jsp.setPreferredSize(new Dimension(560,650));
 		jtb.setRowHeight(40);
 		jtb.setFont(ft1);
+		jtb.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
+	    jtb.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
 
 		//jtb.setRowHeight(int row_index, int row_height);
 		
@@ -156,6 +158,7 @@ public class CView extends JDialog implements InterView {
 		jb_see.setBounds(350, 50, 300, 300);
 		jp_south.add(jb_see);
 		jb_see.setPreferredSize(new Dimension(150,50));
+		this.setResizable(false);
 		this.setSize(800,800);
 		this.setVisible(false);
 	}

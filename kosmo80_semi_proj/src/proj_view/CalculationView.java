@@ -80,6 +80,7 @@ public class CalculationView extends JFrame {
 		this.setSize(800,800);
 		this.setMinimumSize(getSize());
 		this.setVisible(true);
+		this.setResizable(false);
 	}
 
 

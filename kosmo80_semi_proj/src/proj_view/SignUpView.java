@@ -73,6 +73,7 @@ public class SignUpView extends JDialog {
 		this.setSize(400,300);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
+		this.setResizable(false);
 		
 	}
 	

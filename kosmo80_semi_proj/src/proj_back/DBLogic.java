@@ -115,13 +115,21 @@ public class DBLogic {
 	}
 	
 	public void insertMenu(MenuVO mVO) {
+		sql = new StringBuffer();
 		sql.append("INSERT INTO menu (m_num, m_name, m_price) values (?, ?, ?)"); 
 		try {
 			pstmt = con.prepareStatement(sql.toString());
 			System.out.println(sql.toString());
-			pstmt.setInt(1, getLastIndex("menu")+1);
-			pstmt.setString(2, mVO.getM_name());
+			String menu = "menu";
+			int index = getLastIndex(menu);
+//			int index = 26;
+			System.out.println(index);
+			pstmt.setInt(1, index+1);
+			System.out.println("1");
+			pstmt.setString(2, mVO.getM_name());	
+			System.out.println("2");
 			pstmt.setInt(3, mVO.getM_price());
+			System.out.println("3");
 //			pstmt.setString(4, mVO.getM_type());
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -133,9 +141,9 @@ public class DBLogic {
 	}
 	
 	int getLastIndex(String table) {
-
+		sql = new StringBuffer();
 		if("menu".equals(table)) {
-			sql.append("SELECT MAX(m_num) FROM menu");
+			sql.append("SELECT MAX(m_num) as m_num FROM menu ");
 		}
 		else if("users".equals(table)) {
 			sql.append("SELECT MAX(u_num) FROM users");
@@ -145,10 +153,10 @@ public class DBLogic {
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
 			rs.next();
-			idx = rs.getInt(1);
+			idx = rs.getInt("m_num");
 			System.out.println("idx : " + idx);
-			rs.close();
 			pstmt.close();
+			rs.close();
 		} catch (Exception e) {
 			System.out.println("getLastIndex() : " + e);
 		} finally {
@@ -243,13 +251,12 @@ public class DBLogic {
 		Vector<MenuVO> mv = null;
 		DBLogic dl = new DBLogic();
 		mv=dl.getList("drink");
-		System.out.println("getList test");
-		for(int i = 0; i < mv.size(); i++) {
-			System.out.println(mv.elementAt(i).getM_name() + ", " + mv.elementAt(i).getM_price() + ", " + mv.elementAt(i).getM_type() + ", " + mv.elementAt(i).getM_lunch_date());
-		}
+//		System.out.println("getList test");
+//		for(int i = 0; i < mv.size(); i++) {
+//			System.out.println(mv.elementAt(i).getM_name() + ", " + mv.elementAt(i).getM_price() + ", " + mv.elementAt(i).getM_type() + ", " + mv.elementAt(i).getM_lunch_date());}
 		//System.out.println(dl.getLastIndex("users"));
 		System.out.println(dl.getLastIndex("menu"));
 		
-		System.out.println(dl.checkPw());
+//		System.out.println(dl.checkPw());
 	}
 }
