@@ -132,7 +132,7 @@ public class EventHandler implements ActionListener, ItemListener {
 
 		this.db = DBLogic.getInstance();
 		this.mVOS = db.getList("main");
-		mVO = mVOS.elementAt(0);
+		//mVO = mVOS.elementAt(0);
 
 	}
 
@@ -237,10 +237,14 @@ public class EventHandler implements ActionListener, ItemListener {
 			try {
 				cav.addCartList(mVOS.elementAt(cv.jtb.getSelectedRow()));
 				System.out.println("addCartList실행됨");
-				JOptionPane.showMessageDialog(cv, "장바구니에 추가되었습니다.");
-				cav.refresh();
-				cav.showCartList();
-				cav.initDisplay();
+				int result = JOptionPane.showConfirmDialog(cv, "장바구니에 추가되었습니다.\n장바구니를 확인하시겠습니까?", "장바구니 확인", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if(result == JOptionPane.YES_OPTION) {
+					cav.refresh();
+					cav.showCartList();
+					cav.initDisplay();
+				}else {
+					
+				}
 			} catch (ArrayIndexOutOfBoundsException ie) {
 				JOptionPane.showMessageDialog(cv, "메뉴를 선택하여 주십시오");
 			}
@@ -254,7 +258,13 @@ public class EventHandler implements ActionListener, ItemListener {
 
 		} else if ("결제하기".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			bokv.initDiplayOkView();
+			
+			if(cav.isEmpty() == true) {
+				JOptionPane.showMessageDialog(cav, "장바구니에 물건이 없습니다.");
+			}
+			else {
+				bokv.initDiplayOkView();
+			}
 			return;
 			// OKView 띄우기
 
@@ -267,12 +277,17 @@ public class EventHandler implements ActionListener, ItemListener {
 
 		} else if ("결제".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
+			int idx = db.getLastIndex("transaction");
+			db.insertTransaction(idx, cav.getTotal());
+			db.insertConnection(idx, cav.getCartList());
+			bokv.dispose();
 			cav.cartRemove();
-			System.out.println(bokv.getTimer());
+			cav.dispose();
+			JOptionPane.showMessageDialog(cv, "거래가 완료되었습니다.");
 			return;
 			// OkView 끄고 팝업 띄우기
 
-		} else if (cav.jb_cancel == obj) {
+		} else if ("취소".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			this.bokv.dispose();
 			return;

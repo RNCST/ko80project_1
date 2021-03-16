@@ -54,6 +54,7 @@ public class CartView extends JDialog {
 	Font 						ft1 			= null;
 	Font 						ft2 			= null;
 	Font 						ft3 			= null;
+	private boolean				isEmpty			= true;
 	
 	//생성자
 	public CartView() {
@@ -162,11 +163,13 @@ public class CartView extends JDialog {
 	
 	public void addCartList(MenuVO selectedMenu) {
 		MenuVO mVO = new MenuVO();
+		mVO.setM_num(selectedMenu.getM_num());
 		mVO.setM_name(selectedMenu.getM_name());
 		mVO.setM_price(selectedMenu.getM_price());
 		mVO.setM_type(selectedMenu.getM_type());
 		mVO.setM_type(selectedMenu.getM_lunch_date());
 		total += selectedMenu.getM_price();
+		isEmpty = false;
 		cartList.addElement(mVO);
 	}
 	
@@ -188,10 +191,12 @@ public class CartView extends JDialog {
 		
 	}
 	
-	public MenuVO[] getCartList() {
-		MenuVO[] cl = null;
-		cartList.copyInto(cl);
-		return cl;
+	public Vector<MenuVO> getCartList() {
+			return cartList;
+	}
+	
+	public boolean isEmpty() {
+		return isEmpty;
 	}
 	
 	public int getTotal() {
@@ -205,6 +210,7 @@ public class CartView extends JDialog {
 	}
 	public void cartRemove() {
 		cartList.removeAllElements();
+		isEmpty = true;
 		this.total=0;
 	}
 	

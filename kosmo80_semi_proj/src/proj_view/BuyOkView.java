@@ -1,7 +1,6 @@
 package proj_view;
 
 import java.awt.Font;
-import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -29,32 +28,6 @@ public class BuyOkView extends JDialog{
 	public BuyOkView() {
 	}
 	
-		
-	public String getTimer() {
-		Calendar cal = Calendar.getInstance();
-		
-		int year     = cal.get(Calendar.YEAR);
-		int month    = cal.get(Calendar.MONTH);
-		int day      = cal.get(Calendar.DATE);
-		int hour     = cal.get(Calendar.HOUR_OF_DAY);
-		int min      = cal.get(Calendar.MINUTE);
-		int sec      = cal.get(Calendar.SECOND);
-//		String str1   = Integer.toString(hour);
-//		if(str1.length()==1) {
-//			str1 = "0"+str1;
-//		}
-//		String str2   = Integer.toString(min);
-//		if(str2.length()==1) {
-//			str2 = "0"+str2;
-//		}
-//		String str3   = Integer.toString(sec);
-//		if(str3.length()==1) {
-//			str3 = "0"+str3;
-//		}
-		return year+"년"+month+"월"+day+"일 "+hour+":"+min+":"+sec;
-	}
-	
-		
 	
 	public void initDiplayOkView() {
 		Font ft1 = new Font("휴먼모음T", Font.PLAIN, 15);
@@ -82,7 +55,6 @@ public class BuyOkView extends JDialog{
 	}
 	public static void main(String[] args) {
 		BuyOkView ok = new BuyOkView();
-		System.out.println(ok.getTimer());
 		ok.initDiplayOkView();
 	}
 }

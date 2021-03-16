@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Calendar;
 import java.util.Vector;
 
 import proj_view.MainView;
@@ -32,7 +33,7 @@ public class DBLogic {
 		sql = new StringBuffer();
 		try {
 			Class.forName(_DRIVER);
-			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+			//con = DriverManager.getConnection(_URL, _USER, _PW);
 		} catch (Exception e) {
 			System.out.println("DBLogic() : " + e);
 		}
@@ -63,7 +64,7 @@ public class DBLogic {
 		sql = new StringBuffer();
 		sql.append(" SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_lunch_date > ADD_MONTHS(sysdate, -1)");
 		try {
-			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -82,8 +83,6 @@ public class DBLogic {
 			pstmt.close();
 		} catch (Exception e) {
 			System.out.println("getList() : " + e);
-		} finally {
-			sql.setLength(0);
 		}
 		return mvoVec;
 	}
@@ -115,8 +114,6 @@ public class DBLogic {
 			pstmt.close();
 		} catch (Exception e) {
 			System.out.println("getList() : " + e);
-		} finally {
-			sql.setLength(0);
 		}
 		return mvoVec;
 	}
@@ -126,7 +123,7 @@ public class DBLogic {
 		sql = new StringBuffer();
 		sql.append("INSERT INTO menu (m_num, m_name, m_price, m_type) values (?, ?, ? ,?)"); 
 		try {
-			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+			con = DriverManager.getConnection(_URL, _USER, _PW);
 			System.out.println(con);
 			pstmt = con.prepareStatement(sql.toString());
 			System.out.println(sql.toString());
@@ -149,8 +146,6 @@ public class DBLogic {
 		} catch (Exception e) {
 			System.out.println("insertMenu() : " + e);
 			e.printStackTrace();
-		} finally {
-			sql.setLength(0);
 		}
 	}
 	
@@ -162,26 +157,27 @@ public class DBLogic {
 			sql.append("SELECT MAX(m_num) as m_num FROM menu ");
 		}else if("users".equals(table)) {
 			sql.append("SELECT MAX(u_num) FROM users");
+		}else if("transaction".equals(table)) {
+			sql.append("SELECT MAX(t_num) FROM transaction");
+			
 		}
 		int idx = 0;
 		try {
 			
-			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+			con = DriverManager.getConnection(_URL, _USER, _PW);
 			System.out.println(con);
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
 			rs.next();
-			idx = rs.getInt("m_num");
+			idx = rs.getInt(1);
 			System.out.println("idx : " + idx);
 			rs.close();
 			pstmt.close();
 			con.close();
 		} catch (Exception e) {
 			System.out.println("getLastIndex() : " + e);
-		} finally {
-			sql.setLength(0);
 		}
-		return idx;
+		return idx+1;
 	}
 	
 	public void updateMenu(MenuVO mVO) {
@@ -189,7 +185,7 @@ public class DBLogic {
 		sql = new StringBuffer();
 		sql.append("UPDATE menu SET m_name=?, m_price=?, m_type=LOWER(?) WHERE m_num=? ");
 		try {
-			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, mVO.getM_name());
 			System.out.println(mVO.getM_name());
@@ -205,10 +201,7 @@ public class DBLogic {
 			System.out.println("update문 실행");
 		} catch (Exception e) {
 			System.out.println("updateMenu() : " + e);
-		} finally {
-			sql.setLength(0);
 		}
-
 	}
 	
 	public void deleteMenu(int m_num) {
@@ -216,7 +209,7 @@ public class DBLogic {
 		sql = new StringBuffer();
 		sql.append("DELETE FROM menu WHERE m_num=? ");
 		try {
-			con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1 , m_num);
 			pstmt.executeUpdate();
@@ -241,7 +234,7 @@ public class DBLogic {
 		sql.append("select LPAD(u_pw, 4 , 0) from USERS");
 		String upw = null;
 			try {
-				con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+				con = DriverManager.getConnection(_URL, _USER, _PW);
 				pstmt = con.prepareStatement(sql.toString());
 				rs = pstmt.executeQuery();
 				rs.next();
@@ -251,8 +244,6 @@ public class DBLogic {
 				con.close();
 			} catch (Exception e) {
 				System.out.println("checkPw() : " + e);
-			} finally {
-				sql.setLength(0);
 			}
 			return upw;
 	}
@@ -263,7 +254,7 @@ public class DBLogic {
 		sql.append("UPDATE USERS SET u_pw=? ");
 		String upw = null;
 			try {
-				con = DriverManager.getConnection(_URL, "ko80project_1", "abcd1234");
+				con = DriverManager.getConnection(_URL, _USER, _PW);
 				pstmt = con.prepareStatement(sql.toString());
 				pstmt.setString(1,  text);
 				System.out.println(text);
@@ -274,12 +265,103 @@ public class DBLogic {
 				con.close();
 			} catch (Exception e) {
 				System.out.println("changePw() : " + e);
-			} finally {
-				sql.setLength(0);
 			}
 			return upw;
 	}
 	
+	//거래 발생시 데이터베이스에 기록
+	public void insertTransaction(int idx, int total) {
+		sql = null;
+		sql = new StringBuffer();
+		sql.append("INSERT INTO transaction (t_num, t_date, t_total) values (?, sysdate, ?)"); 
+		try {
+			con = DriverManager.getConnection(_URL, _USER, _PW);
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, idx);
+			pstmt.setInt(2, total);
+			pstmt.executeUpdate();
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			System.out.println("insertTransaction() : " + e);
+			e.printStackTrace();
+		}
+	}
+	//거래기록과 메뉴를 연결
+	public void insertConnection(int idx, Vector<MenuVO> mVec) {
+		sql = null;
+		sql = new StringBuffer();
+		sql.append("INSERT INTO connection (t_num, m_num) values (?, ?)"); 
+		MenuVO mVO = null;
+		for(int i = 0; i < mVec.size(); i++) {
+			mVO = mVec.elementAt(i);
+			try {
+				con = DriverManager.getConnection(_URL, _USER, _PW);
+				pstmt = con.prepareStatement(sql.toString());
+				pstmt.setInt(1, idx);
+				pstmt.setInt(2, mVO.getM_num());
+				pstmt.executeUpdate();
+				pstmt.close();
+				con.close();
+			} catch (Exception e) {
+				System.out.println("insertTransaction() : " + e);
+				e.printStackTrace();
+			} 
+		}
+	}
+	//거래 기록을 불러오기
+	public Vector<TransactionVO> getTransactionList() {
+		Vector<TransactionVO> tvoVec = new Vector<TransactionVO>();
+		sql = null;
+		sql = new StringBuffer();
+		sql.append(" SELECT t.t_num, t.t_date, m.m_name, m.m_price "
+				+     "FROM menu m, transaction t, connection c	"
+				+ 	 "WHERE t.t_num = c.t_num AND c.m_num = m.m_num ");
+		try {
+			con = DriverManager.getConnection(_URL, _USER, _PW);
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				TransactionVO tVO = null;
+				tVO = new TransactionVO();
+				tVO.setT_num(rs.getInt("t.trans_num"));
+				tVO.setT_date(rs.getString("t.trans_date"));
+				tVO.setM_name(rs.getString("m.m_name"));
+				tVO.setM_price(rs.getInt("m.m_price"));
+				tvoVec.add(tVO);
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println("getList() : " + e);
+		}
+		return tvoVec;
+	}
+	
+	
+	public String getTimer() {
+		Calendar cal = Calendar.getInstance();
+	
+		int year     = cal.get(Calendar.YEAR);
+		int month    = cal.get(Calendar.MONTH);
+		int day      = cal.get(Calendar.DATE);
+		int hour     = cal.get(Calendar.HOUR_OF_DAY);
+		int min      = cal.get(Calendar.MINUTE);
+		int sec      = cal.get(Calendar.SECOND);
+//		String str1   = Integer.toString(hour);
+//		if(str1.length()==1) {
+//			str1 = "0"+str1;
+//		}
+//		String str2   = Integer.toString(min);
+//		if(str2.length()==1) {
+//			str2 = "0"+str2;
+//		}
+//		String str3   = Integer.toString(sec);
+//		if(str3.length()==1) {
+//			str3 = "0"+str3;
+//		}
+		return year+"/"+month+"/"+day+" "+hour+":"+min+":"+sec;
+}
 	
 
 	public static void main(String[] args) {
@@ -290,7 +372,8 @@ public class DBLogic {
 //		for(int i = 0; i < mv.size(); i++) {
 //			System.out.println(mv.elementAt(i).getM_name() + ", " + mv.elementAt(i).getM_price() + ", " + mv.elementAt(i).getM_type() + ", " + mv.elementAt(i).getM_lunch_date());}
 		//System.out.println(dl.getLastIndex("users"));
-		System.out.println(dl.getLastIndex("menu"));
+		System.out.println("menu idx : " + dl.getLastIndex("menu"));
+		System.out.println("tran idx : " + dl.getLastIndex("transaction"));
 		
 //		System.out.println(dl.checkPw());
 	}
