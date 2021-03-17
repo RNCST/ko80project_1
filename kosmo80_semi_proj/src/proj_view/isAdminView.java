@@ -23,7 +23,7 @@ public class isAdminView extends JFrame {
 	public RButton jb_input = null;
 
 
-	public JTextField jtf_pw = null;
+	public RTextField jtf_pw = null;
 
 	JPanel jp_south = null;
 	JPanel jp_center= null;
@@ -33,6 +33,7 @@ public class isAdminView extends JFrame {
 
 	Font ft1 = null;
 	Font ft2 = null;
+	Font ft3 = null;
 
 	public isAdminView() {
 		jb_login  = new RButton("login");
@@ -40,7 +41,7 @@ public class isAdminView extends JFrame {
 		jb_out    = new RButton("Cancel");
 		jb_input  = new RButton("패스워드 입력");
 
-		jtf_pw    = new JTextField(4);
+		jtf_pw    = new RTextField(4);
 		jp_south  = new JPanel();
 		jp_center = new JPanel();
 		jp_east   = new JPanel();
@@ -49,6 +50,7 @@ public class isAdminView extends JFrame {
 
 		ft1      = new Font("휴먼모음T", Font.PLAIN, 15);
 		ft2      = new Font("Ariel", Font.BOLD, 15);
+		ft3      = new Font("Ariel", Font.BOLD, 50);
 
 	}
 	public isAdminView(MainView mv) {
@@ -71,9 +73,11 @@ public class isAdminView extends JFrame {
 		jlb.setText("<html>로그인을 위해 <br>"
 				+ "패스워드를 입력해주십시오.</html>");
 		
-		jtf_pw.setBounds(130, 80, 112, 25);
+		jtf_pw.setBounds(116, 80, 140, 60);
 		jtf_pw.setDocument(new BoundDocument(4, jtf_pw));
 		jtf_pw.setHorizontalAlignment(JLabel.CENTER);
+		jtf_pw.setFont(ft3);
+		jtf_pw.setEnabled(false);
 		
 		
 		this.getContentPane().add(jlb);
