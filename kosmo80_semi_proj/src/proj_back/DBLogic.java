@@ -317,9 +317,8 @@ public class DBLogic {
 		Vector<TransactionVO> tvoVec = new Vector<TransactionVO>();
 		sql = null;
 		sql = new StringBuffer();
-		sql.append(" SELECT t.t_num, t.t_date, m.m_name, m.m_price "
-				+  "   FROM menu m, transaction t, connection c	"
-				+  "  WHERE t.t_num = c.t_num AND c.m_num = m.m_num "
+		sql.append(" SELECT t_num, t_date t_total"
+				+  "   FROM transaction "
 				+  "  ORDER BY t.t_date DESC ");
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
@@ -328,10 +327,9 @@ public class DBLogic {
 			while(rs.next()) {
 				TransactionVO tVO = null;
 				tVO = new TransactionVO();
-				tVO.setT_num(rs.getInt("t.trans_num"));
-				tVO.setT_date(rs.getString("t.trans_date"));
-				tVO.setM_name(rs.getString("m.m_name"));
-				tVO.setM_price(rs.getInt("m.m_price"));
+				tVO.setT_num(rs.getInt("t_num"));
+				tVO.setT_date(rs.getString("t_date"));
+				tVO.setT_total(rs.getInt("t_total"));
 				tvoVec.add(tVO);
 			}
 			rs.close();
@@ -342,6 +340,32 @@ public class DBLogic {
 		return tvoVec;
 	}
 	
+	public Vector<MenuVO> getDetailList(int t_num) {
+		Vector<MenuVO> mVec = new Vector<MenuVO>();
+		sql = null;
+		sql = new StringBuffer();
+		sql.append(" SELECT m.m_num, m.m_name, m.m_price"
+				+  "   FROM transaction t, connection c, menu m"
+				+  "  WHERE c.t_num = ? AND c.num = m.num");
+		try {
+			con = DriverManager.getConnection(_URL, _USER, _PW);
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MenuVO mVO = null;
+				mVO = new MenuVO();
+				mVO.setM_num(rs.getInt("m.m_num"));
+				mVO.setM_name(rs.getString("m.m_name"));
+				mVO.setM_price(rs.getInt("m.m_price"));
+				mVec.add(mVO);
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println("getList() : " + e);
+		}
+		return mVec;
+	}
 	
 	public String getTimer() {
 		Calendar cal = Calendar.getInstance();

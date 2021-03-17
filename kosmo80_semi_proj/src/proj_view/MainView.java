@@ -42,8 +42,6 @@ public class MainView extends JFrame {
 	Font 					ft1 		= null; 
 	Font 					ft2 		= null; 
 	
-	public static int menuidx = 0;
-	
 	public MainView() {
 		
 	    cv     		= new CView();
