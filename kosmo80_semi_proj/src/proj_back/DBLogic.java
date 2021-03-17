@@ -81,6 +81,7 @@ public class DBLogic {
 			}
 			rs.close();
 			pstmt.close();
+			con.close();
 		} catch (Exception e) {
 			System.out.println("getList() : " + e);
 		}
@@ -95,6 +96,7 @@ public class DBLogic {
 		sql = new StringBuffer();
 		sql.append("SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_type = ?");
 		try {
+			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, type);
 			rs = pstmt.executeQuery();
@@ -112,6 +114,7 @@ public class DBLogic {
 			}
 			rs.close();
 			pstmt.close();
+			con.close();
 		} catch (Exception e) {
 			System.out.println("getList() : " + e);
 		}
@@ -135,6 +138,7 @@ public class DBLogic {
 			System.out.println("3" + mVO.getM_price());
 			pstmt.setString(4, mVO.getM_type());
 			System.out.println("4" + mVO.getM_type());
+
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
