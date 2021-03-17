@@ -40,7 +40,7 @@ public class pwView extends JDialog {
 		jb_6 = new RButton("6");
 		jb_7 = new RButton("7");
 		jb_8 = new RButton("8");
-		jb_9 = new RButton("9");
+		jb_9 = new RButton("9"); 
 		jb_0 = new RButton("0");
 		jb_b1= new RButton("지우기");
 		jb_b2= new RButton("입  력");

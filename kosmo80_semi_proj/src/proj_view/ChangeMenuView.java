@@ -177,9 +177,18 @@ public class ChangeMenuView extends JDialog{
 		this.mVO = mVO;
 	} 
 	public MenuVO getDisplay() {
+		try {
+			
+		System.out.println(jtf_mname.getText());
+		System.out.println(jtf_mprice.getText());
+		System.out.println(jcb1.getSelectedItem().toString());
 		this.mVO.setM_name(jtf_mname.getText());
 		this.mVO.setM_price(Integer.parseInt(jtf_mprice.getText()));
 		this.mVO.setM_type(jcb1.getSelectedItem().toString());
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mVO;
 	}
 	public void setDisplay() {

@@ -45,6 +45,7 @@ public class MainView extends JFrame {
 	public static int menuidx = 0;
 	
 	public MainView() {
+		
 	    cv     		= new CView();
 	    cav    		= new CartView();
 	    clv    		= new CalculationView();
@@ -70,7 +71,7 @@ public class MainView extends JFrame {
 	public void initDisplay() {
 		//container가 jframe에??
 
-		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		jf.getContentPane().setLayout(null);
 		
         jlb.setBounds(0, 20, 400, 100);
