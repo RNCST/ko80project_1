@@ -53,6 +53,9 @@ public class EventHandler implements ActionListener, ItemListener {
 	String type = "";
 	public static String menutype = "";
 	int isul    = 0;
+	int isChangePw  = 0;
+	int isSignUp    = 0;
+	
 
 	// 생성자
 //	public EventHandler(CView cv) {
@@ -196,7 +199,6 @@ public class EventHandler implements ActionListener, ItemListener {
 		} else if ("DRINK".equals(cmd)) {
 			iv.refresh();
 			this.cmv.jcb1.setSelectedIndex(1);
-			System.out.println("콤보박스 drink로 변경");
 			type = "drink";
 			System.out.println("event labetl:" + cmd);
 			try {
@@ -291,12 +293,12 @@ public class EventHandler implements ActionListener, ItemListener {
 			return;
 			// OkView 끄고 팝업 띄우기
 
-		} else if (bokv.jb_no == obj) { //BuyOkView에서 취소
+		} else if ("취소".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
-			bokv.dispose();
+			this.bokv.dispose();
 			return;
 
-		} else if (dokv.jb_delete == obj) { //항목삭제 시 최종 확인
+		} else if (dokv.jb_delete == obj) {
 			System.out.println("event labetl:" + cmd);
 			int idx = uv.jtb.getSelectedRow();
 			db.deleteMenu(mVOS.elementAt(idx).getM_num());
@@ -308,7 +310,7 @@ public class EventHandler implements ActionListener, ItemListener {
 			// DeleteOkView
 
 		} else if ("아니요".equals(cmd)) {
-			System.out.println("아니요 event labetl:" + cmd);
+			System.out.println("event labetl:" + cmd);
 			this.dokv.dispose();
 			return;
 			// DeleteOkView
@@ -318,11 +320,8 @@ public class EventHandler implements ActionListener, ItemListener {
 			menutype = (String) cmv.jcb1.getSelectedItem();
 			System.out.println(menutype);
 			
-			
-
 			return;
 			
-			//jcombobox항목 넣기 ===================================================
 		} else if ("항목 추가".equals(cmd)) {
 			System.out.println("event labetl:" + cmd);
 			cmv.reset();
@@ -383,8 +382,9 @@ public class EventHandler implements ActionListener, ItemListener {
 			this.cmv.dispose();
 
 		} else if (cmv.jbno == obj) {
-			System.out.println("취소 event labetl:" + cmd);
-			cmv.dispose();
+			System.out.println("event labetl:" + cmd);
+
+			this.cmv.dispose();
 			return;
 
 		} else if ("U L 모드 종료".equals(cmd)) {
@@ -404,21 +404,339 @@ public class EventHandler implements ActionListener, ItemListener {
 			// CaculationView 새로고침하기
 
 		} else if (iav.jb_login == obj) {
+			pv.initDisplay();
+			isChangePw = 0;
+			
+			
+			//패스워드가 맞다면 UL모드 나 OL모드 띄우기
+			
+		} else if (iav.jb_chpw == obj) {
+			System.out.println("event labetl:" + cmd);
+			isChangePw = 1;
+			String text = iav.get_text();
+			pv.initDisplay();
+
+			return;
+
+			//SignUpView 띄우기
+		} else if (suv.jb_chpw == obj) {
+			isSignUp = 1;
+			pv.initDisplay();
+			System.out.println("event labetl:" + cmd);
+//			String text = suv.get_text();
+//			if(text.length()<4) {
+//				JOptionPane.showMessageDialog(suv, "비밀번호는 네자리입니다.");
+//			}else{
+//				db.changePw(text);
+//			}
+			return;
+		} else if (iav.jb_out == obj) {
+			System.out.println("event labetl:" + cmd);
+			this.iav.dispose();
+			sb.setLength(0);
+			return;
+			
+			//isAdminView 끄기
+
+		} else if (iav.jb_input == obj) {
+			System.out.println("event labetl:" + cmd);
+			pv.initDisplay();
+			return;
+		} else if (pv.jb_0 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("0");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("0");
+				suv.jtf_pw.setText(sb.toString());
+			}
+		} else if (pv.jb_1 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("1");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("1");
+				suv.jtf_pw.setText(sb.toString());
+				return;
+			}
+		} else if (pv.jb_2 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("2");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("2");
+				suv.jtf_pw.setText(sb.toString());
+				return;
+			}
+		} else if (pv.jb_3 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("3");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("3");
+				suv.jtf_pw.setText(sb.toString());
+				return;
+			}
+		} else if (pv.jb_4 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("4");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("4");
+				suv.jtf_pw.setText(sb.toString());
+				return;
+			}
+		} else if (pv.jb_5 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("5");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("5");
+				suv.jtf_pw.setText(sb.toString());
+				return;
+			}
+		} else if (pv.jb_6 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("6");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("6");
+				suv.jtf_pw.setText(sb.toString());
+				return;
+			}
+		} else if (pv.jb_7 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("7");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("7");
+				suv.jtf_pw.setText(sb.toString());
+				return;
+			}
+		} else if (pv.jb_8 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("8");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("8");
+				suv.jtf_pw.setText(sb.toString());
+				return;
+			}
+		} else if (pv.jb_9 == obj) {
+			System.out.println("event labetl:" + cmd);
+			if(isSignUp == 0) {
+			if(sb.length() ==4 ) {
+				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+				sb = new StringBuilder();
+				iav.jtf_pw.setText("");
+				suv.jtf_pw.setText("");
+				return;
+			}
+			sb.append("9");
+			iav.jtf_pw.setText(sb.toString());
+			return;}else if(isSignUp == 1) {
+				if(sb.length() ==4 ) {
+					JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
+					sb = new StringBuilder();
+					iav.jtf_pw.setText("");
+					suv.jtf_pw.setText("");
+					return;
+				}
+				sb.append("9");
+				suv.jtf_pw.setText(sb.toString());
+				return;
+			}
+		} else if (pv.jb_b1 == obj) {
+			System.out.println("event labetl:" + cmd);
+			iav.jtf_pw.setText("");
+			suv.jtf_pw.setText("");
+			
+			sb.setLength(0);
+			System.out.println(iav.jtf_pw.getText());
+			return;
+		} else if (pv.jb_b2 == obj) {
 			System.out.println("event labetl:" + cmd);
 			String text = iav.get_text();
+			String text2 = suv.get_text();
 			System.out.println("jtf텍스트는 "+ text+"|");
+			System.out.println("jtf2텍스트는 "+ text2+"|");
 			System.out.println("db.cjecl는 "+db.checkPw()+"|");
-			
 			System.out.println(text.equals(db.checkPw()));
+			System.out.println(isSignUp);
+			System.out.println(isChangePw);
+			if(isSignUp == 1) {
+				System.out.println("signup진입");
+				isChangePw = 0;
+				suv.jtf_pw.setText("");
+				db.changePw(text2);
+				JOptionPane.showMessageDialog(suv, "비밀번호가 변경되었습니다");
+				sb.setLength(0);
+				System.out.println(isSignUp);
+				return;
+			}
 			if(db.checkPw().equals(text)){
 				this.pv.dispose();
+				if(isChangePw == 1) {
+					System.out.println("icp진입");
+					if(db.checkPw().equals(text)) {
+						this.suv.initDisplay();
+						sb.setLength(0);
+						iav.jtf_pw.setText(sb.toString());
+						return;
+					}else{JOptionPane.showMessageDialog(iav, "비밀번호를 확인해주세요.");};
+					sb.setLength(0);
+					iav.jtf_pw.setText(sb.toString());
+					isChangePw = 0;
+					return;
+				}
 				if(isul ==0) {
+					System.out.println("ol 진입");
 					clv.initDisplay();
+					sb.setLength(0);
+					iav.jtf_pw.setText(sb.toString());
 					return;}
 				if(isul ==1) {
+					System.out.println("uv 진입");
 					uv.refresh();
 					System.out.println("event labetl:" + cmd);
 					iv = this.uv;
+					sb.setLength(0);
+					iav.jtf_pw.setText(sb.toString());
 					try {
 						this.mVOS = db.getList();
 
@@ -430,173 +748,13 @@ public class EventHandler implements ActionListener, ItemListener {
 				uv.setrow(this.mVOS);
 				return;}
 			}else{JOptionPane.showMessageDialog(iav, "비밀번호를 확인해주세요.");};
-			//패스워드가 맞다면 UL모드 나 OL모드 띄우기
-			
-		} else if (iav.jb_chpw == obj) {
-			System.out.println("event labetl:" + cmd);
-			String text = iav.get_text();
-			if(db.checkPw().equals(text)) {
-				this.suv.initDisplay();
-			}else{JOptionPane.showMessageDialog(iav, "비밀번호를 확인해주세요.");};
-			return;
-
-			//SignUpView 띄우기
-		} else if (suv.jb_chpw == obj) {
-			System.out.println("event labetl:" + cmd);
-			String text = suv.get_text();
-			if(text.length()<4) {
-				JOptionPane.showMessageDialog(suv, "비밀번호는 네자리입니다.");
-			}else{
-				db.changePw(text);
-			}
-			return;
-		} else if (iav.jb_out == obj) {
-			System.out.println("event labetl:" + cmd);
-			this.iav.dispose();
-			return;
-			
-			//isAdminView 끄기
-//=============================================================================
-		} else if (iav.jb_input == obj) {
-			System.out.println("event labetl:" + cmd);
-			pv.initDisplay();
-			return;
-		} else if (pv.jb_0 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("0");
-			iav.jtf_pw.setText(sb.toString());
-			if(sb.length()==4) {
-				clv.initDisplay();
-			}
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_1 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("1");
-			iav.jtf_pw.setText(sb.toString());
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_2 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("2");
-			iav.jtf_pw.setText(sb.toString());
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_3 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("3");
-			iav.jtf_pw.setText(sb.toString());
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_4 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("4");
-			iav.jtf_pw.setText(sb.toString());
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_5 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("5");
-			iav.jtf_pw.setText(sb.toString());
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_6 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("6");
-			iav.jtf_pw.setText(sb.toString());
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_7 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("7");
-			iav.jtf_pw.setText(sb.toString());
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_8 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("8");
-			iav.jtf_pw.setText(sb.toString());
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_9 == obj) {
-			System.out.println("event labetl:" + cmd);
-			if(sb.length() ==4 ) {
-				JOptionPane.showMessageDialog(iav, "비밀번호는 네자리입니다. 네자리 이하로만 입력해주세요");
-				sb = new StringBuilder();
-				iav.jtf_pw.setText("");
-				return;
-			}
-			sb.append("9");
-			iav.jtf_pw.setText(sb.toString());
-			System.out.println(iav.jtf_pw.getText()); 
-			return;
-		} else if (pv.jb_b1 == obj) {
-			System.out.println("event labetl:" + cmd);
-			iav.jtf_pw.setText("");
-			
-			sb.replace(0, 4, "0000");
-			System.out.println(iav.jtf_pw.getText());
-			return;
-		} else if (pv.jb_b2 == obj) {
-			System.out.println("event labetl:" + cmd);
 			return;
 	} else if (suv.jb_out == obj) {
 		System.out.println("event labetl:" + cmd);
 		this.suv.dispose();
+		sb.setLength(0);
+		iav.jtf_pw.setText(sb.toString());
+		isSignUp = 0;
 		return;
 		
 		//isAdminView 끄기

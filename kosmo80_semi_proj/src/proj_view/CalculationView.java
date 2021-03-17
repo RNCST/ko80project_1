@@ -23,14 +23,19 @@ public class CalculationView extends JFrame {
 	JFrame         		jf 				= null;
 	JPanel     			jpList 			= null;
 	JPanel   			jpButton 		= null;
-	JTable        		jtb 			= null;
-	JScrollPane   		jsp 			= null;
+	JTable        		jtb_1 			= null;
+	JTable        		jtb_2 			= null;
+	JScrollPane   		jsp_1 			= null;
+	JScrollPane   		jsp_2 			= null;
 	public RButton     	jb_rf 			= null;
 	public RButton     	jb_out 			= null;
 	TitledBorder 		tb_south  		= null;
-	DefaultTableModel 	detm 			= null;
-	String 				array[]    		= {"판매내역"};
-	String 				data[][]   		= new String[0][0];
+	DefaultTableModel 	detm_1			= null;
+	DefaultTableModel 	detm_2			= null;
+	String 				array_1[]       = {"주문번호", "주문일시", "주문금액"};
+	String 				array_2[]    		= {"메뉴명", "가격"};
+	String 				data_1[][]   	= new String[0][2];
+	String 				data_2[][]   		= new String[0][1];
 	Font 				ft1 			= null; 
 	
 	
@@ -41,9 +46,12 @@ public class CalculationView extends JFrame {
 	
 	public CalculationView() {
 		System.out.println("clv initdisplay호출 성공");
-		detm        = new DefaultTableModel(data, array);
-		jtb         = new JTable(detm);
-		jsp         = new JScrollPane(jtb);
+		detm_1        = new DefaultTableModel(data_1, array_1);
+		jtb_1         = new JTable(detm_1);
+		jsp_1         = new JScrollPane(jtb_1);
+		detm_2        = new DefaultTableModel(data_2, array_2);
+		jtb_2         = new JTable(detm_2);
+		jsp_2         = new JScrollPane(jtb_2);
 		jpList      = new JPanel();
 		tb_south	= new TitledBorder(new LineBorder(Color.white));
 		ft1 		= new Font("휴먼모음T", Font.PLAIN, 15);
@@ -59,8 +67,11 @@ public class CalculationView extends JFrame {
 		eh = mv.eh;
 	}
 	public void initDisplay() {
-		jsp.setPreferredSize(new Dimension(810,760));
-		jpList.add(jsp);
+		jsp_1.setPreferredSize(new Dimension(610,760));
+		jpList.add(jsp_1);
+		jpList.setBackground(Color.LIGHT_GRAY);
+		jsp_2.setPreferredSize(new Dimension(310,760));
+		jpList.add(jsp_2);
 		jpList.setBackground(Color.LIGHT_GRAY);
 		
 		jb_out.setFont(ft1);
@@ -77,7 +88,7 @@ public class CalculationView extends JFrame {
 		
 		this.add("Center",jpList);
 		this.add("South",jpButton);
-		this.setSize(800,800);
+		this.setSize(950,800);
 		this.setMinimumSize(getSize());
 		this.setVisible(true);
 		this.setResizable(false);

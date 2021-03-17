@@ -62,9 +62,7 @@ public class DBLogic {
 		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
 		sql = null;
 		sql = new StringBuffer();
-		sql.append(" SELECT m_num, m_name, m_price, m_type, m_lunch_date"
-				+ "    FROM menu WHERE m_lunch_date > ADD_MONTHS(sysdate, -1) "
-				+ "    ORDER BY m_lunch_date");
+		sql.append(" SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_lunch_date > ADD_MONTHS(sysdate, -1)");
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
@@ -96,10 +94,7 @@ public class DBLogic {
 		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
 		sql = null;
 		sql = new StringBuffer();
-		sql.append("SELECT m_num, m_name, m_price, m_type, m_lunch_date "
-				+ "   FROM menu "
-				+ "  WHERE m_type = ? "
-				+ "  ORDER BY m_lunch_date ");
+		sql.append("SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_type = ?");
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
@@ -129,7 +124,7 @@ public class DBLogic {
 	public void insertMenu(int idx, MenuVO mVO) {
 		sql = null;
 		sql = new StringBuffer();
-		sql.append("INSERT INTO menu (m_num, m_name, m_price, m_type , m_lunch_date) values (?, ?, ? ,?, TO_DATE(sysdate, 'RR/MM/DD'))" ); 
+		sql.append("INSERT INTO menu (m_num, m_name, m_price, m_type, m_lunch_date) values (?, ?, ? ,?, TO_DATE(sysdate, 'RR/MM/DD'))" ); 
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			System.out.println(con + "여기까지");
@@ -141,8 +136,9 @@ public class DBLogic {
 			System.out.println("2" + mVO.getM_name());
 			pstmt.setInt(3, mVO.getM_price());
 			System.out.println("3" + mVO.getM_price());
-			pstmt.setString(4, mVO.getM_type().toLowerCase());
-			System.out.println("4" + mVO.getM_type().toLowerCase());
+			pstmt.setString(4, mVO.getM_type());
+			System.out.println("4" + mVO.getM_type());
+
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -268,6 +264,7 @@ public class DBLogic {
 				con.close();
 			} catch (Exception e) {
 				System.out.println("changePw() : " + e);
+				
 			}
 			return upw;
 	}
@@ -317,9 +314,9 @@ public class DBLogic {
 		Vector<TransactionVO> tvoVec = new Vector<TransactionVO>();
 		sql = null;
 		sql = new StringBuffer();
-		sql.append(" SELECT t_num, t_date t_total"
-				+  "   FROM transaction "
-				+  "  ORDER BY t.t_date DESC ");
+		sql.append(" SELECT t.t_num, t.t_date, m.m_name, m.m_price "
+				+     "FROM menu m, transaction t, connection c	"
+				+ 	 "WHERE t.t_num = c.t_num AND c.m_num = m.m_num ");
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
@@ -327,9 +324,10 @@ public class DBLogic {
 			while(rs.next()) {
 				TransactionVO tVO = null;
 				tVO = new TransactionVO();
-				tVO.setT_num(rs.getInt("t_num"));
-				tVO.setT_date(rs.getString("t_date"));
-				tVO.setT_total(rs.getInt("t_total"));
+				tVO.setT_num(rs.getInt("t.trans_num"));
+				tVO.setT_date(rs.getString("t.trans_date"));
+				tVO.setM_name(rs.getString("m.m_name"));
+				tVO.setM_price(rs.getInt("m.m_price"));
 				tvoVec.add(tVO);
 			}
 			rs.close();
@@ -340,32 +338,6 @@ public class DBLogic {
 		return tvoVec;
 	}
 	
-	public Vector<MenuVO> getDetailList(int t_num) {
-		Vector<MenuVO> mVec = new Vector<MenuVO>();
-		sql = null;
-		sql = new StringBuffer();
-		sql.append(" SELECT m.m_num, m.m_name, m.m_price"
-				+  "   FROM transaction t, connection c, menu m"
-				+  "  WHERE c.t_num = ? AND c.num = m.num");
-		try {
-			con = DriverManager.getConnection(_URL, _USER, _PW);
-			pstmt = con.prepareStatement(sql.toString());
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				MenuVO mVO = null;
-				mVO = new MenuVO();
-				mVO.setM_num(rs.getInt("m.m_num"));
-				mVO.setM_name(rs.getString("m.m_name"));
-				mVO.setM_price(rs.getInt("m.m_price"));
-				mVec.add(mVO);
-			}
-			rs.close();
-			pstmt.close();
-		} catch (Exception e) {
-			System.out.println("getList() : " + e);
-		}
-		return mVec;
-	}
 	
 	public String getTimer() {
 		Calendar cal = Calendar.getInstance();

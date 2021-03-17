@@ -17,7 +17,7 @@ public class SignUpView extends JDialog {
 	public RButton jb_chpw  = null;
 	public RButton jb_out    = null;
 
-	JTextField     jtf_pw    = null;
+	public RTextField     jtf_pw    = null;
 
 	JPanel         jp_south  = null;
 	JPanel         jp_center = null;
@@ -26,12 +26,13 @@ public class SignUpView extends JDialog {
 
 	Font           ft1 = null;
 	Font           ft2 = null;
+	Font           ft3 = null;
 
 	public SignUpView() {
 		jb_chpw  = new RButton("change pw");
 		jb_out    = new RButton("Cancel");
 
-		jtf_pw    = new JTextField();
+		jtf_pw    = new RTextField(4);
 		jp_south  = new JPanel();
 		jp_center = new JPanel();
 		
@@ -39,6 +40,7 @@ public class SignUpView extends JDialog {
 
 		ft1      = new Font("휴먼모음T", Font.PLAIN, 15);
 		ft2      = new Font("Ariel", Font.BOLD, 15);
+		ft3      = new Font("Ariel", Font.BOLD, 50);
 
 	}
 	public SignUpView(MainView mv) {
@@ -57,9 +59,11 @@ public class SignUpView extends JDialog {
 		jlb.setHorizontalAlignment(JLabel.CENTER);
 		jlb.setText(" 사용하고자 하는 pw를 입력해 주세요 ");
 		
-		jtf_pw.setBounds(130, 100, 112, 25);
+		jtf_pw.setBounds(116, 80, 140, 60);
 		jtf_pw.setHorizontalAlignment(JLabel.CENTER);
 		jtf_pw.setDocument(new BoundDocument(4, jtf_pw));
+		jtf_pw.setFont(ft3);
+		jtf_pw.setEnabled(false);
 		
 		this.add(jlb);
 		this.add(jtf_pw);
