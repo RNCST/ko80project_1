@@ -7,6 +7,7 @@ import javax.swing.text.*;
  * Title: 텍스트 필드의 글자수 제한 도큐먼트 Description: Copyright: Copyright (c) 2001
  * Company:(주)피플넷 커뮤니케이션즈
  * 
+ * 
  * @author
  * @version 1.0
  */
