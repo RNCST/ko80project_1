@@ -62,7 +62,9 @@ public class DBLogic {
 		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
 		sql = null;
 		sql = new StringBuffer();
-		sql.append(" SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_lunch_date > ADD_MONTHS(sysdate, -1)");
+		sql.append(" SELECT m_num, m_name, m_price, m_type, m_lunch_date"
+				+ "    FROM menu WHERE m_lunch_date > ADD_MONTHS(sysdate, -1) "
+				+ "    ORDER BY m_lunch_date");
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
@@ -94,7 +96,10 @@ public class DBLogic {
 		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
 		sql = null;
 		sql = new StringBuffer();
-		sql.append("SELECT m_num, m_name, m_price, m_type, m_lunch_date FROM menu WHERE m_type = ?");
+		sql.append("SELECT m_num, m_name, m_price, m_type, m_lunch_date "
+				+ "   FROM menu "
+				+ "  WHERE m_type = ? "
+				+ "  ORDER BY m_lunch_date ");
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
@@ -124,7 +129,7 @@ public class DBLogic {
 	public void insertMenu(int idx, MenuVO mVO) {
 		sql = null;
 		sql = new StringBuffer();
-		sql.append("INSERT INTO menu (m_num, m_name, m_price, m_type, m_lunch_date) values (?, ?, ? ,?, TO_DATE(sysdate, 'RR/MM/DD'))" ); 
+		sql.append("INSERT INTO menu (m_num, m_name, m_price, m_type , m_lunch_date) values (?, ?, ? ,?, TO_DATE(sysdate, 'RR/MM/DD'))" ); 
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			System.out.println(con + "여기까지");
@@ -136,9 +141,8 @@ public class DBLogic {
 			System.out.println("2" + mVO.getM_name());
 			pstmt.setInt(3, mVO.getM_price());
 			System.out.println("3" + mVO.getM_price());
-			pstmt.setString(4, mVO.getM_type());
-			System.out.println("4" + mVO.getM_type());
-
+			pstmt.setString(4, mVO.getM_type().toLowerCase());
+			System.out.println("4" + mVO.getM_type().toLowerCase());
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -314,8 +318,9 @@ public class DBLogic {
 		sql = null;
 		sql = new StringBuffer();
 		sql.append(" SELECT t.t_num, t.t_date, m.m_name, m.m_price "
-				+     "FROM menu m, transaction t, connection c	"
-				+ 	 "WHERE t.t_num = c.t_num AND c.m_num = m.m_num ");
+				+  "   FROM menu m, transaction t, connection c	"
+				+  "  WHERE t.t_num = c.t_num AND c.m_num = m.m_num "
+				+  "  ORDER BY t.t_date DESC ");
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());

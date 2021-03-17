@@ -73,6 +73,7 @@ public class ChangeMenuView extends JDialog{
      
 	 ft1           =  new Font("휴먼모음T", Font.PLAIN, 15);
 	 ft2           =  new Font("휴먼모음T", Font.BOLD, 20);
+	 mVO			= new MenuVO();
 	}
 	
 	public ChangeMenuView(MainView mv) {
@@ -171,7 +172,7 @@ public class ChangeMenuView extends JDialog{
 		System.out.println("cmv reseted");
 		jtf_mname.setText("");
 		jtf_mprice.setText("");
-		jcb1.setSelectedIndex(0);
+		//jcb1.setSelectedIndex(0);
 		
 	}
 	public void setMVO(MenuVO mVO) {
@@ -184,7 +185,6 @@ public class ChangeMenuView extends JDialog{
 
 	public void getDisplay() {
 		//MenuVO mVO = new MenuVO();
-
 		this.mVO.setM_name(jtf_mname.getText());
 		//System.out.println(jtf_mname.getText());
 		this.mVO.setM_price(Integer.parseInt(jtf_mprice.getText()));
@@ -203,7 +203,7 @@ public class ChangeMenuView extends JDialog{
 	public static void main(String[] args) {
 		ChangeMenuView cmv = new ChangeMenuView();
 		cmv.jcb1.setSelectedIndex(1);
-				cmv.initDisplay();
+				cmv.initDisplay();  
 
 	}
 			

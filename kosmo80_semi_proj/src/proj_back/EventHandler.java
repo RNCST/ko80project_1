@@ -196,6 +196,7 @@ public class EventHandler implements ActionListener, ItemListener {
 		} else if ("DRINK".equals(cmd)) {
 			iv.refresh();
 			this.cmv.jcb1.setSelectedIndex(1);
+			System.out.println("콤보박스 drink로 변경");
 			type = "drink";
 			System.out.println("event labetl:" + cmd);
 			try {
@@ -290,12 +291,12 @@ public class EventHandler implements ActionListener, ItemListener {
 			return;
 			// OkView 끄고 팝업 띄우기
 
-		} else if ("취소".equals(cmd)) {
+		} else if (bokv.jb_no == obj) { //BuyOkView에서 취소
 			System.out.println("event labetl:" + cmd);
-			this.bokv.dispose();
+			bokv.dispose();
 			return;
 
-		} else if (dokv.jb_delete == obj) {
+		} else if (dokv.jb_delete == obj) { //항목삭제 시 최종 확인
 			System.out.println("event labetl:" + cmd);
 			int idx = uv.jtb.getSelectedRow();
 			db.deleteMenu(mVOS.elementAt(idx).getM_num());
@@ -307,7 +308,7 @@ public class EventHandler implements ActionListener, ItemListener {
 			// DeleteOkView
 
 		} else if ("아니요".equals(cmd)) {
-			System.out.println("event labetl:" + cmd);
+			System.out.println("아니요 event labetl:" + cmd);
 			this.dokv.dispose();
 			return;
 			// DeleteOkView
@@ -382,9 +383,8 @@ public class EventHandler implements ActionListener, ItemListener {
 			this.cmv.dispose();
 
 		} else if (cmv.jbno == obj) {
-			System.out.println("event labetl:" + cmd);
-
-			this.cmv.dispose();
+			System.out.println("취소 event labetl:" + cmd);
+			cmv.dispose();
 			return;
 
 		} else if ("U L 모드 종료".equals(cmd)) {
