@@ -131,7 +131,7 @@ public class EventHandler implements ActionListener, ItemListener {
 		this.pv.jb_b2.addActionListener(this);
 
 		this.db = DBLogic.getInstance();
-		this.mVOS = db.getList("main");
+		//this.mVOS = db.getList("main");
 		//mVO = mVOS.elementAt(0);
 
 	}
@@ -349,14 +349,12 @@ public class EventHandler implements ActionListener, ItemListener {
 
 		} else if ("처리".equals(cmd) && cmv.checkToAdd() == true) { // 항목추가에서 처리를 눌렀을때
 			System.out.println("항목추가에서 처리를 눌렀을때");
-			System.out.println("menutype은 "+menutype);
-			menuidx = db.getLastIndex("menu");
-			
-			System.out.println("menuidx는 "+menuidx);
-			//처리가 누르는순간 menuidx에 파라미터에 있는 " " 의 last index가 담김
-		
-			cmv.setMVO(mVO);
-			db.insertMenu(cmv.getDisplay());
+			cmv.getDisplay();
+			//System.out.println("cmv에서 mvo를 받아온 직후");
+			int i = db.getLastIndex("menu");
+			//System.out.println("db에서 idx를 받아온 직후");
+			db.insertMenu(i , cmv.getMVO());
+			//System.out.println("오라클에 전송");
 			if (type.equals("")) {
 				this.mVOS = db.getList();
 			} else {
@@ -368,7 +366,8 @@ public class EventHandler implements ActionListener, ItemListener {
 
 		} else if ("처리".equals(cmd) && cmv.checkToAdd() == false) { // 항목수정에서 처리를 눌렀을때
 			System.out.println("항목수정에서 처리를 눌렀을때");
-			db.updateMenu(cmv.getDisplay());
+			cmv.getDisplay();
+			db.updateMenu(cmv.getMVO());
 			System.out.println("event labetl:" + "update실행");
 			if (type.equals(""))
 				this.mVOS = db.getList();

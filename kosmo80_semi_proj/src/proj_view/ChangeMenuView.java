@@ -32,7 +32,7 @@ public class ChangeMenuView extends JDialog{
 	public JComboBox 	jcb1          =  null;      
 	
 	JLabel         		jl_mname      =  null;
-	public JTextField   jtf_mname     =  null;
+	JTextField   		jtf_mname     =  null;
 	JLabel         		jl_mprice     =  null;
 	JTextField     		jtf_mprice    =  null;
 	JLabel         		jl_mtype      =  null;
@@ -78,7 +78,7 @@ public class ChangeMenuView extends JDialog{
 	public ChangeMenuView(MainView mv) {
 		this();
 		this.mv = mv;
-		eh = mv.eh;
+		this.eh = mv.eh;
 	}
 	
 	public String getJtf_mname() { return jtf_mname.getText(); }
@@ -168,19 +168,29 @@ public class ChangeMenuView extends JDialog{
 	}
 	
 	public void reset() {
+		System.out.println("cmv reseted");
 		jtf_mname.setText("");
 		jtf_mprice.setText("");
 		jcb1.setSelectedIndex(0);
 		
 	}
 	public void setMVO(MenuVO mVO) {
+		System.out.println("setMVO");
 		this.mVO = mVO;
 	} 
-	public MenuVO getDisplay() {
+	public MenuVO getMVO() {
+		return this.mVO;
+	}
+
+	public void getDisplay() {
+		//MenuVO mVO = new MenuVO();
 		this.mVO.setM_name(jtf_mname.getText());
+		//System.out.println(jtf_mname.getText());
 		this.mVO.setM_price(Integer.parseInt(jtf_mprice.getText()));
+		//System.out.println(jtf_mprice.getText());
 		this.mVO.setM_type(jcb1.getSelectedItem().toString());
-		return mVO;
+		//System.out.println(jcb1.getSelectedItem().toString());
+		//this.mVO = mVO;
 	}
 	public void setDisplay() {
 		jtf_mname.setText(mVO.getM_name()); 

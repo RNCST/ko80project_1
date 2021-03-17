@@ -23,7 +23,7 @@ public class DBLogic {
 	private ResultSet				rs		= null;
 	private MenuVO[] 				mvoList = null;
 	private LoginVO[] 				lvoList = null;
-	static EventHandler 			eh      = null;
+	//private EventHandler 			eh      = null;
 
 	
 
@@ -118,28 +118,23 @@ public class DBLogic {
 		return mvoVec;
 	}
 	
-	public void insertMenu(MenuVO mVO) {
+	public void insertMenu(int idx, MenuVO mVO) {
 		sql = null;
 		sql = new StringBuffer();
-		sql.append("INSERT INTO menu (m_num, m_name, m_price, m_type) values (?, ?, ? ,?)"); 
+		sql.append("INSERT INTO menu (m_num, m_name, m_price, m_type, m_lunch_date) values (?, ?, ? ,?, TO_DATE(sysdate, 'RR/MM/DD'))" ); 
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
-			System.out.println(con);
+			System.out.println(con + "여기까지");
 			pstmt = con.prepareStatement(sql.toString());
 			System.out.println(sql.toString());
-			String menu = "menu";
-			int index = EventHandler.menuidx;
-			System.out.println(index);
-//			int index = 27;
-			System.out.println(index);
-			pstmt.setInt(1, index+1);
-			System.out.println("1");
+			pstmt.setInt(1, idx);
+			System.out.println("1" + idx);
 			pstmt.setString(2, mVO.getM_name());	
-			System.out.println("2");
+			System.out.println("2" + mVO.getM_name());
 			pstmt.setInt(3, mVO.getM_price());
-			System.out.println("3");
+			System.out.println("3" + mVO.getM_price());
 			pstmt.setString(4, mVO.getM_type());
-			System.out.println("4");
+			System.out.println("4" + mVO.getM_type());
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -154,12 +149,11 @@ public class DBLogic {
 		sql = new StringBuffer();
 		
 		if("menu".equals(table)) {
-			sql.append("SELECT MAX(m_num) as m_num FROM menu ");
+			sql.append("SELECT MAX(m_num) FROM menu ");
 		}else if("users".equals(table)) {
 			sql.append("SELECT MAX(u_num) FROM users");
 		}else if("transaction".equals(table)) {
 			sql.append("SELECT MAX(t_num) FROM transaction");
-			
 		}
 		int idx = 0;
 		try {
@@ -176,8 +170,9 @@ public class DBLogic {
 			con.close();
 		} catch (Exception e) {
 			System.out.println("getLastIndex() : " + e);
+		} finally {
+			return idx+1;
 		}
-		return idx+1;
 	}
 	
 	public void updateMenu(MenuVO mVO) {
@@ -363,6 +358,15 @@ public class DBLogic {
 		return year+"/"+month+"/"+day+" "+hour+":"+min+":"+sec;
 }
 	
+	public boolean isNum(String str) {
+		boolean isNumeric = true;
+		for (int i = 0; i < str.length(); i++) {
+			if (!Character.isDigit(str.charAt(i))) {
+				isNumeric = false;
+			}
+		}
+		return isNumeric;
+	}
 
 	public static void main(String[] args) {
 		Vector<MenuVO> mv = null;
