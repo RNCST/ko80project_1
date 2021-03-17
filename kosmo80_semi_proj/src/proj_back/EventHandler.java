@@ -748,6 +748,9 @@ public class EventHandler implements ActionListener, ItemListener {
 				uv.setrow(this.mVOS);
 				return;}
 			}else{JOptionPane.showMessageDialog(iav, "비밀번호를 확인해주세요.");};
+			sb.setLength(0);
+			iav.jtf_pw.setText(sb.toString());
+			isChangePw = 0;
 			return;
 	} else if (suv.jb_out == obj) {
 		System.out.println("event labetl:" + cmd);
