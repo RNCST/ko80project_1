@@ -1,11 +1,11 @@
 package proj_view;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JDialog;
-
 import proj_back.EventHandler;
 
 public class pwView extends JDialog {
@@ -58,6 +58,8 @@ public class pwView extends JDialog {
 	public void initDisplay() {
 		
 		
+//		this.setContentPane(jb_0);
+//		this.setContentPane(jb_1);
 		this.setLayout(new GridLayout(4,3,10,10));
 		this.add(jb_7);
 		this.add(jb_8);
