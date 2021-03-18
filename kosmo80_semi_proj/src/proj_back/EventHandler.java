@@ -831,6 +831,7 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 				}
 				if(isul ==0) {
 					System.out.println("ol 진입");
+					iav.dispose();
 					try {
 						tVOS = db.getTransactionList();
 					} catch (Exception e) {
@@ -838,6 +839,7 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 					}
 					clv.setTransaction(tVOS);
 					clv.initDisplay();
+					
 					
 					
 					sb.setLength(0);
@@ -850,6 +852,7 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 					iv = this.uv;
 					sb.setLength(0);
 					iav.jtf_pw.setText(sb.toString());
+					iav.dispose();
 					try {
 						this.mVOS = db.getList();
 
