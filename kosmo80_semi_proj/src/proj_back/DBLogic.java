@@ -90,6 +90,40 @@ public class DBLogic {
 		return mvoVec;
 	}
 	
+	public Vector<MenuVO> getHotList() { //for Hot
+		Vector<MenuVO> mvoVec = new Vector<MenuVO>();
+		sql = null;
+		sql = new StringBuffer();
+		sql.append(    "SELECT M.m_num, M.m_name, M.m_price, M.m_type, M.m_lunch_date "
+				+"  	  FROM menu M, (SELECT distinct m_name, count(m_name) AS cnt "  
+				+"                     FROM connection " 
+				+"                    GROUP BY m_name " 
+				+"                    ORDER BY cnt DESC) D "  
+				+" 		 WHERE M.m_name = D.m_name AND ROWNUM <= 10 ");
+		try {
+			con = DriverManager.getConnection(_URL, _USER, _PW);
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MenuVO mVO = null;
+				mVO = new MenuVO();
+				mVO.setM_num(rs.getInt(1));
+				mVO.setM_name(rs.getString(2));
+				mVO.setM_price(rs.getInt(3));
+				mVO.setM_type(rs.getString(4));
+				if(rs.getNString(5)!=null) {
+					mVO.setM_lunch_date(rs.getString(5).substring(0, 10));
+				}
+				mvoVec.add(mVO);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			System.out.println("getList() : " + e);
+		}
+		return mvoVec;
+	}
 	
 	//type을 매개변수로 받아서 main과 drink,side메뉴를 나누어 반환
 	public Vector<MenuVO> getList(String type) {
@@ -294,7 +328,7 @@ public class DBLogic {
 	public void insertConnection(int idx, Vector<MenuVO> mVec) {
 		sql = null;
 		sql = new StringBuffer();
-		sql.append("INSERT INTO connection (t_num, m_num) values (?, ?)"); 
+		sql.append("INSERT INTO connection (t_num, m_num, m_name, m_price) values (?, ?, ?, ?)"); 
 		MenuVO mVO = null;
 		for(int i = 0; i < mVec.size(); i++) {
 			mVO = mVec.elementAt(i);
@@ -303,6 +337,8 @@ public class DBLogic {
 				pstmt = con.prepareStatement(sql.toString());
 				pstmt.setInt(1, idx);
 				pstmt.setInt(2, mVO.getM_num());
+				pstmt.setString(3, mVO.getM_name());
+				pstmt.setInt(4, mVO.getM_price());
 				pstmt.executeUpdate();
 				pstmt.close();
 				con.close();
@@ -317,15 +353,15 @@ public class DBLogic {
 		Vector<TransactionVO> tvoVec = new Vector<TransactionVO>();
 		sql = null;
 		sql = new StringBuffer();
-		sql.append(" SELECT t_num, t_date t_total"
+		sql.append(" SELECT t_num, t_date, t_total"
 				+  "   FROM transaction "
-				+  "  ORDER BY t.t_date DESC ");
+				+  "  ORDER BY t_date DESC ");
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
+			TransactionVO tVO = null;
 			while(rs.next()) {
-				TransactionVO tVO = null;
 				tVO = new TransactionVO();
 				tVO.setT_num(rs.getInt("t_num"));
 				tVO.setT_date(rs.getString("t_date"));
@@ -335,7 +371,7 @@ public class DBLogic {
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			System.out.println("getList() : " + e);
+			System.out.println("getTransaction() : " + e);
 		}
 		return tvoVec;
 	}
@@ -344,52 +380,30 @@ public class DBLogic {
 		Vector<MenuVO> mVec = new Vector<MenuVO>();
 		sql = null;
 		sql = new StringBuffer();
-		sql.append(" SELECT m.m_num, m.m_name, m.m_price"
-				+  "   FROM transaction t, connection c, menu m"
-				+  "  WHERE c.t_num = ? AND c.num = m.num");
+		sql.append(" SELECT m_num, m_name, m_price "
+				+  "   FROM connection "
+				+  "  WHERE t_num = ? ");
 		try {
 			con = DriverManager.getConnection(_URL, _USER, _PW);
 			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, t_num);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				MenuVO mVO = null;
 				mVO = new MenuVO();
-				mVO.setM_num(rs.getInt("m.m_num"));
-				mVO.setM_name(rs.getString("m.m_name"));
-				mVO.setM_price(rs.getInt("m.m_price"));
+				mVO.setM_num(rs.getInt("m_num"));
+				mVO.setM_name(rs.getString("m_name"));
+				mVO.setM_price(rs.getInt("m_price"));
 				mVec.add(mVO);
 			}
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			System.out.println("getList() : " + e);
+			System.out.println("getDetailList() : " + e);
 		}
 		return mVec;
 	}
-	
-	public String getTimer() {
-		Calendar cal = Calendar.getInstance();
-	
-		int year     = cal.get(Calendar.YEAR);
-		int month    = cal.get(Calendar.MONTH);
-		int day      = cal.get(Calendar.DATE);
-		int hour     = cal.get(Calendar.HOUR_OF_DAY);
-		int min      = cal.get(Calendar.MINUTE);
-		int sec      = cal.get(Calendar.SECOND);
-//		String str1   = Integer.toString(hour);
-//		if(str1.length()==1) {
-//			str1 = "0"+str1;
-//		}
-//		String str2   = Integer.toString(min);
-//		if(str2.length()==1) {
-//			str2 = "0"+str2;
-//		}
-//		String str3   = Integer.toString(sec);
-//		if(str3.length()==1) {
-//			str3 = "0"+str3;
-//		}
-		return year+"/"+month+"/"+day+" "+hour+":"+min+":"+sec;
-}
+
 	
 	public boolean isNum(String str) {
 		boolean isNumeric = true;

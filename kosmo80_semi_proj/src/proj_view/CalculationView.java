@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import proj_back.EventHandler;
 import proj_back.MenuVO;
+import proj_back.TransactionVO;
 
 public class CalculationView extends JFrame {
 
@@ -23,7 +24,7 @@ public class CalculationView extends JFrame {
 	JFrame         		jf 				= null;
 	JPanel     			jpList 			= null;
 	JPanel   			jpButton 		= null;
-	JTable        		jtb_1 			= null;
+	public JTable       jtb_1 			= null;
 	JTable        		jtb_2 			= null;
 	JScrollPane   		jsp_1 			= null;
 	JScrollPane   		jsp_2 			= null;
@@ -55,7 +56,7 @@ public class CalculationView extends JFrame {
 		jpList      = new JPanel();
 		tb_south	= new TitledBorder(new LineBorder(Color.white));
 		ft1 		= new Font("휴먼모음T", Font.PLAIN, 15);
-		jb_rf       = new RButton("새로 고침");
+		jb_rf       = new RButton("거래상세");
 		jb_out      = new RButton("O L 모드 종료");
 		jpButton    = new JPanel();
 		
@@ -92,6 +93,31 @@ public class CalculationView extends JFrame {
 		this.setMinimumSize(getSize());
 		this.setVisible(true);
 		this.setResizable(false);
+	}
+	
+	public void setTransaction(Vector<TransactionVO> tVOS) {
+		for(int i=0;i<tVOS.size();i++) {
+		    Vector oneRow = new Vector();
+		    oneRow.add(tVOS.elementAt(i).getT_num());
+		    oneRow.add(tVOS.elementAt(i).getT_date());
+		    oneRow.add(tVOS.elementAt(i).getT_total());
+		    this.detm_1.addRow(oneRow);
+		}
+	}
+	
+	public void setDetail(Vector<MenuVO> mVOS) {
+		for(int i=0;i<mVOS.size();i++) {
+		    Vector oneRow = new Vector();
+		    oneRow.add(mVOS.elementAt(i).getM_name());
+		    oneRow.add(mVOS.elementAt(i).getM_price());
+		    this.detm_2.addRow(oneRow);
+		}
+	}
+	
+	public void refresh() {
+		   while(this.detm_2.getRowCount()>0) {
+	            this.detm_2.removeRow(0);
+	         }
 	}
 
 

@@ -41,6 +41,7 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 	DBLogic db = null;
 	MenuVO mVO = null;
 	Vector<MenuVO> mVOS = null;
+	Vector<TransactionVO> tVOS = null;
 	MenuVO cart[] = null;
 	PwVO   pw[]   = null;
 	InterView iv = null;
@@ -179,7 +180,15 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 
 		} else if ("H O T".equals(cmd)) {
 			// 판매량에 따른 분류
+			iv.refresh();
 			System.out.println("event labetl:" + cmd);
+			try {
+				this.mVOS = db.getHotList();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			iv.setrow(this.mVOS);
 			return;
 
 //		} else if ("S E T".equals(cmd)) {
@@ -248,13 +257,11 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 			try {
 				cav.addCartList(mVOS.elementAt(cv.jtb.getSelectedRow()));
 				System.out.println("addCartList실행됨");
-				int result = JOptionPane.showConfirmDialog(cv, "장바구니에 추가되었습니다.\n장바구니를 확인하시겠습니까?", "장바구니 확인", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+				int result = JOptionPane.showConfirmDialog(cv, "장바구니에 추가되었습니다.\n장바구니를 확인하시겠습니까?", "장바구니 확인", JOptionPane.YES_NO_OPTION);
 				if(result == JOptionPane.YES_OPTION) {
 					cav.refresh();
 					cav.showCartList();
 					cav.initDisplay();
-				}else {
-					
 				}
 			} catch (ArrayIndexOutOfBoundsException ie) {
 				JOptionPane.showMessageDialog(cv, "메뉴를 선택하여 주십시오");
@@ -294,7 +301,8 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 			bokv.dispose();
 			cav.cartRemove();
 			cav.dispose();
-			JOptionPane.showMessageDialog(cv, "거래가 완료되었습니다.");
+			cv.dispose();
+				JOptionPane.showMessageDialog(mv, "거래가 완료되었습니다.");
 			return;
 			// OkView 끄고 팝업 띄우기
 
@@ -304,8 +312,12 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 			return;
 
 		} else if (dokv.jb_delete == obj) { //항목삭제 시 최종 확인
-			System.out.println("event labetl:" + cmd);
 			int idx = uv.jtb.getSelectedRow();
+			if(idx == -1) {
+				JOptionPane.showMessageDialog(dokv, "삭제할 메뉴를 선택하여 주십시오.");
+				this.dokv.dispose();
+				return;
+			}
 			db.deleteMenu(mVOS.elementAt(idx).getM_num());
 			mVOS.remove(idx);
 			uv.refresh();
@@ -402,15 +414,22 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 
 			return;
 
-		} else if ("새로 고침".equals(cmd)) {
-			System.out.println("event labetl:" + cmd);
-			return;
-			// CaculationView 새로고침하기
+		} else if ("거래상세".equals(cmd)) {
+		//} else if (clv.jtb_1.getSelectedRow() != -1) {
+			clv.refresh();
+			int idx = clv.jtb_1.getSelectedRow();
+			try {
+				mVOS = db.getDetailList(tVOS.elementAt(idx).getT_num());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			clv.setDetail(mVOS);
 
 		} else if (iav.jb_login == obj) {
 			pv.initDisplay();
 			isChangePw = 0;
 			
+/////////////////////////////////패스워드 처리 관련해서 반복되는 코드가 너무 심하게 많아서 메소드로 처리하거나 해서 불필요한 코드를 줄일 필요가 많이 있을것 같아요 새벽이라 카톡 보내기 좀 그래서 일단 주석으로 의견을 남겨봅니다.
 			
 			//패스워드가 맞다면 UL모드 나 OL모드 띄우기
 			
@@ -441,7 +460,7 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 			return;
 			
 			//isAdminView 끄기
-
+			
 		} else if (iav.jb_input == obj) {
 			System.out.println("event labetl:" + cmd);
 			pv.initDisplay();
@@ -812,7 +831,15 @@ public class EventHandler implements ActionListener, ItemListener , MouseListene
 				}
 				if(isul ==0) {
 					System.out.println("ol 진입");
+					try {
+						tVOS = db.getTransactionList();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					clv.setTransaction(tVOS);
 					clv.initDisplay();
+					
+					
 					sb.setLength(0);
 					iav.jtf_pw.setText(sb.toString());
 					return;}
