@@ -17,7 +17,7 @@ public class DeleteOkView extends JDialog {
 	JLabel  		jl        	= new JLabel("정말로 항목을 삭제할까요?");
 	JPanel  		jp_south  	= new JPanel();
 	JPanel  		jp_center 	= new JPanel();
-	public RButton 	jb_delete    	= new RButton("삭제");
+	public RButton 	jb_delete   = new RButton("삭제");
 	public RButton 	jb_no     	= new RButton("아니요");
 	
 	
