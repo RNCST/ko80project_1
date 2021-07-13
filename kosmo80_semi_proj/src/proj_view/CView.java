@@ -83,8 +83,6 @@ public class CView extends JDialog implements InterView {
 	}
 	public CView(MainView mv) {
 		this();
-		this.mv = mv;
-		eh = mv.eh;
 	}
 	@Override
 	public void setrow(Vector<MenuVO> mVOS) {
@@ -169,9 +167,9 @@ public class CView extends JDialog implements InterView {
 	         }
 	}
 	
-	public static void main(String[] args) {
-		CView cv = new CView();
-		cv.initDisplay();
-		cv.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		CView cv = new CView();
+//		cv.initDisplay();
+//		cv.setVisible(true);
+//	}
 }

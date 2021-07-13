@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import proj_back.BoundDocument;
+import util.BoundDocument;
 
 public class SignUpView extends JDialog {
 
